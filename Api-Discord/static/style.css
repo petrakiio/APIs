@@ -36,7 +36,16 @@ nav a{
 }
 nav a:hover{        
     text-decoration: underline;
-}   
+}
+nav img{
+    height: 40px;
+    margin-left: 10px;
+    cursor: pointer;
+} 
+nav img:hover{
+    transform: scale(1.1);
+    transition: transform 0.2s ease;
+}
 @media (max-width: 600px) {
     body {
         padding-top: 100px; 

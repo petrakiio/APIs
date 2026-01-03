@@ -85,4 +85,6 @@ def logout():
 
 @home_route.route('/perfil')
 def perfil():
-    return render_template('perfil.html')
+    if 'usuario_id' not in session:
+        return redirect(url_for('home.login')) and '<p>Você precisa estar logado para acessar o perfil.</p><br><a href="/login">Ir para o login</a>'
+    return render_template('perfil.html', usuario_nome=session['usuario_nome'])
