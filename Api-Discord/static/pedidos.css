@@ -16,6 +16,14 @@ h1{
     text-align: center;
     top: auto;
 }
+span{
+    font-size: 20px;
+    color: white;
+    text-align: center;
+    top: auto;
+    margin-bottom: 20px;
+    display: block;
+}
 nav{
     background-color: #2F3136;
     width: 100%;
@@ -57,7 +65,16 @@ nav a{
 }
 nav a:hover{        
     text-decoration: underline;
+}
+nav img{
+    height: 40px;
+    margin-left: 10px;
+    cursor: pointer;
 } 
+nav img:hover{
+    transform: scale(1.1);
+    transition: transform 0.2s ease;
+}
 .container {
     background-color: palegoldenrod;
     width: 90%;          

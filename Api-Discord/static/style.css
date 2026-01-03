@@ -16,6 +16,14 @@ h1{
     text-align: center;
     top: auto;
 }
+span{
+    font-size: 20px;
+    color: white;
+    text-align: center;
+    top: auto;
+    margin-bottom: 20px;
+    display: block;
+}
 nav{
     background-color: #2F3136;
     width: 100%;

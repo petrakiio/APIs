@@ -10,7 +10,7 @@
     <h1>Faça seu Pedido</h1>
     <nav>
     {% if 'usuario_nome' in session %}
-        <span style="color: yellow;">Bem vindo {{ session['usuario_nome'] }}!</span>
+        <span>Bem vindo {{ session['usuario_nome'] }}!</span>
         <a href="/index">Inicio</a>
         <a href="/logout">Logout</a>
         <a href="/sobre">Sobre</a>
