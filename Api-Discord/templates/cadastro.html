@@ -3,24 +3,28 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Login</title>
+    <title>Cadastro</title>
     <link rel="stylesheet" href="../static/login.css">
 </head>
 <body>
+    <h1>Faça seu Cadastro</h1>
     <nav>
         <a href="/index">Inicio</a>
-        <a href="/pedidos_route">Pedido</a>
         <a href="/sobre">Sobre</a>
+        <a href="/pedidos_route">Pedidos</a>
     </nav>
-    <h1>Login</h1>
     <div class="container">
-        <form action="/busca" method="post">
+        <form action="/cadastro_cliente" method="post">
             <p>Usuário:</p>
             <input type="text" placeholder="Seu Usuário" name="usuario">
+            <p>Senha:</p>
+            <input type="password" placeholder="Sua Senha" name="senha"><br>
             <p>Email:</p>
             <input type="email" placeholder="Seu Email" name="email"><br>
-            <button>Entrar!</button>
-            <a href="/cadastro">Não tem conta?Cadastre</a>
+            <p>Data de Nascimento:</p>
+            <input type="date" name="data"><br>
+            <button>Cadastrar!</button>
+            <a href="/login">Já tem uma conta? Faça login aqui.</a>
         </form>
     </div>
 </body>

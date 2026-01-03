@@ -8,9 +8,17 @@
 </head>
 <body>
     <nav>
-        <a href="/pedidos_route">Faça seu Pedido</a>
+    {% if 'usuario_nome' in session %}
+        <span style="color: yellow;">Bem vindo {{ session['usuario_nome'] }}!</span>
+        <a href="/logout">Logout</a>
+        <a href="/pedidos_route">Pedidos</a>
+        <a href="/sobre">Sobre</a>
+        <a href="/perfil">Minha conta</a>
+    {% else %}
         <a href="/login">Login</a>
         <a href="/sobre">Sobre</a>
-    </nav>
+        <a href="/pedidos_route">Pedidos</a>
+    {% endif %}
+</nav>
 </body>
 </html>

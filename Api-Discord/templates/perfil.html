@@ -1,0 +1,28 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Perfil</title>
+    <link rel="stylesheet" href="../static/perfil.css">
+</head>
+<body>
+    <nav>
+        {% if 'usuario_nome' in session %}
+            <span style="color: yellow;">Bem vindo {{ session['usuario_nome'] }}!</span>
+            <a href="/logout">Logout</a>
+            <a href="/pedidos_route">Pedidos</a>
+            <a href="/sobre">Sobre</a>
+        {% else %}
+            <a href="/index">Inicio</a>
+            <a href="/login">Login</a>
+            <a href="/sobre">Sobre</a>
+            <a href="/pedidos_route">Pedidos</a>
+    {% endif %}
+    </nav>
+    <h1>Perfil de {{ session['usuario_nome'] }}</h1>
+    <p>ID do usuário: {{ session['usuario_id'] }}</p>
+    <p>Email: {{ session['usuario_email'] }}</p>
+    <a href="/index">Voltar ao Início</a>
+</body>
+</html>

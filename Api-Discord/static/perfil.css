@@ -16,6 +16,11 @@ h1{
     text-align: center;
     top: auto;
 }
+p{
+    color: white;
+    font-size: 20px;
+    text-align: center;
+}
 nav{
     background-color: #2F3136;
     width: 100%;
