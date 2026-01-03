@@ -4,6 +4,8 @@ import os
 import argon2
 load_dotenv()
 
+ph = argon2.PasswordHasher()
+
 try:
     connection = pymysql.connect(
         host=os.getenv('DB_HOST'),
@@ -18,7 +20,6 @@ except Exception as e:
     print(f"Erro ao conectar ao banco de dados: {e}")
 
 def criptografar_senha(senha):
-    ph = argon2.PasswordHasher()
     return ph.hash(senha)
 
 def inserir_cliente(usuario,senha,email,data):
@@ -32,12 +33,18 @@ def inserir_cliente(usuario,senha,email,data):
         print(f"Erro ao inserir cliente: {e}")
         return False
 
-def buscar_cliente(usuario,email):
+def buscar_senha(senha: str,senha_hash: str)-> bool:
     try:
-        sql = "SELECT * FROM clientes WHERE usuario = %s AND email = %s"
-        cursor.execute(sql, (usuario, email))
-        result = cursor.fetchone()
-        return result
+        ph.verify(senha_hash, senha)
+        return True
+    except argon2.exceptions.VerifyMismatchError:
+        return False
+
+def buscar_cliente(usuario):
+    try:
+        sql = "SELECT id, usuario, senha FROM clientes WHERE usuario = %s"
+        cursor.execute(sql, (usuario,))
+        return cursor.fetchone()
     except Exception as e:
         print(f"Erro ao buscar cliente: {e}")
         return None

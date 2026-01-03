@@ -2,7 +2,7 @@ import requests
 from flask import Blueprint, render_template, request,session, redirect, url_for
 from dotenv import load_dotenv
 import os
-from conn import inserir_cliente, buscar_cliente,criptografar_senha
+from conn import inserir_cliente, buscar_cliente,criptografar_senha,buscar_senha
 
 load_dotenv()
 
@@ -69,17 +69,13 @@ def cadastro_cliente():
 def busca():
     if request.method == 'POST':
         usuario = request.form.get('usuario')
-        email = request.form.get('email')
-        cliente = buscar_cliente(usuario, email)
-
-        if cliente:
+        senha = request.form.get('senha')
+        cliente = buscar_cliente(usuario)
+        if cliente and buscar_senha(senha, cliente[2]):
             session['usuario_id'] = cliente[0]
             session['usuario_nome'] = cliente[1]
-            session['usuario_email'] = cliente[3]
-            return redirect(url_for('home.index'))
-        else:
-            return '<p>Usuário ou senha incorretos.</p><a href="/login">Tentar novamente</a>'
-    return render_template('login.html')
+            return f'<p>Login bem-sucedido! Bem-vindo, {cliente[1]}.</p><br><a href="/perfil">Ir para o perfil</a>'
+    return '<p>Falha no login. Usuário ou senha incorretos.</p><br><a href="/login">Voltar ao login</a>'
 
 @home_route.route('/logout')
 def logout():
