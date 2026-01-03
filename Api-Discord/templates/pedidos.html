@@ -9,18 +9,18 @@
 <body>
     <h1>Faça seu Pedido</h1>
     <nav>
-        <a href="/">Inicio</a>
-        <a href="">Login</a>
-        <a href="">Sobre</a>
+        <a href="/index">Inicio</a>
+        <a href="/login">Login</a>
+        <a href="/sobre">Sobre</a>
     </nav>
     <div class="container">
         <form action="/pedido" method="post">
             <p>Nome:</p>
-            <input type="text" placeholder="Seu Nome">
+            <input type="text" placeholder="Seu Nome" name="nome">
             <p>Pedido:</p>
-            <input type="text" placeholder="Seu Pedido">
+            <input type="text" placeholder="Seu Pedido" name="item">
             <p>Endereço:</p>
-            <input type="text" placeholder="Seu Endereço"><br>
+            <input type="text" placeholder="Seu Endereço" name="endereco"><br>
             <button>Enviar Pedido!</button>
         </form>
     </div>
