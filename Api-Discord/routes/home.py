@@ -2,10 +2,10 @@ import requests
 from flask import Blueprint, render_template, request,session, redirect, url_for
 from dotenv import load_dotenv
 import os
-from coneção.conn import inserir_cliente, buscar_cliente,criptografar_senha,buscar_senha
+from connection.conn import inserir_cliente, buscar_cliente,criptografar_senha,buscar_senha
 from time import time
-from auth import login_required
-from coneção.pedidos import inserir_pedido, gerar_codigo_pedido, consultar_pedido_db
+from routes.auth import login_required
+from connection.pedidos import inserir_pedido, gerar_codigo_pedido, consultar_pedido_db
 
 load_dotenv()
 
@@ -86,7 +86,7 @@ def pedido():
         nome = request.form.get('nome','')
         item = request.form.get('item', '')
         endereco = request.form.get('endereco', '')
-        telefone = request.form.get('telefone', '')
+        
 
         if nome == '' or item == '' or endereco == '':
             return '<p>Por favor, preencha todos os campos.</p><br><a href="/pedidos_route">Voltar ao formulário de pedidos</a>'
@@ -97,11 +97,11 @@ def pedido():
         nome = limpar(nome)
         item = limpar(item)
         endereco = limpar(endereco)
-        telefone = limpar(telefone)
+        
 
         #inserindo pedido no banco
         codigo_pedido = gerar_codigo_pedido()
-        sucesso = inserir_pedido(nome, item, codigo_pedido)
+        sucesso = inserir_pedido(item,codigo_pedido)
         if not sucesso:
             return '<p>Falha ao processar o pedido. Tente novamente mais tarde.</p><br><a href="/pedidos_route">Voltar ao formulário de pedidos</a>'
 
@@ -110,7 +110,6 @@ def pedido():
                        f"👤 **Cliente:** {nome}\n"
                        f"📦 **Item:** {item}\n"
                        f"🏠 **Endereço:** {endereco}\n"
-                       f"📞 **Telefone:** {telefone}"
         }   
         try:
             response =requests.post(bot_disc, json=payload)
@@ -125,10 +124,12 @@ def pedido():
 @home_route.route('/consulta-de-pedido', methods=['POST'])
 def consulta_de_pedido():
     codigo = request.form.get('codigo', '')
+    if codigo == '':
+        return '<p>Por favor, insira o código do pedido.</p><br><a href="/consultar-pedido">Voltar</a>'
     pedido = consultar_pedido_db(codigo)
     if pedido:
         return '<p>Pedido Pronto!</p><br><a href="/index">Voltar</a>'
-    return '<p>Pedido Não Encontrado ou Ainda em Preparação.</p><br><a href="/index">Voltar</a>'
+    return '<p>Ainda em Preparação.</p><br><a href="/index">Voltar</a>'
 
 @home_route.route('/cadastro')
 def cadastro():

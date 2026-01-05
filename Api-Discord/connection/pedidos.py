@@ -1,14 +1,14 @@
-from conn import cursor
+from connection.conn import cursor
 import random
 
 def gerar_codigo_pedido():
     return random.randint(100000, 999999)
 
 
-def inserir_pedido(nome,preco,codigo):
+def inserir_pedido(nome,codigo):
     try:
-        sql = "INSERT INTO pedidos (nome, preco, codigo) VALUES (%s, %s, %s)"
-        cursor.execute(sql,(nome, preco, codigo))
+        sql = "INSERT INTO pedidos (nome,codigo) VALUES (%s,%s)"
+        cursor.execute(sql,(nome, codigo))
         cursor.connection.commit()
         return True
     except Exception as e:
@@ -17,7 +17,7 @@ def inserir_pedido(nome,preco,codigo):
     
 def consultar_pedido_db(codigo):
     try:
-        sql = "SELECT nome, preco FROM pedidos WHERE codigo = %s"
+        sql = "SELECT nome FROM pedidos WHERE codigo = %s"
         cursor.execute(sql, (codigo,))
         pedido = cursor.fetchone()
         return True
