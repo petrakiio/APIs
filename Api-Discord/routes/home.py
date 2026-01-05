@@ -5,7 +5,7 @@ import os
 from coneção.conn import inserir_cliente, buscar_cliente,criptografar_senha,buscar_senha
 from time import time
 from auth import login_required
-from coneção.pedidos import inserir_pedido, gerar_codigo_pedido
+from coneção.pedidos import inserir_pedido, gerar_codigo_pedido, consultar_pedido_db
 
 load_dotenv()
 
@@ -121,6 +121,14 @@ def pedido():
         except Exception as e:
             return f'<p>Ocorreu um erro: {e}</p>'
     return render_template('pedidos.html')
+
+@home_route.route('/consulta-de-pedido', methods=['POST'])
+def consulta_de_pedido():
+    codigo = request.form.get('codigo', '')
+    pedido = consultar_pedido_db(codigo)
+    if pedido:
+        return '<p>Pedido Pronto!</p><br><a href="/index">Voltar</a>'
+    return '<p>Pedido Não Encontrado ou Ainda em Preparação.</p><br><a href="/index">Voltar</a>'
 
 @home_route.route('/cadastro')
 def cadastro():

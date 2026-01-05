@@ -7,6 +7,34 @@
     <link rel="stylesheet" href="../static/consultar.css">
 </head>
 <body>
-    <a href="https://t.me/LucyBot">Fale com a Lucy no Telegram</a>
+    <h1>consultar pedidos</h1>
+    <nav>
+    {% if 'usuario_nome' in session %}
+        <span>Bem vindo {{ session['usuario_nome'] }}!</span>
+        <a href="/index">Inicio</a>
+        <a href="/logout">Logout</a>
+        <a href="/sobre">Sobre</a>
+        <a href="/perfil">
+            <img src="https://static.vecteezy.com/system/resources/thumbnails/020/911/748/small/user-profile-icon-profile-avatar-user-icon-male-icon-face-icon-profile-icon-free-png.png"
+             alt="icone">
+        </a>
+    {% else %}
+        <a href="/login">Login</a>
+        <a href="/index">Inicio</a>
+        <a href="/sobre">Sobre</a>
+    {% endif %}
+    </nav>
+    <div class="container">
+        <p>Para consultar seu pedido,utilize o código fornecido após o envio do pedido.</p>
+        <p>Você pode consultar seu pedido através do nosso bot no Telegram ou diretamente em nosso site.</p>
+        <h2>Consulta via Bot do Telegram:</h2>
+        <a href="https://t.me/LucyBot" target="_blank" rel="noopener noreferrer">Fale com a Lucy no Telegram</a>
+        <h2>Consulta via Site:</h2>
+        <form action="/consulta-de-pedido" method="post">
+            <p>Insira o código do seu pedido:</p>
+            <input type="text" placeholder="Código do Pedido" name="codigo" required>
+            <button>Consultar Pedido</button>
+        </form>
+    </div>
 </body>
 </html>
