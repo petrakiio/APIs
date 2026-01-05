@@ -2,9 +2,10 @@ import requests
 from flask import Blueprint, render_template, request,session, redirect, url_for
 from dotenv import load_dotenv
 import os
-from conn import inserir_cliente, buscar_cliente,criptografar_senha,buscar_senha
+from coneção.conn import inserir_cliente, buscar_cliente,criptografar_senha,buscar_senha
 from time import time
 from auth import login_required
+from coneção.pedidos import inserir_pedido, gerar_codigo_pedido
 
 load_dotenv()
 
@@ -68,6 +69,10 @@ def sobre():
 def pedidos_route():
     return render_template('pedidos.html')
 
+@home_route.route('/consultar-pedido')
+def consultar_pedido():
+    return render_template('consultar-pedido.html')
+
 @home_route.route('/pedido', methods=['GET', 'POST'])
 def pedido():
     if request.method == 'POST':
@@ -93,6 +98,13 @@ def pedido():
         item = limpar(item)
         endereco = limpar(endereco)
         telefone = limpar(telefone)
+
+        #inserindo pedido no banco
+        codigo_pedido = gerar_codigo_pedido()
+        sucesso = inserir_pedido(nome, item, codigo_pedido)
+        if not sucesso:
+            return '<p>Falha ao processar o pedido. Tente novamente mais tarde.</p><br><a href="/pedidos_route">Voltar ao formulário de pedidos</a>'
+
         payload = {
             "content": f"🔔 **NOVO PEDIDO RECEBIDO**\n"
                        f"👤 **Cliente:** {nome}\n"
@@ -103,9 +115,9 @@ def pedido():
         try:
             response =requests.post(bot_disc, json=payload)
             if response.status_code == 204:
-                return '<p>Pedido enviado com sucesso!</p><br><a href="/index">Voltar para a página inicial</a>'
+                return f'<p>Pedido enviado com sucesso!Seu pedido é {codigo_pedido}</p><br><a href="/index">Voltar para a página inicial</a><a href="/consultar-pedido">Como consular pedido?</a>'
             else:
-                return '<p>Falha ao enviar o pedido. Tente novamente mais tarde.</p><br><a href="/pedidos_route">Voltar ao formulário de pedidos</a>'
+                return f'<p>Falha ao enviar o pedido. Tente novamente mais tarde.</p><br><a href="/pedidos_route">Voltar ao formulário de pedidos</a><p>Seu pedido é {codigo_pedido},Não o perca!</p>'
         except Exception as e:
             return f'<p>Ocorreu um erro: {e}</p>'
     return render_template('pedidos.html')
