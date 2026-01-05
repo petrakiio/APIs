@@ -78,9 +78,10 @@ def pedido():
         if ip in ip_last_order and agora - ip_last_order[ip] < 30:
             return '<p>Aguarde 30 segundos antes de enviar outro pedido.</p><br><a href="/pedidos_route">Voltar</a>'
 
-        nome = request.form.get('nome')
-        item = request.form.get('item')
-        endereco = request.form.get('endereco')
+        nome = request.form.get('nome','')
+        item = request.form.get('item', '')
+        endereco = request.form.get('endereco', '')
+        telefone = request.form.get('telefone', '')
 
         if nome == '' or item == '' or endereco == '':
             return '<p>Por favor, preencha todos os campos.</p><br><a href="/pedidos_route">Voltar ao formulário de pedidos</a>'
@@ -91,11 +92,13 @@ def pedido():
         nome = limpar(nome)
         item = limpar(item)
         endereco = limpar(endereco)
+        telefone = limpar(telefone)
         payload = {
             "content": f"🔔 **NOVO PEDIDO RECEBIDO**\n"
                        f"👤 **Cliente:** {nome}\n"
                        f"📦 **Item:** {item}\n"
-                       f"🏠 **Endereço:** {endereco}"
+                       f"🏠 **Endereço:** {endereco}\n"
+                       f"📞 **Telefone:** {telefone}"
         }   
         try:
             response =requests.post(bot_disc, json=payload)
