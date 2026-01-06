@@ -6,6 +6,8 @@ from connection.conn import inserir_cliente, buscar_cliente,criptografar_senha,b
 from time import time
 from routes.auth import login_required
 from connection.pedidos import inserir_pedido, gerar_codigo_pedido, consultar_pedido_db
+from routes.itens import products
+
 
 load_dotenv()
 
@@ -56,6 +58,14 @@ home_route = Blueprint('home', __name__)
 @home_route.route('/index') 
 def index():
     return render_template('index.html')
+
+@home_route.route('/search', methods=['POST'])
+def search():
+    iten = request.form.get('search', '')
+    for product in products:
+        if iten == product['nome']:
+            return render_template('index.html', products=[product])
+    return '<p>Produto não encontrado.</p><br><a href="/index">Voltar</a>'
 
 @home_route.route('/login')
 def login():
