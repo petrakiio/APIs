@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Compra</title>
+    <link rel="stylesheet" href="../static/comprar.css">
+</head>
+<body>
+    <nav>
+    {% if 'usuario_nome' in session %}
+        <span>Bem vindo {{ session['usuario_nome'] }}!</span>
+        <a href="/logout">Logout</a>
+        <a href="/pedidos_route">Pedidos</a>
+        <a href="/sobre">Sobre</a>
+        <a href="/perfil">
+        <img src="{{ session['usuario_image'] }}" alt="icone">
+        </a>
+    {% else %}
+        <a href="/login">Login</a>
+        <a href="/sobre">Sobre</a>
+        <a href="/pedidos_route">Pedidos</a>
+    {% endif %}
+    <div class="container">
+        <h1>Finalizar Compra</h1>
+        {% if 'usuario_nome' in session %}
+            <p>Olá, {{ session['usuario_nome'] }}!</p>
+            <p>Seu carrinho:</p>
+            <ul>
+                {% for item in products %}
+                    <li>{{ item }}</li>
+                {% endfor %}
+            </ul>
+            <button onclick="">Finalizar Compra</button>
+        {% else %}
+            <p>Você precisa estar logado para finalizar a Compra.</p>
+        {% endif %}
+    </div>
+</body>
+</html>

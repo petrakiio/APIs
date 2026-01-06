@@ -33,6 +33,7 @@
             <h3>{{ product['nome'] }}</h3>
             <p>{{ product['descricao'] }}</p>
             <span class="price">R$ {{ "%.2f"|format(product['preco'])|replace('.', ',') }}</span>
+            <button onclick="comprarProduto()">Comprar</button>
         </div>
     {% endfor %}
 </div>
@@ -42,5 +43,6 @@
     <a href="/" style="color: #7289DA;">Ver todo o cardápio</a>
 {% endif %}
 </div>
+<script src="../js/script.js"></script>
 </body>
 </html>

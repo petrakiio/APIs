@@ -86,62 +86,15 @@ def pedidos_route():
 
 @home_route.route('/consultar-pedido')
 def consultar_pedido():
-    return render_template('consultar-pedido.html')
-
-@home_route.route('/pedido', methods=['GET', 'POST'])
-def pedido():
-    if request.method == 'POST':
-        ip = get_client_ip()
-        agora = time()
-        
-        #span de tempo entre pedidos
-        if ip in ip_last_order and agora - ip_last_order[ip] < 30:
-            return '<p>Aguarde 30 segundos antes de enviar outro pedido.</p><br><a href="/pedidos_route">Voltar</a>'
-
-        nome = request.form.get('nome','')
-        item = request.form.get('item', '')
-        endereco = request.form.get('endereco', '')
-        
-
-        if nome == '' or item == '' or endereco == '':
-            return '<p>Por favor, preencha todos os campos.</p><br><a href="/pedidos_route">Voltar ao formulário de pedidos</a>'
-         #marcando ip
-        ip_last_order[ip] = agora
-
-        #tratamento simples
-        nome = limpar(nome)
-        item = limpar(item)
-        endereco = limpar(endereco)
-        
-
-        #inserindo pedido no banco
-        codigo_pedido = gerar_codigo_pedido()
-        sucesso = inserir_pedido(item,codigo_pedido)
-        if not sucesso:
-            return '<p>Falha ao processar o pedido. Tente novamente mais tarde.</p><br><a href="/pedidos_route">Voltar ao formulário de pedidos</a>'
-
-        payload = {
-            "content": f"🔔 **NOVO PEDIDO RECEBIDO**\n"
-                       f"👤 **Cliente:** {nome}\n"
-                       f"📦 **Item:** {item}\n"
-                       f"🏠 **Endereço:** {endereco}\n"
-                       f"Codigo do Pedido: {codigo_pedido}"
-        }   
-        try:
-            response =requests.post(bot_disc, json=payload)
-            if response.status_code == 204:
-                return f'<p>Pedido enviado com sucesso!Seu pedido é {codigo_pedido}</p><br><a href="/index">Voltar para a página inicial</a><a href="/consultar-pedido">Como consular pedido?</a>'
-            else:
-                return f'<p>Falha ao enviar o pedido. Tente novamente mais tarde.</p><br><a href="/pedidos_route">Voltar ao formulário de pedidos</a><p>Seu pedido é {codigo_pedido},Não o perca!</p>'
-        except Exception as e:
-            return f'<p>Ocorreu um erro: {e}</p>'
-    return render_template('pedidos.html')
+    return render_template('consultar_pedido.html')
 
 @home_route.route('/consulta-de-pedido', methods=['POST'])
 def consulta_de_pedido():
     codigo = request.form.get('codigo', '')
-    if codigo == '':
+    
+    if not codigo:
         return '<p>Por favor, insira o código do pedido.</p><br><a href="/consultar-pedido">Voltar</a>'
+    
     pedido = consultar_pedido_db(codigo)
     if pedido:
         return '<p>Pedido Pronto!</p><br><a href="/index">Voltar</a>'
@@ -230,3 +183,8 @@ def upload_image():
     # Atualiza na sessão
     session['usuario_image'] = img_url
     return redirect(url_for('home.perfil'))
+
+#Products compra
+@home_route.route('/products')
+def products_page():
+    return render_template('comprar.html', products=products)

@@ -131,7 +131,19 @@ nav img:hover{
     margin-bottom: 15px;
     line-height: 1.4;
 }
-
+.product-card button {
+    background-color: #43B581;
+    color: white;
+    border: none;
+    padding: 10px 20px;
+    border-radius: 5px;
+    cursor: pointer;
+    font-weight: bold;
+    width: 100%;
+}
+.product-card button:hover {
+    background-color: lightgreen;
+}
 .price {
     font-size: 1.4rem;
     font-weight: bold;
