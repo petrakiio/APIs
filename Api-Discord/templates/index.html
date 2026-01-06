@@ -1,10 +1,10 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="pt-br">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Inicio</title>
-    <link rel="stylesheet" href="../static/style.css">
+    <title>Início</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
 </head>
 <body>
     <nav>
@@ -25,8 +25,22 @@
         <input type="text" id="search" placeholder="pesquisar produto" name="search">
     </form>
 </nav>
-<div class="">
-    
+
+<div id='products-grid'>
+    {% for product in products %}
+        <div class="product-card">
+            <img src="{{ product['img'] }}" class="product-image" alt="{{ product['nome'] }}">
+            <h3>{{ product['nome'] }}</h3>
+            <p>{{ product['descricao'] }}</p>
+            <span class="price">R$ {{ "%.2f"|format(product['preco'])|replace('.', ',') }}</span>
+        </div>
+    {% endfor %}
+</div>
+
+{% if products|length == 0 %}
+    <p style="color: white; margin-top: 20px;">Nenhum prato encontrado com esse nome.</p>
+    <a href="/" style="color: #7289DA;">Ver todo o cardápio</a>
+{% endif %}
 </div>
 </body>
 </html>
