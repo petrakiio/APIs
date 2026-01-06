@@ -22,6 +22,12 @@
     </nav>
     <h1>Perfil de {{ session['usuario_nome'] }}</h1>
     <p>ID do usuário: {{ session['usuario_id'] }}</p>
+    <p>Mudar Sua imagem(mande a url da imagem)</p>
+    <img src="{{ session['usuario_image'] }}" alt="Imagem de Perfil" width="150" height="150">
+    <form action="/upload-image" method="post" enctype="multipart/form-data">
+        <input type="text" name="img" placeholder="URL da imagem" required>
+        <button type="submit">Enviar Imagem</button>
+    </form>
     <a href="/index">Voltar ao Início</a>
 </body>
 </html>

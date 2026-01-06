@@ -15,7 +15,7 @@
         <a href="/logout">Logout</a>
         <a href="/sobre">Sobre</a>
         <a href="/perfil">
-            <img src="https://static.vecteezy.com/system/resources/thumbnails/020/911/748/small/user-profile-icon-profile-avatar-user-icon-male-icon-face-icon-profile-icon-free-png.png" alt="icone">
+        <img src="{{ session['usuario_image'] }}" alt="icone">
         </a>
     {% else %}
         <a href="/login">Login</a>
@@ -24,26 +24,22 @@
     {% endif %}   
     </nav>
     <div class="container">
-        <form action="/pedido" method="post">
-            <p>Nome:</p>
-            <input type="text" placeholder="Seu Nome" name="nome">
-            <p>Pedido:</p>
-            <select name="item" required style="width: 100%; padding: 8px; border-radius: 4px;">
-                <option value="" disabled selected>Escolha o produto...</option>
-                <option value="Pizza de Calabresa">Pizza de Calabresa</option>
-                <option value="X-Burguer">X-Burguer</option>
-                <option value="Batata Frita">Batata Frita</option>
-                <option value="Refrigerante 2L">Refrigerante 2L</option>
-                <option value="Hambúrger Artesanal">Hambúrger Artesanal</option>
-                <option value="Sushi Combo">Sushi Combo</option>
-                <option value="Salada Caesar">Salada Caesar</option>
-                <option value="Sorvete">Sorvete</option>
-            </select>
-            <p>Endereço:</p>
-            <input type="text" placeholder="Seu Endereço" name="endereco"><br>
-            <button>Enviar Pedido!</button>
-        </form>
-        <a href="/consultar-pedido">Consultar o pedido</a>
-    </div>
+<form action="/pedido" method="post">
+    <p>Nome:</p>
+    <input type="text" name="nome" required placeholder="Seu nome">
+    <p>Endereço</p>
+    <input type="text" name="endereco" required placeholder="Seu Endereço">
+    <p>Selecione seu item:</p>
+    <select name="item" required>
+        {% for product in products %}
+            <option value="{{ product['nome'] }}">
+                {{ product['nome'] }} - R$ {{ "%.2f"|format(product['preco'])|replace('.', ',') }}
+            </option>
+        {% endfor %}
+    </select>
+    <button type="submit">Finalizar Pedido</button>
+    <a href="/consultar-pedido">Consultar Pedido</a>
+</form>
+</div>
 </body>
 </html>

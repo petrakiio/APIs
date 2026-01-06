@@ -2,37 +2,56 @@ import pymysql
 from dotenv import load_dotenv
 import os
 import argon2
-load_dotenv()
 
+load_dotenv()
 ph = argon2.PasswordHasher()
 
-try:
-    connection = pymysql.connect(
-        host=os.getenv('DB_HOST'),
-        user=os.getenv('DB_USER'),
-        password=os.getenv('DB_PASSWORD'),
-        database=os.getenv('DB_NAME'),
-        port=int(os.getenv('DB_PORT'))
-    )
-    cursor = connection.cursor()
-    print("Conexão bem-sucedida ao banco de dados!")
-except Exception as e:
-    print(f"Erro ao conectar ao banco de dados: {e}")
+def get_connection():
+    try:
+        return pymysql.connect(
+            host=os.getenv('DB_HOST'),
+            user=os.getenv('DB_USER'),
+            password=os.getenv('DB_PASSWORD'),
+            database=os.getenv('DB_NAME'),
+            port=int(os.getenv('DB_PORT')),
+            cursorclass=pymysql.cursors.DictCursor 
+        )
+    except Exception as e:
+        print(f"Erro ao conectar ao banco de dados: {e}")
+        return None
 
 def criptografar_senha(senha):
     return ph.hash(senha)
 
-def inserir_cliente(usuario,senha,email,data):
+def inserir_cliente(usuario, senha, email, data):
+    db = get_connection()
+    if not db: return False
     try:
-        sql = "INSERT INTO clientes (usuario,senha,email,data_nascimento) VALUES (%s, %s, %s, %s)"
-        cursor.execute(sql, (usuario, senha, email, data))
-        connection.commit()
+        with db.cursor() as cursor:
+            sql = "INSERT INTO clientes (usuario, senha, email, data_nascimento) VALUES (%s, %s, %s, %s)"
+            cursor.execute(sql, (usuario, senha, email, data))
+        db.commit()
         print("Cliente inserido com sucesso!")
         return True
     except Exception as e:
         print(f"Erro ao inserir cliente: {e}")
         return False
+    finally:
+        db.close() 
 
+def buscar_cliente(usuario):
+    db = get_connection()
+    if not db: return None
+    try:
+        with db.cursor() as cursor:
+            sql = "SELECT id, usuario, senha, foto_perfil FROM clientes WHERE usuario = %s"
+            cursor.execute(sql, (usuario,))
+            return cursor.fetchone()
+    except Exception as e:
+        print(f"Erro ao buscar cliente: {e}")
+        return None
+    finally:
+        db.close()
 def buscar_senha(senha: str,senha_hash: str)-> bool:
     try:
         ph.verify(senha_hash, senha)
@@ -40,11 +59,18 @@ def buscar_senha(senha: str,senha_hash: str)-> bool:
     except argon2.exceptions.VerifyMismatchError:
         return False
 
-def buscar_cliente(usuario):
+
+def atualizar_imagem_perfil(usuario_id, img_url):
+    db = get_connection()
+    if not db: return False
     try:
-        sql = "SELECT id, usuario, senha FROM clientes WHERE usuario = %s"
-        cursor.execute(sql, (usuario,))
-        return cursor.fetchone()
+        with db.cursor() as cursor:
+            sql = "UPDATE clientes SET foto_perfil = %s WHERE id = %s"
+            cursor.execute(sql, (img_url, usuario_id))
+        db.commit()
+        return True
     except Exception as e:
-        print(f"Erro ao buscar cliente: {e}")
-        return None
+        print(f"Erro ao atualizar imagem de perfil: {e}")
+        return False
+    finally:
+        db.close()

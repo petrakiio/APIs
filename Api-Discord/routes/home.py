@@ -2,7 +2,7 @@ import requests
 from flask import Blueprint, render_template, request,session, redirect, url_for
 from dotenv import load_dotenv
 import os
-from connection.conn import inserir_cliente, buscar_cliente,criptografar_senha,buscar_senha
+from connection.conn import inserir_cliente, buscar_cliente,criptografar_senha,buscar_senha,atualizar_imagem_perfil
 from time import time
 from routes.auth import login_required
 from connection.pedidos import inserir_pedido, gerar_codigo_pedido, consultar_pedido_db
@@ -82,7 +82,7 @@ def sobre():
 
 @home_route.route('/pedidos_route')
 def pedidos_route():
-    return render_template('pedidos.html')
+    return render_template('pedidos.html', products=products)
 
 @home_route.route('/consultar-pedido')
 def consultar_pedido():
@@ -125,6 +125,7 @@ def pedido():
                        f"👤 **Cliente:** {nome}\n"
                        f"📦 **Item:** {item}\n"
                        f"🏠 **Endereço:** {endereco}\n"
+                       f"Codigo do Pedido: {codigo_pedido}"
         }   
         try:
             response =requests.post(bot_disc, json=payload)
@@ -182,22 +183,26 @@ def busca():
             return redirect(url_for('home.login'))
         if usuario == '' or senha == '':
             return '<p>Por favor, preencha todos os campos.</p><br><a href="/login">Voltar ao login</a>'
-        else:
-            cliente = buscar_cliente(usuario)
-            if cliente:
-                usuario_id, usuario_nome, senha_hash = cliente
-                if buscar_senha(senha, senha_hash):
-                    resetar_tentativas(ip)
-                    session['usuario_id'] = usuario_id
-                    session['usuario_nome'] = usuario_nome
-                    session.permanent = True
-                    return redirect(url_for('home.index'))
-                else:
-                    registrar_erro_login(ip)
-                    return '<p>Usuário ou senha incorretos.</p><br><a href="/login">Voltar</a>'
+        
+        cliente = buscar_cliente(usuario)
+        if cliente:
+            usuario_id = cliente['id']
+            usuario_nome = cliente['usuario']
+            senha_hash = cliente['senha']
+            img = cliente['foto_perfil']
+            if buscar_senha(senha, senha_hash):
+                resetar_tentativas(ip)
+                session['usuario_id'] = usuario_id
+                session['usuario_nome'] = usuario_nome
+                session['usuario_image'] = img
+                session.permanent = True
+                return redirect(url_for('home.index'))
             else:
                 registrar_erro_login(ip)
                 return '<p>Usuário ou senha incorretos.</p><br><a href="/login">Voltar</a>'
+        else:
+            registrar_erro_login(ip)
+            return '<p>Usuário ou senha incorretos.</p><br><a href="/login">Voltar</a>'
 
     return redirect(url_for('home.login'))
 
@@ -212,3 +217,16 @@ def logout():
 @login_required
 def perfil():
     return render_template('perfil.html', usuario_nome=session['usuario_nome'])
+
+@home_route.route('/upload-image', methods=['POST'])
+@login_required
+def upload_image():
+    img_url = request.form.get('img', '')
+    if img_url == '':
+        return '<p>Por favor, insira a URL da imagem.</p><br><a href="/perfil">Voltar</a>'
+    
+    # Atualiza no banco de dados
+    atualizar_imagem_perfil(session['usuario_id'], img_url)
+    # Atualiza na sessão
+    session['usuario_image'] = img_url
+    return redirect(url_for('home.perfil'))

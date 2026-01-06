@@ -151,3 +151,35 @@ nav img:hover{
         margin: 5px 10px;
     }
 }
+
+/* Estilização do Select para combinar com o Container */
+.container select {
+    width: 100%;        
+    max-width: 350px;    /* Mesma largura dos seus inputs */
+    height: 40px;
+    border-radius: 10px;
+    border: 2px solid #ccc; /* Um contorno leve */
+    padding: 0 10px;
+    font-size: 16px;
+    margin-bottom: 10px;
+    background-color: white;
+    cursor: pointer;
+    outline: none;
+    color: #333;
+    display: block;      /* Garante que o margin auto funcione */
+    margin-left: auto;
+    margin-right: auto;
+}
+
+/* Efeito ao clicar no select */
+.container select:focus {
+    border-color: #2F3136; /* Cor da sua Nav */
+    box-shadow: 0 0 5px rgba(47, 49, 54, 0.3);
+}
+
+/* Estilização das opções (o que aparece dentro da lista) */
+.container select option {
+    background-color: white;
+    color: black;
+    padding: 10px;
+}
