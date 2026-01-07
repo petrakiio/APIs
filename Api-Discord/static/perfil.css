@@ -40,18 +40,17 @@ nav span {
     display: inline;
 }
 
-nav a {
+nav #link {
     color: #B9BBBE;
     text-decoration: none;
-    font-size: 15px;
+    font-size: 16px;
     font-weight: 500;
-    margin-left: 20px;
-    transition: all 0.2s ease;
+    transition: color 0.2s ease;
 }
 
-nav a:hover {
-    color: #FFFFFF;
-    text-shadow: 0 0 5px rgba(255,255,255,0.3);
+nav #link:hover {
+    color: white;
+    text-decoration: none;
 }
 
 h1 {

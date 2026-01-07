@@ -8,15 +8,9 @@
 </head>
 <body>
     <nav>
-        {% if 'usuario_nome' in session %}
-            <span>Bem vindo {{ session['usuario_nome'] }}!</span>
-            <a href="/logout">Logout</a>
-            <a href="/sobre">Sobre</a>
-        {% else %}
-            <a href="/index">Inicio</a>
-            <a href="/login">Login</a>
-            <a href="/sobre">Sobre</a>
-    {% endif %}
+        <span>Bem vindo! {{session['usuario_nome']}}</span>
+        <a href="/sobre" id="link">Sobre</a>
+        <a href="/index" id="link">Inicio</a>
     </nav>
     <h1>Perfil de {{ session['usuario_nome'] }}</h1>
     <p>Mudar Sua imagem(mande a url da imagem)</p>

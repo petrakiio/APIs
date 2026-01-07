@@ -7,19 +7,30 @@
     <link rel="stylesheet" href="../static/login.css">
 </head>
 <body>
-    <h1>Faça seu Cadastro</h1>
     <nav>
         <a href="/index">Inicio</a>
         <a href="/sobre">Sobre</a>
     </nav>
+    <h1>Faça seu Cadastro</h1>
     <div class="container">
+
+        {% with messages = get_flashed_messages(with_categories=true) %}
+          {% if messages %}
+            {% for category, message in messages %}
+              <div class="alert alert-{{ category }}">
+                {{ message }}
+              </div>
+            {% endfor %}
+          {% endif %}
+        {% endwith %}
+
         <form action="/cadastro_cliente" method="post">
             <p>Usuário:</p>
             <input type="text" placeholder="Seu Usuário" name="usuario">
             <p>Senha:</p>
-            <input type="password" placeholder="Sua Senha" name="senha"><br>
+            <input type="password" placeholder="Sua Senha" name="senha">
             <p>Email:</p>
-            <input type="email" placeholder="Seu Email" name="email"><br>
+            <input type="email" placeholder="Seu Email" name="email">
             <p>Data de Nascimento:</p>
             <input type="date" name="data"><br>
             <button>Cadastrar!</button>

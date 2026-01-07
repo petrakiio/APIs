@@ -1,5 +1,5 @@
 import requests
-from flask import Blueprint, render_template, request, session, redirect, url_for
+from flask import Blueprint, render_template, request, session, redirect, url_for,flash
 from dotenv import load_dotenv
 import os
 from connection.conn import inserir_cliente, buscar_cliente, criptografar_senha, buscar_senha, atualizar_imagem_perfil
@@ -106,23 +106,27 @@ def cadastro_cliente():
     senha = criptografar_senha(senha)
     sucesso = inserir_cliente(usuario, senha, email, data)
     if sucesso:
-        return '<p>Cadastro realizado com sucesso!</p><br><a href="/login">Ir para o login</a>'
+        
+        return redirect(url_for('home.index'))
     else:
-        return '<p>Falha no cadastro. Tente novamente.</p><br><a href="/cadastro">Voltar ao cadastro</a>'
+        flash('Erro no cadastro tente novamente')
+        return redirect(url_for('home.cadastro'))
 
 @home_route.route('/busca', methods=['POST', 'GET'])
 def busca():
     if request.method == 'POST':
         ip = get_client_ip()
         if not pode_tentar_login(ip):
-            return '<p>Muitas tentativas de login falhadas. Tente novamente mais tarde.</p><br><a href="/login">Voltar ao login</a>'
+            flash('Muitas tentativas, tente depois')
+            return redirect(url_for('home.index'))
         
         usuario = request.form.get('usuario')
         senha = request.form.get('senha')
         if len(usuario) > 50 or len(senha) > 100:
             return redirect(url_for('home.login'))
         if usuario == '' or senha == '':
-            return '<p>Por favor, preencha todos os campos.</p><br><a href="/login">Voltar ao login</a>'
+            flash('Dados faltando!')
+            return redirect(url_for('home.login'))
         
         cliente = buscar_cliente(usuario)
         if cliente:
@@ -136,10 +140,12 @@ def busca():
                 session['usuario_nome'] = usuario_nome
                 session['usuario_image'] = img
                 session.permanent = True
+                flash('Login realizado com sucesso!')
                 return redirect(url_for('home.index'))
             else:
                 registrar_erro_login(ip)
-                return '<p>Usuário ou senha incorretos.</p><br><a href="/login">Voltar</a>'
+                flash('Usario ou senha incorretos')
+                return redirect(url_for('home.login'))
         else:
             registrar_erro_login(ip)
             return '<p>Usuário ou senha incorretos.</p><br><a href="/login">Voltar</a>'

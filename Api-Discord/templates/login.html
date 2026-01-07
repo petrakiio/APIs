@@ -13,13 +13,23 @@
     </nav>
     <h1>Login</h1>
     <div class="container">
+
+        {% with messages = get_flashed_messages(with_categories=true) %}
+          {% if messages %}
+            {% for category, message in messages %}
+              <div class="alert alert-{{ category }}">
+                {{ message }}
+              </div>
+            {% endfor %}
+          {% endif %}
+        {% endwith %}
         <form action="/busca" method="post">
             <p>Usuário:</p>
             <input type="text" placeholder="Seu Usuário" name="usuario">
             <p>Senha:</p>
             <input type="password" placeholder="Sua Senha" name="senha"><br>
             <button>Entrar!</button>
-            <a href="/cadastro">Não tem conta?Cadastre</a>
+            <a href="/cadastro">Não tem conta? Cadastre-se</a>
         </form>
     </div>
 </body>
