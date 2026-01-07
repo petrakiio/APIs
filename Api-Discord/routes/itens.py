@@ -42,18 +42,21 @@ products = [
         'img': 'https://giassi.vtexassets.com/arquivos/ids/2759533-300-300?v=638627595322370000&width=300&height=300&aspect=true'
     },
     {
+        'id':7,
         'nome': 'X-Burguer',
         'descricao': 'Clássico X-Burguer com queijo, alface, tomate e maionese especial',
         'preco': 15.00, 
         'img':'https://tofuu.getjusto.com/orioneat-local/resized2/DsgAfKxoM2QS8puye-800-x.webp'
     },
     {
+        'id':8,
         'nome': 'sorvete',
         'descricao': 'Sorvete cremoso com diversos sabores à escolha',
         'preco': 10.00,
         'img':'https://soleneve.com.br/wp-content/uploads/2024/09/bloco02-sorvetes7l-768x432.webp'
     },
-    {
+    {   
+        'id':9,
         'nome':'Suco de Laranja',
         'descricao':'Suco de laranja natural',
         'preco':5.50,
