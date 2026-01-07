@@ -1,7 +1,7 @@
 # 🚀 Sistema de Delivery & Autenticação — Thrownlift
 
 Este projeto é uma aplicação web desenvolvida com **Flask**, focada em autenticação segura, envio de pedidos e boas práticas de backend.  
-O sistema gerencia cadastro, login, controle de sessão e envio de pedidos em tempo real via **Discord Webhook**.
+O sistema gerencia cadastro, login, controle de sessão
 
 O projeto foi desenvolvido com atenção especial à **segurança**, **organização de código** e **proteção contra abusos comuns** (spam e brute force).
 
@@ -46,8 +46,6 @@ Este projeto vai além do básico e implementa medidas reais de segurança:
 - ✅ Login seguro com verificação de hash
 - ✅ Controle de sessão (login / logout)
 - ✅ Proteção de rotas privadas
-- ✅ Sistema de pedidos aberto (não requer login)
-- ✅ Envio automático de pedidos para um canal do Discord
 - ✅ Navbar dinâmica baseada no estado de autenticação
 - ✅ Proteções contra SQL Injection, brute force e spam
 
@@ -67,3 +65,7 @@ CREATE TABLE clientes (
     email VARCHAR(100) NOT NULL UNIQUE,
     data_nascimento DATE
 );
+
+
+Caso queira um projeto parecido entre em contato:
+🟢 WhatsApp: (16) 99312-0042

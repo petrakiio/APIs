@@ -12,14 +12,12 @@
         <span>Bem vindo {{ session['usuario_nome'] }}!</span>
         <a href="/index">Inicio</a>
         <a href="/logout">Logout</a>
-        <a href="/pedidos_route">Pedidos</a>
-        <a href="/perfil">
+        <a href="/perfil" class="profile-link">
          <img src="{{ session['usuario_image'] }}" alt="icone">
         </a>
     {% else %}
         <a href="/index">Inicio</a>
         <a href="/login">Login</a>
-        <a href="/pedidos_route">Pedidos</a>
     {% endif %}
     </nav>
     <h1>Sobre Nós</h1>

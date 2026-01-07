@@ -11,15 +11,13 @@
     {% if 'usuario_nome' in session %}
         <span>Bem vindo {{ session['usuario_nome'] }}!</span>
         <a href="/logout">Logout</a>
-        <a href="/pedidos_route">Pedidos</a>
         <a href="/sobre">Sobre</a>
-        <a href="/perfil">
-        <img src="{{ session['usuario_image'] }}" alt="icone">
+        <a href="/perfil" class="profile-link">
+            <img src="{{ session['usuario_image'] }}" alt="icone">
         </a>
     {% else %}
         <a href="/login">Login</a>
         <a href="/sobre">Sobre</a>
-        <a href="/pedidos_route">Pedidos</a>
     {% endif %}
     <form action="/search" method="post">
         <input type="text" id="search" placeholder="pesquisar produto" name="search">
@@ -33,16 +31,16 @@
             <h3>{{ product['nome'] }}</h3>
             <p>{{ product['descricao'] }}</p>
             <span class="price">R$ {{ "%.2f"|format(product['preco'])|replace('.', ',') }}</span>
-            <button onclick="comprarProduto()">Comprar</button>
+            <a href="/products/{{ product['id'] }}">
+                <button>Comprar</button>
+            </a>
         </div>
     {% endfor %}
 </div>
-
 {% if products|length == 0 %}
     <p style="color: white; margin-top: 20px;">Nenhum prato encontrado com esse nome.</p>
     <a href="/" style="color: #7289DA;">Ver todo o cardápio</a>
 {% endif %}
-</div>
 <script src="../js/script.js"></script>
 </body>
 </html>

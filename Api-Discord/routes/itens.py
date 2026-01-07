@@ -52,5 +52,11 @@ products = [
         'descricao': 'Sorvete cremoso com diversos sabores à escolha',
         'preco': 10.00,
         'img':'https://soleneve.com.br/wp-content/uploads/2024/09/bloco02-sorvetes7l-768x432.webp'
+    },
+    {
+        'nome':'Suco de Laranja',
+        'descricao':'Suco de laranja natural',
+        'preco':5.50,
+        'img':'https://media.gettyimages.com/id/1454673088/pt/foto/pouring-a-fresh-and-healthy-orange-juice.jpg?s=612x612&w=0&k=20&c=k-EQ6wr8exLRT1v3KbBfHZwfIpAA6EQ2D4IOVfEeVG8='
     }
 ]

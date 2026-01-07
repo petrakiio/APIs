@@ -9,19 +9,16 @@
 <body>
     <nav>
         {% if 'usuario_nome' in session %}
-            <span style="color: yellow;">Bem vindo {{ session['usuario_nome'] }}!</span>
+            <span>Bem vindo {{ session['usuario_nome'] }}!</span>
             <a href="/logout">Logout</a>
-            <a href="/pedidos_route">Pedidos</a>
             <a href="/sobre">Sobre</a>
         {% else %}
             <a href="/index">Inicio</a>
             <a href="/login">Login</a>
             <a href="/sobre">Sobre</a>
-            <a href="/pedidos_route">Pedidos</a>
     {% endif %}
     </nav>
     <h1>Perfil de {{ session['usuario_nome'] }}</h1>
-    <p>ID do usuário: {{ session['usuario_id'] }}</p>
     <p>Mudar Sua imagem(mande a url da imagem)</p>
     <img src="{{ session['usuario_image'] }}" alt="Imagem de Perfil" width="150" height="150">
     <form action="/upload-image" method="post" enctype="multipart/form-data">

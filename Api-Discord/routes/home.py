@@ -1,39 +1,48 @@
 import requests
-from flask import Blueprint, render_template, request,session, redirect, url_for
+from flask import Blueprint, render_template, request, session, redirect, url_for
 from dotenv import load_dotenv
 import os
-from connection.conn import inserir_cliente, buscar_cliente,criptografar_senha,buscar_senha,atualizar_imagem_perfil
+from connection.conn import inserir_cliente, buscar_cliente, criptografar_senha, buscar_senha, atualizar_imagem_perfil
 from time import time
 from routes.auth import login_required
 from connection.pedidos import inserir_pedido, gerar_codigo_pedido, consultar_pedido_db
 from routes.itens import products
 
-
 load_dotenv()
+
+# ==========================================
+# CONFIGURAÇÕES E UTILITÁRIOS
+# ==========================================
+
+MAX_TENTATIVAS = 5
+BLOQUEIO_TEMPO = 300  
+login_attempts = {}
+ip_last_order = {}
+bot_disc = os.getenv('DISCORD')
+home_route = Blueprint('home', __name__)
 
 def limpar(text):
     return text.replace('@','').replace('<','').replace('>','')
-
 
 def get_client_ip():
     if request.headers.get('X-Forwarded-For'):
         return request.headers.get('X-Forwarded-For').split(',')[0]
     return request.remote_addr
 
+# ==========================================
+# SEGURANÇA E TENTATIVAS DE LOGIN
+# ==========================================
+
 def pode_tentar_login(ip):
     dados = login_attempts.get(ip)
-
     if not dados:
         return True
-
     tentativas, ultimo_erro = dados
-
     if tentativas >= MAX_TENTATIVAS:
         if time() - ultimo_erro < BLOQUEIO_TEMPO:
             return False
         else:
-            del login_attempts[ip]  # libera depois do tempo
-
+            del login_attempts[ip]
     return True
 
 def registrar_erro_login(ip):
@@ -46,18 +55,14 @@ def registrar_erro_login(ip):
 def resetar_tentativas(ip):
     login_attempts.pop(ip, None)
 
-
-MAX_TENTATIVAS = 5
-BLOQUEIO_TEMPO = 300  
-login_attempts = {}
-ip_last_order = {}
-bot_disc = os.getenv('DISCORD')
-home_route = Blueprint('home', __name__)
+# ==========================================
+# ROTAS DE NAVEGAÇÃO E BUSCA
+# ==========================================
 
 @home_route.route('/')
 @home_route.route('/index') 
 def index():
-    return render_template('index.html',products=products)
+    return render_template('index.html', products=products)
 
 @home_route.route('/search', methods=['POST'])
 def search():
@@ -70,35 +75,19 @@ def search():
     ]
     if resultados:
         return render_template('index.html', products=resultados)
-    return render_template('index.html', products=[],mensagem="Nenhum prato encontrado com esse nome.")
-
-@home_route.route('/login')
-def login():
-    return render_template('login.html')
+    return render_template('index.html', products=[], mensagem="Nenhum prato encontrado com esse nome.")
 
 @home_route.route('/sobre')
 def sobre():
     return render_template('sobre.html')
 
-@home_route.route('/pedidos_route')
-def pedidos_route():
-    return render_template('pedidos.html', products=products)
+# ==========================================
+# ROTAS DE AUTENTICAÇÃO (LOGIN E CADASTRO)
+# ==========================================
 
-@home_route.route('/consultar-pedido')
-def consultar_pedido():
-    return render_template('consultar_pedido.html')
-
-@home_route.route('/consulta-de-pedido', methods=['POST'])
-def consulta_de_pedido():
-    codigo = request.form.get('codigo', '')
-    
-    if not codigo:
-        return '<p>Por favor, insira o código do pedido.</p><br><a href="/consultar-pedido">Voltar</a>'
-    
-    pedido = consultar_pedido_db(codigo)
-    if pedido:
-        return '<p>Pedido Pronto!</p><br><a href="/index">Voltar</a>'
-    return '<p>Ainda em Preparação.</p><br><a href="/index">Voltar</a>'
+@home_route.route('/login')
+def login():
+    return render_template('login.html')
 
 @home_route.route('/cadastro')
 def cadastro():
@@ -125,11 +114,9 @@ def cadastro_cliente():
 def busca():
     if request.method == 'POST':
         ip = get_client_ip()
-
         if not pode_tentar_login(ip):
             return '<p>Muitas tentativas de login falhadas. Tente novamente mais tarde.</p><br><a href="/login">Voltar ao login</a>'
         
-
         usuario = request.form.get('usuario')
         senha = request.form.get('senha')
         if len(usuario) > 50 or len(senha) > 100:
@@ -156,7 +143,6 @@ def busca():
         else:
             registrar_erro_login(ip)
             return '<p>Usuário ou senha incorretos.</p><br><a href="/login">Voltar</a>'
-
     return redirect(url_for('home.login'))
 
 @home_route.route('/logout')
@@ -165,6 +151,10 @@ def logout():
     session.pop('usuario_nome', None)
     session.clear()
     return redirect(url_for('home.index'))
+
+# ==========================================
+# ROTAS DE PERFIL DO USUÁRIO
+# ==========================================
 
 @home_route.route('/perfil')
 @login_required
@@ -178,13 +168,33 @@ def upload_image():
     if img_url == '':
         return '<p>Por favor, insira a URL da imagem.</p><br><a href="/perfil">Voltar</a>'
     
-    # Atualiza no banco de dados
     atualizar_imagem_perfil(session['usuario_id'], img_url)
-    # Atualiza na sessão
     session['usuario_image'] = img_url
     return redirect(url_for('home.perfil'))
 
-#Products compra
-@home_route.route('/products')
-def products_page():
-    return render_template('comprar.html', products=products)
+# ==========================================
+# ROTAS DE PEDIDOS E VENDAS
+# ==========================================
+
+@home_route.route('/consultar-pedido')
+def consultar_pedido():
+    return render_template('consultar_pedido.html')
+
+@home_route.route('/consulta-de-pedido', methods=['POST'])
+def consulta_de_pedido():
+    codigo = request.form.get('codigo', '')
+    if not codigo:
+        return '<p>Por favor, insira o código do pedido.</p><br><a href="/consultar-pedido">Voltar</a>'
+    
+    pedido = consultar_pedido_db(codigo)
+    if pedido:
+        return '<p>Pedido Pronto!</p><br><a href="/index">Voltar</a>'
+    return '<p>Ainda em Preparação.</p><br><a href="/index">Voltar</a>'
+
+@home_route.route('/products/<int:id>')
+def products_page(id):
+    for produto in products:
+        if produto['id'] == id:
+            return render_template('comprar.html',product=produto)
+    else:
+        pass

@@ -1,40 +1,58 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="pt-br">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Compra</title>
+    <title>Finalizar Compra</title>
     <link rel="stylesheet" href="../static/comprar.css">
 </head>
 <body>
     <nav>
-    {% if 'usuario_nome' in session %}
-        <span>Bem vindo {{ session['usuario_nome'] }}!</span>
-        <a href="/logout">Logout</a>
-        <a href="/pedidos_route">Pedidos</a>
-        <a href="/sobre">Sobre</a>
-        <a href="/perfil">
-        <img src="{{ session['usuario_image'] }}" alt="icone">
-        </a>
-    {% else %}
-        <a href="/login">Login</a>
-        <a href="/sobre">Sobre</a>
-        <a href="/pedidos_route">Pedidos</a>
-    {% endif %}
-    <div class="container">
-        <h1>Finalizar Compra</h1>
         {% if 'usuario_nome' in session %}
-            <p>Olá, {{ session['usuario_nome'] }}!</p>
-            <p>Seu carrinho:</p>
-            <ul>
-                {% for item in products %}
-                    <li>{{ item }}</li>
-                {% endfor %}
-            </ul>
-            <button onclick="">Finalizar Compra</button>
+            <span class="user-greeting">Bem-vindo, {{ session['usuario_nome'] }}!</span>
+            <div class="nav-links">
+                <a href="/sobre">Sobre</a>
+                <a href="/logout" class="logout-btn">Logout</a>
+                <a href="/perfil" class="profile-link">
+                    <img src="{{ session['usuario_image'] }}" alt="Foto de Perfil">
+                </a>
+            </div>
         {% else %}
-            <p>Você precisa estar logado para finalizar a Compra.</p>
+            <div class="nav-links">
+                <a href="/sobre">Sobre</a>
+                <a href="/login">Login</a>
+            </div>
         {% endif %}
-    </div>
+    </nav>
+
+    <main class="container">
+        {% if 'usuario_nome' in session %}
+            <h1>Finalizar Compra</h1>
+            
+            {% if product %}
+                <div class="product-info">
+                    <img src="{{ product['img'] }}" alt="{{ product['nome'] }}" class="checkout-img">
+                    <div class="details">
+                        <h2>{{ product['nome'] }}</h2>
+                        <p class="description">{{ product['descricao'] }}</p>
+                        <p class="price">R$ {{ product['preco'] }}</p>
+                    </div>
+                </div>
+            {% else %}
+                <p>Erro: Informações do produto não encontradas.</p>
+            {% endif %}
+                
+                <form action="/confirmar-compra" method="POST">
+                    <button type="submit" class="confirm-btn">Confirmar Pagamento</button>
+                </form>
+            </section>
+        {% else %}
+            <section class="login-required">
+                <h1>Acesso Restrito</h1>
+                <p>Você precisa estar logado para finalizar a compra.</p>
+                <a href="/login" class="login-redirect">Ir para Login</a>
+            </section>
+        {% endif %}
+    </main>
 </body>
 </html>
