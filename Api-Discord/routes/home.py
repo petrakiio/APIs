@@ -2,12 +2,13 @@ import requests
 from flask import Blueprint, render_template, request, session, redirect, url_for,flash
 from dotenv import load_dotenv
 import os
-from connection.conn import inserir_cliente, buscar_cliente, criptografar_senha, buscar_senha, atualizar_imagem_perfil
+from connection.conn import inserir_cliente, buscar_cliente, criptografar_senha, buscar_senha, atualizar_imagem_perfil, verificar_email
 from time import time
 from routes.auth import login_required
 from connection.pedidos import inserir_pedido, gerar_codigo_pedido, consultar_pedido_db
 from routes.itens import products
 from routes.validação import enviar_codigo,criar_codigo
+import time
 
 load_dotenv()
 
@@ -102,6 +103,13 @@ def cadastro_cliente():
     senha = request.form.get('senha')
     email = request.form.get('email')
     data = request.form.get('data')
+
+    #Verificação de email cadastro
+    resultado = verificar_email(email)
+    if resultado:
+        flash('Seu email já esta logado')
+        return render_template('cadastro.html')
+
 
     # Validações básicas
     if not all([usuario, senha, email, data]):

@@ -16,12 +16,29 @@ def get_connection():
             port=int(os.getenv('DB_PORT')),
             cursorclass=pymysql.cursors.DictCursor 
         )
+    
     except Exception as e:
         print(f"Erro ao conectar ao banco de dados: {e}")
         return None
 
 def criptografar_senha(senha):
     return ph.hash(senha)
+
+def verificar_email(email):
+    try:
+        db = get_connection()
+        cursor = db.cursor()
+        sql = 'SELECT id FROM clientes WHERE email = %s'
+        cursor.execute(sql, (email,))
+        resultado = cursor.fetchall()
+        return resultado is not None
+    except Exception as err:
+        print(f'erro:{err}')
+        return False
+    finally:
+        db.close()
+        cursor.close()
+
 
 def inserir_cliente(usuario, senha, email, data):
     db = get_connection()
