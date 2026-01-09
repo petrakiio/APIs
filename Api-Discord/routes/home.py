@@ -8,7 +8,7 @@ from routes.auth import login_required
 from connection.pedidos import inserir_pedido, gerar_codigo_pedido, consultar_pedido_db
 from routes.itens import products
 from routes.validação import enviar_codigo,criar_codigo
-import time
+from datetime import datetime
 
 load_dotenv()
 
@@ -30,6 +30,20 @@ def get_client_ip():
     if request.headers.get('X-Forwarded-For'):
         return request.headers.get('X-Forwarded-For').split(',')[0]
     return request.remote_addr
+
+# ==========================================
+# Validação de idade
+# ==========================================
+
+def validar_idade(data_nascimento_str, idade_minima):
+    try:
+        data_nasc = datetime.strptime(data_nascimento_str, '%Y-%m-%d')
+        hoje = datetime.today()
+        idade = hoje.year - data_nasc.year - ((hoje.month, hoje.day) < (data_nasc.month, data_nasc.day))
+        return idade >= idade_minima
+    except Exception as e:
+        print(f"Erro na data: {e}")
+        return False
 
 # ==========================================
 # SEGURANÇA E TENTATIVAS DE LOGIN
@@ -104,12 +118,16 @@ def cadastro_cliente():
     email = request.form.get('email')
     data = request.form.get('data')
 
+    #Validação de idade
+    if not validar_idade(data,18):
+        flash('Você é novo demais!','danger')
+        return render_template('cadastro.html')
+
     #Verificação de email cadastro
     resultado = verificar_email(email)
     if resultado:
-        flash('Seu email já esta logado')
+        flash('Seu email já esta logado!','danger')
         return render_template('cadastro.html')
-
 
     # Validações básicas
     if not all([usuario, senha, email, data]):
