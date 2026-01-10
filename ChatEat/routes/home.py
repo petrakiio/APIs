@@ -244,6 +244,10 @@ def delete():
 @home_route.route('/perfil')
 @login_required
 def perfil():
+    
+    if 'usuario_id' not in session:
+        redirect(url_for('home.index'))
+        
     return render_template('perfil.html', usuario_nome=session['usuario_nome'])
 
 @home_route.route('/upload-image', methods=['POST'])
