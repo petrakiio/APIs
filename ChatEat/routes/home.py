@@ -2,7 +2,7 @@ import requests
 from flask import Blueprint, render_template, request, session, redirect, url_for,flash
 from dotenv import load_dotenv
 import os
-from connection.conn import inserir_cliente, buscar_cliente, criptografar_senha, buscar_senha, atualizar_imagem_perfil, verificar_email
+from connection.conn import inserir_cliente, buscar_cliente, criptografar_senha, buscar_senha, atualizar_imagem_perfil, verificar_email,deletar
 from time import time
 from routes.auth import login_required
 from connection.pedidos import inserir_pedido, gerar_codigo_pedido, consultar_pedido_db
@@ -219,6 +219,19 @@ def logout():
     session.pop('usuario_nome', None)
     session.clear()
     return redirect(url_for('home.index'))
+
+@login_required
+@home_route.route('/deletar')
+def delete():
+    id = session['usuario_id']
+    user = session['usuario_nome']
+    resultado = deletar(id,user)
+    if resultado:
+        session.pop(id,None)
+        session.pop(user,None)
+        session.clear()
+        return redirect(url_for('home.index'))
+    return render_template('perfil.html')
 
 # ==========================================
 # ROTAS DE PERFIL DO USUÁRIO

@@ -76,6 +76,20 @@ def buscar_senha(senha: str,senha_hash: str)-> bool:
     except argon2.exceptions.VerifyMismatchError:
         return False
 
+def deletar(id,user):
+    try:
+        db = get_connection()
+        cursor = db.cursor()
+        sql = "DELETE FROM clientes WHERE id = %s AND user = %s"
+        valores = id,user
+        cursor.execute(sql,valores)
+        db.commit()
+        return True
+    except Exception as err:
+        print(f'Error:{err}')
+        return False
+    finally:
+        db.close()
 
 def atualizar_imagem_perfil(usuario_id, img_url):
     db = get_connection()
