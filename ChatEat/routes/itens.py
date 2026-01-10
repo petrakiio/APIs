@@ -36,10 +36,10 @@ products = [
     },
     {
         'id': 6,
-        'nome': 'refrigerante 2l',
-        'descricao': 'Garrafão de refrigerante gelado',
-        'preco': 8.50,
-        'img': 'https://giassi.vtexassets.com/arquivos/ids/2759533-300-300?v=638627595322370000&width=300&height=300&aspect=true'
+        'nome': 'Coca-cola 2L',
+        'descricao': 'Coca geladinha',
+        'preco': 12.00,
+        'img': 'https://giassi.vtexassets.com/arquivos/ids/2750863-800-auto?v=638627433091900000&width=800&height=auto&aspect=true'
     },
     {
         'id':7,
