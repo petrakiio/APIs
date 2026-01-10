@@ -80,7 +80,7 @@ def deletar(id,user):
     try:
         db = get_connection()
         cursor = db.cursor()
-        sql = "DELETE FROM clientes WHERE id = %s AND user = %s"
+        sql = "DELETE FROM clientes WHERE id = %s AND usuario = %s"
         valores = id,user
         cursor.execute(sql,valores)
         db.commit()

@@ -12,7 +12,6 @@
         <span>Bem vindo! {{session['usuario_nome']}}</span>
         <a href="/sobre" id="link">Sobre</a>
         <a href="/index" id="link">Inicio</a>
-        <a href="">Deletar conta</a>
     </nav>
     <h1>Perfil de {{ session['usuario_nome'] }}</h1>
     <p>Mudar Sua imagem(mande a url da imagem)</p>
@@ -21,6 +20,10 @@
         <input type="text" name="img" placeholder="URL da imagem" required>
         <button type="submit">Enviar Imagem</button>
     </form>
+    <form action="/deletar" method="post">
+        <button type="submit" id="delete">Deletar Conta</button>
+    </form>
     <a href="/index">Voltar ao Início</a>
+<script src="../script/perfil.js"></script>
 </body>
 </html>

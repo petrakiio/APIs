@@ -109,8 +109,6 @@ def login():
 def cadastro():
     return render_template('cadastro.html')
 
-from flask import session # Não esqueça de importar session
-
 @home_route.route('/cadastro_cliente', methods=['POST'])
 def cadastro_cliente():
     usuario = request.form.get('usuario')
@@ -220,18 +218,24 @@ def logout():
     session.clear()
     return redirect(url_for('home.index'))
 
-@login_required
-@home_route.route('/deletar')
+@home_route.route('/deletar', methods=['POST'])
 def delete():
-    id = session['usuario_id']
-    user = session['usuario_nome']
+    id = session.get('usuario_id')
+    user = session.get('usuario_nome')
+
+    if not id or not user:
+        return '', 401
+
     resultado = deletar(id,user)
+
     if resultado:
-        session.pop(id,None)
-        session.pop(user,None)
-        session.clear()
-        return redirect(url_for('home.index'))
-    return render_template('perfil.html')
+        session.pop('usuario_id', None)
+        session.pop('usuario_nome', None)
+        return '', 204
+
+    return '', 400
+
+
 
 # ==========================================
 # ROTAS DE PERFIL DO USUÁRIO

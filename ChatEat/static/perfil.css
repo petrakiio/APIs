@@ -123,6 +123,22 @@ button:hover {
     background-color: #3ca374;
 }
 
+#delete{
+    background-color: red;
+    color: white;
+    border: none;
+    padding: 12px;
+    border-radius: 5px;
+    font-weight: bold;
+    font-size: 15px;
+    cursor: pointer;
+    transition: background-color 0.2s;
+}
+#delete:hover{
+    color: white;
+    background-color: #8B0000;
+}
+
 a[href="/index"] {
     display: inline-block;
     margin-top: 15px;
