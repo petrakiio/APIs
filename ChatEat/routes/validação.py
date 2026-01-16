@@ -7,7 +7,6 @@ import os
 
 load_dotenv()
 
-# No seu .env, coloque o USERNAME e PASSWORD que o Mailtrap te deu na tela de SMTP
 user_mailtrap = os.getenv('MAILTRAP_USER')
 pass_mailtrap = os.getenv('MAILTRAP_PASS')
 

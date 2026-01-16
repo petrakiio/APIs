@@ -287,3 +287,9 @@ def products_page(id):
             return render_template('comprar.html',product=produto)
     else:
         pass
+@home_route.route('/adicionar-carinho/<int:id>')
+def adicionar(id):
+    for produto in products:
+        if produto['id'] == id:
+            flash('Item adicionado ao carinho')
+            return render_template('carinho.html',)
