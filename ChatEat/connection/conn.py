@@ -76,7 +76,7 @@ def buscar_senha(senha: str,senha_hash: str)-> bool:
     except argon2.exceptions.VerifyMismatchError:
         return False
 
-def deletar(id,user):
+def deletar(id:int,user:str)->bool:
     try:
         db = get_connection()
         cursor = db.cursor()
@@ -91,18 +91,33 @@ def deletar(id,user):
     finally:
         db.close()
 
-def add_carinho(user,item):
+def add_carinho(user:str,item:int)->bool:
     try:
         db = get_connection()
         cursor = db.cursor()
         sql = 'UPDATE clientes SET carinho = %s WHERE usuario = %s'
         cursor.execute(sql(item,user))
-        return cursor.fetchall()
+        db.commit()
+        return True
     except Exception as e:
-        return f'erro:{e}'
+        return False
     finally:
         db.close()
-        
+
+def del_carinho(user,item):
+    try:
+        db = get_connection()
+        cursor = db.cursor()
+        sql = "UPDATE clientes SET carinho = NULL WHERE usuario = %s AND carinho = %s"
+        cursor.execute(sql(user,item))
+        db.commit()
+        return True
+    except Exception as e:
+        return False
+    finally:
+        db.close()
+
+
 def atualizar_imagem_perfil(usuario_id, img_url):
     db = get_connection()
     if not db: return False

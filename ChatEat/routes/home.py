@@ -2,7 +2,7 @@ import requests
 from flask import Blueprint, render_template, request, session, redirect, url_for,flash
 from dotenv import load_dotenv
 import os
-from connection.conn import inserir_cliente, buscar_cliente, criptografar_senha, buscar_senha, atualizar_imagem_perfil, verificar_email,deletar,add_carinho
+from connection.conn import inserir_cliente, buscar_cliente, criptografar_senha, buscar_senha, atualizar_imagem_perfil, verificar_email,deletar,add_carinho,del_carinho
 from time import time
 from routes.auth import login_required
 from connection.pedidos import inserir_pedido, gerar_codigo_pedido, consultar_pedido_db
@@ -307,10 +307,9 @@ def carinho():
 
 @home_route.route('/remover-carinho/<int:id>')
 def deletar_item(id):
-    carrinho = session.get('carrinho', [])
-
-    carrinho = [p for p in carrinho if p['id'] != id]
-
-    session['carrinho'] = carrinho
-    flash('Item removido do carrinho')
-    return redirect(url_for('home.carinho'))
+    r = del_carinho(session['usuario_nome'],id)
+    if (r):
+        flash('Item deletado')
+        return render_template('index')
+    flash('erro')
+    return render_template('carinho')
