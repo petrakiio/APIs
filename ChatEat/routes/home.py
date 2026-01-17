@@ -2,7 +2,7 @@ import requests
 from flask import Blueprint, render_template, request, session, redirect, url_for,flash
 from dotenv import load_dotenv
 import os
-from connection.conn import inserir_cliente, buscar_cliente, criptografar_senha, buscar_senha, atualizar_imagem_perfil, verificar_email,deletar
+from connection.conn import inserir_cliente, buscar_cliente, criptografar_senha, buscar_senha, atualizar_imagem_perfil, verificar_email,deletar,add_carinho
 from time import time
 from routes.auth import login_required
 from connection.pedidos import inserir_pedido, gerar_codigo_pedido, consultar_pedido_db
@@ -199,7 +199,6 @@ def busca():
                 session['usuario_id'] = usuario_id
                 session['usuario_nome'] = usuario_nome
                 session['usuario_image'] = img
-                session['carrinho'] = []
                 session.permanent = True
                 flash('Login realizado com sucesso!')
                 return redirect(url_for('home.index'))
@@ -291,24 +290,9 @@ def products_page(id):
 
 @home_route.route('/adicionar-carinho/<int:id>')
 def adicionar(id):
-    if 'carrinho' not in session:
-        session['carrinho'] = []
-
     for produto in products:
         if produto['id'] == id:
-            carrinho = session['carrinho']
-
-            p = {
-                'id': produto['id'],
-                'nome': produto['nome'],
-                'descricao': produto['descricao'],
-                'preco': produto['preco'],
-                'img': produto['img']
-            }
-
-            carrinho.append(p)
-            session['carrinho'] = carrinho
-
+            carrinho = add_carinho(session['usuario_nome'],produto['id'])
             flash('Item adicionado ao carrinho')
             return redirect(url_for('home.carinho'))
 

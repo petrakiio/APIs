@@ -91,8 +91,18 @@ def deletar(id,user):
     finally:
         db.close()
 
-def add_carinho():
-
+def add_carinho(user,item):
+    try:
+        db = get_connection()
+        cursor = db.cursor()
+        sql = 'UPDATE clientes SET carinho = %s WHERE usuario = %s'
+        cursor.execute(sql(item,user))
+        return cursor.fetchall()
+    except Exception as e:
+        return f'erro:{e}'
+    finally:
+        db.close()
+        
 def atualizar_imagem_perfil(usuario_id, img_url):
     db = get_connection()
     if not db: return False
