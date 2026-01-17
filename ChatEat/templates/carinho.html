@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Carrinho</title>
+    <link rel="stylesheet" href="../static/carrinho.css">
+</head>
+<body>
+    <nav>
+        {% if 'usuario_nome' in session %}
+            <span class="user-greeting">Bem-vindo, {{ session['usuario_nome'] }}!</span>
+            <div class="nav-links">
+                <a href="/sobre">Sobre</a>
+                <a href="/logout" class="logout-btn">Logout</a>
+                <a href="/index">Voltar</a>
+                <a href="/perfil" class="profile-link">
+                    <img src="{{ session['usuario_image'] }}" alt="Foto de Perfil">
+                </a>
+            </div>
+        {% else %}
+            <div class="nav-links">
+                <a href="/sobre">Sobre</a>
+                <a href="/login">Login</a>
+            </div>
+        {% endif %}
+    </nav>
+    <div class="cart-container">
+  <h1>Meu Carrinho</h1>
+
+  <div class="cart-list">
+    <div class="cart-item">
+      <img src="produto.jpg">
+      <div class="cart-info">
+        <h2>Produto</h2>
+        <p>Descrição do produto</p>
+        <span class="cart-price">R$ 99,90</span>
+      </div>
+      <div class="cart-actions">
+        <button class="remove-btn">Remover</button>
+      </div>
+    </div>
+  </div>
+
+  <div class="cart-summary">
+    <h2>Total</h2>
+    <div class="total">R$ 199,80</div>
+    <button class="checkout-btn">Finalizar Compra</button>
+  </div>
+</div>
+
+</body>
+</html>

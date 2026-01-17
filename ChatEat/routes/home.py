@@ -199,6 +199,7 @@ def busca():
                 session['usuario_id'] = usuario_id
                 session['usuario_nome'] = usuario_nome
                 session['usuario_image'] = img
+                session['carrinho'] = []
                 session.permanent = True
                 flash('Login realizado com sucesso!')
                 return redirect(url_for('home.index'))
@@ -289,7 +290,26 @@ def products_page(id):
         pass
 @home_route.route('/adicionar-carinho/<int:id>')
 def adicionar(id):
+    if 'carrinho' not in session:
+        session['carrinho'] = []
+
     for produto in products:
         if produto['id'] == id:
+            carrinho = session['carrinho']
+            p = {
+                'id':produto['id'],
+                'nome':produto['nome'],
+                'descricao':produto['descricao'],
+                'preco':produto['preco'],
+                'img':produto['img']
+            }
+            carrinho.append(p)
+            session['carrinho'] = carinho
             flash('Item adicionado ao carinho')
-            return render_template('carinho.html',)
+            return redirect(url_for('home.carinho'))
+    return render_template('index.html')
+
+@home_route.route('/carinho')
+def carinho():
+    carrinho = session.get('carrinho', [])
+    return render_template('carinho.html', carrinho=carrinho)
