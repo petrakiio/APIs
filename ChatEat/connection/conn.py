@@ -91,6 +91,8 @@ def deletar(id,user):
     finally:
         db.close()
 
+def add_carinho():
+
 def atualizar_imagem_perfil(usuario_id, img_url):
     db = get_connection()
     if not db: return False
