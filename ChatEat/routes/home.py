@@ -288,6 +288,7 @@ def products_page(id):
             return render_template('comprar.html',product=produto)
     else:
         pass
+
 @home_route.route('/adicionar-carinho/<int:id>')
 def adicionar(id):
     if 'carrinho' not in session:
@@ -296,20 +297,36 @@ def adicionar(id):
     for produto in products:
         if produto['id'] == id:
             carrinho = session['carrinho']
+
             p = {
-                'id':produto['id'],
-                'nome':produto['nome'],
-                'descricao':produto['descricao'],
-                'preco':produto['preco'],
-                'img':produto['img']
+                'id': produto['id'],
+                'nome': produto['nome'],
+                'descricao': produto['descricao'],
+                'preco': produto['preco'],
+                'img': produto['img']
             }
+
             carrinho.append(p)
-            session['carrinho'] = carinho
-            flash('Item adicionado ao carinho')
+            session['carrinho'] = carrinho
+
+            flash('Item adicionado ao carrinho')
             return redirect(url_for('home.carinho'))
-    return render_template('index.html')
+
+    return redirect(url_for('home.index'))
 
 @home_route.route('/carinho')
 def carinho():
+    print("SESSION:", session)
     carrinho = session.get('carrinho', [])
+    print("CARRINHO:", carrinho)
     return render_template('carinho.html', carrinho=carrinho)
+
+@home_route.route('/remover-carinho/<int:id>')
+def deletar_item(id):
+    carrinho = session.get('carrinho', [])
+
+    carrinho = [p for p in carrinho if p['id'] != id]
+
+    session['carrinho'] = carrinho
+    flash('Item removido do carrinho')
+    return redirect(url_for('home.carinho'))

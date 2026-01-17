@@ -26,27 +26,51 @@
         {% endif %}
     </nav>
     <div class="cart-container">
+  <div class="cart-container">
   <h1>Meu Carrinho</h1>
 
-  <div class="cart-list">
-    <div class="cart-item">
-      <img src="produto.jpg">
-      <div class="cart-info">
-        <h2>Produto</h2>
-        <p>Descrição do produto</p>
-        <span class="cart-price">R$ 99,90</span>
-      </div>
-      <div class="cart-actions">
-        <button class="remove-btn">Remover</button>
-      </div>
-    </div>
-  </div>
+  {% if carrinho %}
+    <div class="cart-list">
+      {% for produto in carrinho %}
+        <div class="cart-item">
+          <img src="{{ produto.img }}" alt="{{ produto.nome }}">
 
-  <div class="cart-summary">
-    <h2>Total</h2>
-    <div class="total">R$ 199,80</div>
-    <button class="checkout-btn">Finalizar Compra</button>
-  </div>
+          <div class="cart-info">
+            <h2>{{ produto.nome }}</h2>
+            <p>{{ produto.descricao }}</p>
+            <span class="cart-price">R$ {{ "%.2f"|format(produto.preco) }}</span>
+          </div>
+
+          <div class="cart-actions">
+            <a href="/remover-carinho/{{ produto.id }}">
+              <button class="remove-btn">Remover</button>
+            </a>
+          </div>
+        </div>
+      {% endfor %}
+    </div>
+
+    <div class="cart-summary">
+      <h2>Total</h2>
+      <div class="total">
+        R$ {{
+          "%.2f"|format(
+            carrinho | sum(attribute='preco')
+          )
+        }}
+      </div>
+
+      <button class="checkout-btn">Finalizar Compra</button>
+    </div>
+
+  {% else %}
+    <div class="empty-cart">
+      <p>Seu carrinho está vazio 🛒</p>
+      <a href="/index" class="checkout-btn" style="margin-top:20px; display:inline-block;">
+        Voltar às compras
+      </a>
+    </div>
+  {% endif %}
 </div>
 
 </body>
