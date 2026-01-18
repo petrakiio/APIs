@@ -116,35 +116,30 @@ def cadastro_cliente():
     email = request.form.get('email')
     data = request.form.get('data')
 
-    #Validação de idade
-    if not validar_idade(data,18):
-        flash('Você é novo demais!','danger')
-        return render_template('cadastro.html')
-
-    #Verificação de email cadastro
-    resultado = verificar_email(email)
-    if resultado:
-        flash('Seu email já esta logado!','danger')
-        return render_template('cadastro.html')
-
-    # Validações básicas
     if not all([usuario, senha, email, data]):
         flash('Por favor, preencha todos os campos.', 'danger')
         return redirect(url_for('home.cadastro'))
 
-    r = inserir_cliente(usuario,senha,email,data)
+    # Validação de idade
+    if not validar_idade(data, 18):
+        flash('Você deve ter pelo menos 18 anos para se cadastrar.', 'danger')
+        return redirect(url_for('home.cadastro'))
+
+    # Verificação de email já cadastrado
+    if verificar_email(email):
+        flash('Este e-mail já está em uso!', 'danger')
+        return redirect(url_for('home.cadastro'))
+
+    hash = criptografar_senha(senha)
+    r = inserir_cliente(usuario,hash,email,data)
 
     if r:
-        session['temp_usuario'] = usuario
-        session['temp_senha'] = criptografar_senha(senha)
-        session['temp_email'] = email
-        session['temp_data'] = data
-
-        flash('Enviamos uma validação de email!', 'info')
-        return render_template('verificar.html') 
+        flash('Cadastro realizado com sucesso! Faça seu login.', 'success')
+        return redirect(url_for('home.login')) 
     else:
-        flash('Erro ao enviar e-mail de validação. Tente novamente.', 'danger')
+        flash('Erro ao realizar cadastro. Tente novamente.', 'danger')
         return redirect(url_for('home.cadastro'))
+    
 
 @home_route.route('/busca', methods=['POST', 'GET'])
 def busca():

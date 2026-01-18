@@ -25,19 +25,22 @@ def criptografar_senha(senha):
     return ph.hash(senha)
 
 def verificar_email(email):
+    db = None
     try:
         db = get_connection()
         cursor = db.cursor()
         sql = 'SELECT id FROM clientes WHERE email = %s'
         cursor.execute(sql, (email,))
-        resultado = cursor.fetchall()
+        resultado = cursor.fetchone()
         return resultado is not None
+        
     except Exception as err:
-        print(f'erro:{err}')
+        print(f'Erro ao verificar e-mail: {err}')
         return False
     finally:
-        db.close()
-        cursor.close()
+        if db:
+            cursor.close()
+            db.close()
 
 
 def inserir_cliente(usuario, senha, email, data):
