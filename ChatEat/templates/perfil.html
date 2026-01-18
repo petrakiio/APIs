@@ -1,29 +1,49 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="pt-br">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Perfil</title>
-    <link rel="stylesheet" href="../static/perfil.css">
-    <link rel="shortcut icon" href="../img/logo.png" type="image/x-icon">
+    <title>Meu Perfil | ChatEat</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='perfil.css') }}">
+    <link rel="shortcut icon" href="{{ url_for('static', filename='img/logo.png') }}" type="image/x-icon">
 </head>
 <body>
     <nav>
-        <span>Bem vindo! {{session['usuario_nome']}}</span>
-        <a href="/sobre" id="link">Sobre</a>
-        <a href="/index" id="link">Inicio</a>
+        <div class="nav-links">
+            <span>Bem-vindo, <strong>{{ session['usuario_nome'] }}</strong></span>
+            <a href="/index">Início</a>
+            <a href="/sobre">Sobre</a>
+        </div>
     </nav>
-    <h1>Perfil de {{ session['usuario_nome'] }}</h1>
-    <p>Mudar Sua imagem(mande a url da imagem)</p>
-    <img src="{{ session['usuario_image'] }}" alt="Imagem de Perfil" width="150" height="150">
-    <form action="/upload-image" method="post" enctype="multipart/form-data">
-        <input type="text" name="img" placeholder="URL da imagem" required>
-        <button type="submit">Enviar Imagem</button>
-    </form>
-    <form action="/deletar" method="post">
-        <button type="submit" id="delete">Deletar Conta</button>
-    </form>
-    <a href="/index">Voltar ao Início</a>
-<script src="{{ url_for('static', filename='script/perfil.js') }}"></script>
+
+    <main class="container">
+        <h1>Perfil do Usuário</h1>
+        
+        <div class="profile-card">
+            <img src="{{ session['usuario_image'] }}" alt="Foto de Perfil" class="profile-img">
+            
+            <section class="settings">
+                <h3>Alterar Foto</h3>
+                <form action="/upload-image" method="post">
+                    <input type="url" name="img" placeholder="Cole a URL da imagem aqui" required>
+                    <button type="submit" class="btn-save">Atualizar Foto</button>
+                </form>
+            </section>
+
+            <hr>
+
+            <section class="danger-zone">
+                <h3>Zona de Perigo</h3>
+                <form action="/deletar" method="post" onsubmit="return confirm('Tem certeza que deseja deletar sua conta? Esta ação é irreversível!')">
+                    <input type="hidden" name="usuario_id" value="{{ session['usuario_id'] }}">
+                    <button type="submit" id="delete">Deletar Minha Conta</button>
+                </form>
+            </section>
+        </div>
+
+        <a href="/index" class="back-link">← Voltar ao Início</a>
+    </main>
+
+    <script src="{{ url_for('static', filename='script/perfil.js') }}"></script>
 </body>
 </html>

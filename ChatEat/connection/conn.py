@@ -76,21 +76,27 @@ def buscar_senha(senha: str,senha_hash: str)-> bool:
     except argon2.exceptions.VerifyMismatchError:
         return False
 
-def deletar(id:int,user:str)->bool:
+def deletar(id: int, user: str) -> bool:
+    db = None
     try:
         db = get_connection()
         cursor = db.cursor()
         sql = "DELETE FROM clientes WHERE id = %s AND usuario = %s"
-        valores = id,user
-        cursor.execute(sql,valores)
+        cursor.execute(sql, (id, user))
         db.commit()
-        return True
+        
+        if cursor.rowcount > 0:
+            return True
+        return False
+        
     except Exception as err:
-        print(f'Error:{err}')
+        print(f'Error: {err}')
         return False
     finally:
-        db.close()
+        if db:
+            db.close()
 
+            
 def get_user_id(nome_usuario):
     db = get_connection()
     try:

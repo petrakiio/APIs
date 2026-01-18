@@ -9,20 +9,25 @@
 </head>
 <body>
     <nav>
-    {% if 'usuario_nome' in session %}
-        <span>Bem vindo {{ session['usuario_nome'] }}!</span>
-        <a href="/logout">Logout</a>
-        <a href="/sobre">Sobre</a>
-        <a href="/perfil" class="profile-link">
-            <img src="{{ session['usuario_image'] }}" alt="icone">
-        </a>
-        <a href="/carinho">
-            <img src="https://cdn.iconscout.com/icon/premium/png-256-thumb/carrinho-de-compras-icon-svg-download-png-4337497.png?f=webp&w=128">
-        </a>
-    {% else %}
-        <a href="/login">Login</a>
-        <a href="/sobre">Sobre</a>
-    {% endif %}
+    <nav>
+    <div class="nav-links">
+        {% if 'usuario_nome' in session %}
+            <span class="welcome-msg">Bem vindo {{ session['usuario_nome'] }}!</span>
+            <a href="/sobre">Sobre</a>
+            <a href="/logout">Logout</a>
+            <a href="/perfil" class="profile-link">
+                <img src="{{ session['usuario_image'] }}" alt="perfil">
+            </a>
+        {% else %}
+            <a href="/login">Login</a>
+            <a href="/sobre">Sobre</a>
+        {% endif %}
+    </div>
+
+    <form action="/search" method="post">
+        <input type="text" id="search" placeholder="pesquisar produto" name="search">
+    </form>
+</nav>
     <form action="/search" method="post">
         <input type="text" id="search" placeholder="pesquisar produto" name="search">
     </form>

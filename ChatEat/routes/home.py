@@ -191,6 +191,7 @@ def logout():
     session.pop('usuario_nome', None)
     session.clear()
     return redirect(url_for('home.index'))
+from flask import session, redirect, url_for
 
 @home_route.route('/deletar', methods=['POST'])
 def delete():
@@ -198,17 +199,15 @@ def delete():
     user = session.get('usuario_nome')
 
     if not id or not user:
-        return '', 401
+        return redirect(url_for('home_route.login'))
 
-    resultado = deletar(id,user)
+    resultado = deletar(id, user)
 
     if resultado:
-        session.pop('usuario_id', None)
-        session.pop('usuario_nome', None)
-        return '', 204
+        session.clear()
+        return redirect(url_for('home_route.index'))
 
-    return '', 400
-
+    return "Erro interno ao deletar conta", 500
 
 
 # ==========================================
