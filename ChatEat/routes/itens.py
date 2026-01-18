@@ -61,5 +61,12 @@ products = [
         'descricao':'Suco de laranja natural',
         'preco':5.50,
         'img':'https://media.gettyimages.com/id/1454673088/pt/foto/pouring-a-fresh-and-healthy-orange-juice.jpg?s=612x612&w=0&k=20&c=k-EQ6wr8exLRT1v3KbBfHZwfIpAA6EQ2D4IOVfEeVG8='
+    },
+    {
+        'id':10,
+        'nome':'banana',
+        'descricao':'Uma fruta gostosa',
+        'preco':3.5,
+        'img':'https://media.gettyimages.com/id/1226082884/photo/bananas.jpg?s=612x612&w=0&k=20&c=R3IYxfxY4p5Ztn2j7lqPRtMy5zKGhtXMKGglePHyExE='
     }
 ]
