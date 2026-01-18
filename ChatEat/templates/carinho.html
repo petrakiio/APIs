@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="pt-br">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -25,53 +25,56 @@
             </div>
         {% endif %}
     </nav>
+
     <div class="cart-container">
-  <div class="cart-container">
-  <h1>Meu Carrinho</h1>
+        <h1>Meu Carrinho</h1>
 
-  {% if carrinho %}
-    <div class="cart-list">
-      {% for produto in carrinho %}
-        <div class="cart-item">
-          <img src="{{ produto.img }}" alt="{{ produto.nome }}">
+        {# Exibe mensagens de feedback como 'Item removido' #}
+        {% with messages = get_flashed_messages() %}
+          {% if messages %}
+            {% for message in messages %}
+              <div class="alert">{{ message }}</div>
+            {% endfor %}
+          {% endif %}
+        {% endwith %}
 
-          <div class="cart-info">
-            <h2>{{ produto.nome }}</h2>
-            <p>{{ produto.descricao }}</p>
-            <span class="cart-price">R$ {{ "%.2f"|format(produto.preco) }}</span>
-          </div>
+        {% if carrinho %}
+            <div class="cart-list">
+                {% for produto in carrinho %}
+                    <div class="cart-item">
+                        <img src="{{ produto.img }}" alt="{{ produto.nome }}">
 
-          <div class="cart-actions">
-            <a href="/remover-carinho/{{ produto.id }}">
-              <button class="remove-btn">Remover</button>
-            </a>
-          </div>
-        </div>
-      {% endfor %}
+                        <div class="cart-info">
+                            <h2>{{ produto.nome }}</h2>
+                            <p>{{ produto.descricao }}</p>
+                            <span class="cart-price">R$ {{ "%.2f"|format(produto.preco) }}</span>
+                        </div>
+
+                        <div class="cart-actions">
+                            <a href="{{ url_for('home.deletar_item', id=produto.id) }}">
+                                <button class="remove-btn">Remover</button>
+                            </a>
+                        </div>
+                    </div>
+                {% endfor %}
+            </div>
+
+            <div class="cart-summary">
+                <h2>Total</h2>
+                <div class="total">
+                    R$ {{ "%.2f"|format(carrinho | sum(attribute='preco')) }}
+                </div>
+                <button class="checkout-btn">Finalizar Compra</button>
+            </div>
+
+        {% else %}
+            <div class="empty-cart">
+                <p>Seu carrinho está vazio 🛒</p>
+                <a href="/index" class="checkout-btn" style="margin-top:20px; display:inline-block;">
+                    Voltar às compras
+                </a>
+            </div>
+        {% endif %}
     </div>
-
-    <div class="cart-summary">
-      <h2>Total</h2>
-      <div class="total">
-        R$ {{
-          "%.2f"|format(
-            carrinho | sum(attribute='preco')
-          )
-        }}
-      </div>
-
-      <button class="checkout-btn">Finalizar Compra</button>
-    </div>
-
-  {% else %}
-    <div class="empty-cart">
-      <p>Seu carrinho está vazio 🛒</p>
-      <a href="/index" class="checkout-btn" style="margin-top:20px; display:inline-block;">
-        Voltar às compras
-      </a>
-    </div>
-  {% endif %}
-</div>
-
 </body>
 </html>

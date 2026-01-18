@@ -2,7 +2,7 @@ import requests
 from flask import Blueprint, render_template, request, session, redirect, url_for,flash
 from dotenv import load_dotenv
 import os
-from connection.conn import inserir_cliente, buscar_cliente, criptografar_senha, buscar_senha, atualizar_imagem_perfil, verificar_email,deletar,add_carinho,del_carinho
+from connection.conn import inserir_cliente, buscar_cliente, criptografar_senha, buscar_senha,get_itens_carrinho,atualizar_imagem_perfil, verificar_email,deletar,add_carinho,del_carinho
 from time import time
 from routes.auth import login_required
 from connection.pedidos import inserir_pedido, gerar_codigo_pedido, consultar_pedido_db
@@ -292,7 +292,7 @@ def products_page(id):
 def adicionar(id):
     for produto in products:
         if produto['id'] == id:
-            carrinho = add_carinho(session['usuario_nome'],produto['id'])
+            add_carinho(session['usuario_nome'], produto['id'])
             flash('Item adicionado ao carrinho')
             return redirect(url_for('home.carinho'))
 
@@ -300,16 +300,24 @@ def adicionar(id):
 
 @home_route.route('/carinho')
 def carinho():
-    print("SESSION:", session)
-    carrinho = session.get('carrinho', [])
-    print("CARRINHO:", carrinho)
-    return render_template('carinho.html', carrinho=carrinho)
+    ids_no_banco = get_itens_carrinho(session['usuario_nome'])
+
+    carrinho_completo = []
+    for p_id in ids_no_banco:
+        for p in products:
+            if p['id'] == p_id:
+                carrinho_completo.append(p)
+                break
+    
+    return render_template('carinho.html', carrinho=carrinho_completo)
 
 @home_route.route('/remover-carinho/<int:id>')
 def deletar_item(id):
-    r = del_carinho(session['usuario_nome'],id)
-    if (r):
-        flash('Item deletado')
-        return render_template('index')
-    flash('erro')
-    return render_template('carinho')
+    sucesso = del_carinho(session['usuario_nome'], id)
+    
+    if sucesso:
+        flash('Item removido!')
+        return redirect(url_for('home.carinho'))
+    
+    flash('Erro ao remover item')
+    return redirect(url_for('home.carinho'))
