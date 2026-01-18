@@ -81,21 +81,21 @@ def deletar(id: int, user: str) -> bool:
     try:
         db = get_connection()
         cursor = db.cursor()
-        sql = "DELETE FROM clientes WHERE id = %s AND usuario = %s"
-        cursor.execute(sql, (id, user))
+        
+        sql_carrinho = "DELETE FROM carrinho WHERE usuario_id = %s"
+        cursor.execute(sql_carrinho, (id,))
+        
+        sql_usuario = "DELETE FROM clientes WHERE id = %s AND usuario = %s"
+        cursor.execute(sql_usuario, (id, user))
+        
         db.commit()
-        
-        if cursor.rowcount > 0:
-            return True
-        return False
-        
+        return True
     except Exception as err:
-        print(f'Error: {err}')
+        print(f"Erro no banco: {err}")
         return False
     finally:
         if db:
             db.close()
-
             
 def get_user_id(nome_usuario):
     db = get_connection()

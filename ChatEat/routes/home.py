@@ -193,21 +193,18 @@ def logout():
     return redirect(url_for('home.index'))
 from flask import session, redirect, url_for
 
-@home_route.route('/deletar', methods=['POST'])
-def delete():
-    id = session.get('usuario_id')
-    user = session.get('usuario_nome')
-
-    if not id or not user:
-        return redirect(url_for('home_route.login'))
-
-    resultado = deletar(id, user)
-
-    if resultado:
+@home_route.route('/deletar/<int:id>/<string:user>', methods=['POST'])
+def delete(id, user):
+    if not id and user:
+        return 'Erro'
+ 
+    if deletar(int(id), str(user)):
         session.clear()
-        return redirect(url_for('home_route.index'))
-
-    return "Erro interno ao deletar conta", 500
+        flash("Sua conta foi excluída com sucesso. Sentiremos sua falta!", "success")
+        return redirect(url_for('home.index'))
+    
+    flash("Não foi possível excluir sua conta. Tente novamente mais tarde.", "danger")
+    return "Erro ao deletar", 500
 
 
 # ==========================================
