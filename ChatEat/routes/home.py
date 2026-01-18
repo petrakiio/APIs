@@ -7,7 +7,6 @@ from time import time
 from routes.auth import login_required
 from connection.pedidos import inserir_pedido, gerar_codigo_pedido, consultar_pedido_db
 from routes.itens import products
-from routes.validação import enviar_codigo,criar_codigo
 from datetime import datetime
 
 load_dotenv()
@@ -97,6 +96,7 @@ def search():
 def sobre():
     return render_template('sobre.html')
 
+
 # ==========================================
 # ROTAS DE AUTENTICAÇÃO (LOGIN E CADASTRO)
 # ==========================================
@@ -132,45 +132,19 @@ def cadastro_cliente():
         flash('Por favor, preencha todos os campos.', 'danger')
         return redirect(url_for('home.cadastro'))
 
-    #Gera o código e enviar
-    codigo_gerado = criar_codigo()
-    print(codigo_gerado)
-    sucesso_email = enviar_codigo(codigo_gerado, email)
+    r = inserir_cliente(usuario,senha,email,data)
 
-    if sucesso_email:
+    if r:
         session['temp_usuario'] = usuario
         session['temp_senha'] = criptografar_senha(senha)
         session['temp_email'] = email
         session['temp_data'] = data
-        session['codigo_validacao'] = codigo_gerado
 
         flash('Enviamos uma validação de email!', 'info')
         return render_template('verificar.html') 
     else:
         flash('Erro ao enviar e-mail de validação. Tente novamente.', 'danger')
         return redirect(url_for('home.cadastro'))
-
-@home_route.route('/confirmar_email',methods=['POST'])
-def confirmar():
-    codigo_real = session['codigo_validacao']
-    codigo_dig = request.form.get('codigo')
-    if codigo_dig == codigo_real:
-        sucesso = inserir_cliente(
-            session['temp_usuario'],
-            session['temp_senha'],
-            session['temp_email'],
-            session['temp_data']
-        )
-        if sucesso:
-            session.clear()
-            flash('Usuario criado com sucesso!')
-            return redirect(url_for('home.index'))
-        else:
-            flash('Erro')
-            return redirect(url_for('home.cadastro'))
-    else:
-        flash('Codigo Errado!')
-        return render_template('verificar.html')
 
 @home_route.route('/busca', methods=['POST', 'GET'])
 def busca():

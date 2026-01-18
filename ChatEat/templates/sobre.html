@@ -1,27 +1,61 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="pt-br">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Sobre</title>
-    <link rel="stylesheet" href="../static/style.css">
+    <title>Sobre Nós | Seu Nome</title>
+    <link rel="stylesheet" href="../static/sobre.css">
     <link rel="shortcut icon" href="../img/logo.png" type="image/x-icon">
 </head>
 <body>
-    <nav>
-    {% if 'usuario_nome' in session %}
-        <span>Bem vindo {{ session['usuario_nome'] }}!</span>
-        <a href="/index">Inicio</a>
-        <a href="/logout">Logout</a>
-        <a href="/perfil" class="profile-link">
-         <img src="{{ session['usuario_image'] }}" alt="icone">
-        </a>
-    {% else %}
-        <a href="/index">Inicio</a>
-        <a href="/login">Login</a>
-    {% endif %}
-    </nav>
-    <h1>Sobre Nós</h1>
-    <h2>O site é apenas um projeto de aprendizagem pessoal</h2>
+    
+    <header>
+        <nav class="navbar">
+            <div class="nav-brand">
+                <a href="/index">MeuProjeto</a>
+            </div>
+            
+            <div class="nav-links">
+                <a href="/index">Início</a>
+                
+                {% if 'usuario_nome' in session %}
+                    <span class="welcome-text">Olá, <strong>{{ session['usuario_nome'] }}</strong></span>
+                    <a href="/perfil" class="profile-link">
+                        <img src="{{ session['usuario_image'] }}" alt="Foto de perfil de {{ session['usuario_nome'] }}" class="avatar">
+                    </a>
+                    <a href="/logout" class="btn-logout">Sair</a>
+                {% else %}
+                    <a href="/login" class="btn-login">Entrar</a>
+                {% endif %}
+            </div>
+        </nav>
+    </header>
+
+    <main class="container">
+        <section class="about-section">
+            <h1>Sobre o Projeto</h1>
+            <p class="lead">Este site é um projeto de desenvolvimento pessoal focado em aprendizado prático.</p>
+            
+            <article class="content">
+                <p>
+                    Desenvolvido durante minhas férias, este projeto visa consolidar conhecimentos em 
+                    <strong>Python/Flask</strong> e <strong>Frontend</strong>, demonstrando minha 
+                    capacidade técnica e evolução como desenvolvedor.
+                </p>
+                
+                <div class="actions">
+                    <button id="git" class="btn-primary">
+                        <i class="fab fa-github"></i> Visitar meu GitHub
+                    </button>
+                </div>
+            </article>
+        </section>
+    </main>
+
+    <footer class="footer">
+        <p>&copy; 2026 Pedro. Todos os direitos reservados.</p>
+    </footer>
+
+<script src="{{ url_for('static', filename='script/sobre.js') }}"></script>
 </body>
 </html>
