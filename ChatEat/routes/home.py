@@ -2,7 +2,7 @@ import requests
 from flask import Blueprint, render_template, request, session, redirect, url_for,flash
 from dotenv import load_dotenv
 import os
-from connection.conn import inserir_cliente, buscar_cliente, criptografar_senha, buscar_senha,get_itens_carrinho,atualizar_imagem_perfil, verificar_email,deletar,add_carinho,del_carinho,feed
+from connection.conn import inserir_cliente, buscar_cliente, criptografar_senha, buscar_senha,get_itens_carrinho,atualizar_imagem_perfil, verificar_email,deletar,add_carinho,del_carinho,add_com
 from time import time
 from routes.auth import login_required
 from connection.pedidos import inserir_pedido, gerar_codigo_pedido, consultar_pedido_db
@@ -229,41 +229,32 @@ def upload_image():
 @home_route.route('/feedback')
 @login_required
 def feed():
-    render_template('feedback.html')
+    return render_template('feedback.html')
 
-home_route.route('/enviar-feed')
-def comentario():
-    user = session['usuario']
-    comentario = request.form.get('comentario','')
-    nota = request.form.get('nota','')
+
+@home_route.route('/enviar-feed', methods=['POST'])
+@login_required
+def enviar_comentario():
+    user = session.get('usuario')
+    comentario = request.form.get('comentario', '')
+    nota = request.form.get('nota', '')
     
-    if not comentario and not nota:
-        return flash('Falta de dados')
+    if not comentario or not nota:
+        flash('Por favor, preencha todos os campos.', 'warning')
+        return redirect(url_for('home.feedback'))
     
-    r = feed(user,comentario,nota)
+    r = add_com(user, comentario, nota)
+    
     if r:
-        return flash('Comentario enviado!')
-    return flash('Erro')
-
+        flash('Comentário enviado com sucesso!', 'success')
+    else:
+        flash('Erro ao enviar comentário.', 'danger')
+        
+    return redirect(url_for('home.feedback'))
 
 # ==========================================
 # ROTAS DE PEDIDOS E VENDAS
 # ==========================================
-
-@home_route.route('/consultar-pedido')
-def consultar_pedido():
-    return render_template('consultar_pedido.html')
-
-@home_route.route('/consulta-de-pedido', methods=['POST'])
-def consulta_de_pedido():
-    codigo = request.form.get('codigo', '')
-    if not codigo:
-        return '<p>Por favor, insira o código do pedido.</p><br><a href="/consultar-pedido">Voltar</a>'
-    
-    pedido = consultar_pedido_db(codigo)
-    if pedido:
-        return '<p>Pedido Pronto!</p><br><a href="/index">Voltar</a>'
-    return '<p>Ainda em Preparação.</p><br><a href="/index">Voltar</a>'
 
 @home_route.route('/products/<int:id>')
 def products_page(id):

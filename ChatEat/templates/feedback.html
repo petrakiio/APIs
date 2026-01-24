@@ -8,15 +8,15 @@
     <link rel="shortcut icon" href="../img/logo.png" type="image/x-icon">
 </head>
 <body>
-      <div class="nav-links">
-            <span class="welcome-msg">Bem vindo {{ session['usuario_nome'] }}!</span>
+      <nav>
+            <span>Bem vindo {{ session['usuario_nome'] }}!</span>
             <a href="/sobre">Sobre</a>
             <a href="/logout">Logout</a>
             <a href="/index">Inicio</a>
             <a href="/perfil" class="profile-link">
                 <img src="{{ session['usuario_image'] }}" alt="perfil">
             </a>
-    </div>
+      </nav>
     <div class="container">
         {% with messages = get_flashed_messages(with_categories=true) %}
           {% if messages %}
@@ -28,7 +28,7 @@
           {% endif %}
         {% endwith %}
 
-        <form action="/enviar-feed">
+        <form action="/enviar-feed" method="post">
             <textarea name="comentario" placeholder="O que achou do ChatEat?"></textarea>
             <select name="nota">
                 <option value="5">⭐⭐⭐⭐⭐ (Excelente)</option>

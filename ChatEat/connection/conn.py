@@ -162,20 +162,22 @@ def del_carinho(user_nome, item_id):
         return False
     finally:
         db.close()
-
-
-def feed(user,comentario,nota):
+def add_com(user, comentario, nota):
+    db = None
     try:
         db = get_connection()
         cursor = db.cursor()
-        sql = 'INSERT INTO feedback(usuario_id,comentario,nota) VALUES (%s,%s,%s)'
-        cursor.execute(sql,(user,comentario,nota))
+        sql = 'INSERT INTO feedback(usuario_id, comentario, nota) VALUES (%s, %s, %s)'
+        cursor.execute(sql, (user, comentario, nota))
         db.commit()
+        cursor.close()
         return True
     except Exception as e:
+        print(f"Erro ao inserir feedback: {e}")
         return False
     finally:
-        db.close()
+        if db:
+            db.close()
 
 def atualizar_imagem_perfil(usuario_id, img_url):
     db = get_connection()
