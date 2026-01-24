@@ -2,7 +2,7 @@ import requests
 from flask import Blueprint, render_template, request, session, redirect, url_for,flash
 from dotenv import load_dotenv
 import os
-from connection.conn import inserir_cliente, buscar_cliente, criptografar_senha, buscar_senha,get_itens_carrinho,atualizar_imagem_perfil, verificar_email,deletar,add_carinho,del_carinho
+from connection.conn import inserir_cliente, buscar_cliente, criptografar_senha, buscar_senha,get_itens_carrinho,atualizar_imagem_perfil, verificar_email,deletar,add_carinho,del_carinho,feed
 from time import time
 from routes.auth import login_required
 from connection.pedidos import inserir_pedido, gerar_codigo_pedido, consultar_pedido_db
@@ -225,6 +225,26 @@ def upload_image():
     atualizar_imagem_perfil(session['usuario_id'], img_url)
     session['usuario_image'] = img_url
     return redirect(url_for('home.perfil'))
+
+@home_route.route('/feedback')
+@login_required
+def feed():
+    render_template('feedback.html')
+
+home_route.route('/enviar-feed')
+def comentario():
+    user = session['usuario']
+    comentario = request.form.get('comentario','')
+    nota = request.form.get('nota','')
+    
+    if not comentario and not nota:
+        return flash('Falta de dados')
+    
+    r = feed(user,comentario,nota)
+    if r:
+        return flash('Comentario enviado!')
+    return flash('Erro')
+
 
 # ==========================================
 # ROTAS DE PEDIDOS E VENDAS

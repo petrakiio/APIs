@@ -164,7 +164,18 @@ def del_carinho(user_nome, item_id):
         db.close()
 
 
-
+def feed(user,comentario,nota):
+    try:
+        db = get_connection()
+        cursor = db.cursor()
+        sql = 'INSERT INTO feedback(usuario_id,comentario,nota) VALUES (%s,%s,%s)'
+        cursor.execute(sql,(user,comentario,nota))
+        db.commit()
+        return True
+    except Exception as e:
+        return False
+    finally:
+        db.close()
 
 def atualizar_imagem_perfil(usuario_id, img_url):
     db = get_connection()

@@ -12,6 +12,7 @@
         {% if 'usuario_nome' in session %}
             <span class="user-greeting">Bem-vindo, {{ session['usuario_nome'] }}!</span>
             <div class="nav-links">
+                <a href="/feedback">Feedbacks</a>
                 <a href="/sobre">Sobre</a>
                 <a href="/logout" class="logout-btn">Logout</a>
                 <a href="/index">Voltar</a>

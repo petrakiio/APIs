@@ -4,8 +4,50 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Document</title>
+    <link rel="stylesheet" href="../static/feedback.css">
+    <link rel="shortcut icon" href="../img/logo.png" type="image/x-icon">
 </head>
 <body>
-    
+      <div class="nav-links">
+            <span class="welcome-msg">Bem vindo {{ session['usuario_nome'] }}!</span>
+            <a href="/sobre">Sobre</a>
+            <a href="/logout">Logout</a>
+            <a href="/index">Inicio</a>
+            <a href="/perfil" class="profile-link">
+                <img src="{{ session['usuario_image'] }}" alt="perfil">
+            </a>
+    </div>
+    <div class="container">
+        {% with messages = get_flashed_messages(with_categories=true) %}
+          {% if messages %}
+            {% for category, message in messages %}
+              <div class="alert alert-{{ category }}">
+                {{ message }}
+              </div>
+            {% endfor %}
+          {% endif %}
+        {% endwith %}
+
+        <form action="/enviar-feed">
+            <textarea name="comentario" placeholder="O que achou do ChatEat?"></textarea>
+            <select name="nota">
+                <option value="5">⭐⭐⭐⭐⭐ (Excelente)</option>
+                <option value="4">⭐⭐⭐⭐ (Bom)</option>
+                <option value="3">⭐⭐⭐ (Médio)</option>
+                <option value="1">⭐ (Ruim)</option>
+            </select>
+            <button type="submit">Enviar</button>
+        </form>
+    </div>
+    <script>
+        setTimeout(function() {
+            let alerts = document.querySelectorAll('.alert');
+            alerts.forEach(function(alert) {
+                alert.style.transition = "opacity 0.5s ease";
+                alert.style.opacity = "0";
+                setTimeout(() => alert.remove(), 500);
+            });
+        }, 5000);
+    </script>
 </body>
 </html>
