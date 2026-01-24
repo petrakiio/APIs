@@ -1,0 +1,64 @@
+.feedback-section {
+    background-color: #2F3136;
+    padding: 20px;
+    border-radius: 12px;
+    margin-top: 30px;
+    border: 1px solid #4F545C;
+    text-align: left;
+}
+
+.feedback-section h3 {
+    color: palegoldenrod;
+    margin-bottom: 15px;
+    font-size: 22px;
+}
+
+.feedback-form textarea {
+    width: 100%;
+    min-height: 100px;
+    background-color: #36393F;
+    border: 1px solid #202225;
+    border-radius: 8px;
+    color: white;
+    padding: 12px;
+    font-size: 15px;
+    resize: vertical;
+    outline: none;
+    margin-bottom: 15px;
+}
+
+.feedback-form textarea:focus {
+    border-color: palegoldenrod;
+}
+
+.feedback-form select {
+    width: 100%;
+    height: 40px;
+    background-color: #36393F;
+    color: white;
+    border: 1px solid #202225;
+    border-radius: 8px;
+    padding: 0 10px;
+    margin-bottom: 15px;
+    cursor: pointer;
+}
+
+.btn-feedback {
+    width: 100% !important;
+    background-color: palegoldenrod !important;
+    color: black !important;
+    font-weight: bold;
+    text-transform: uppercase;
+    transition: filter 0.2s;
+}
+
+.btn-feedback:hover {
+    filter: brightness(0.8);
+    background-color: palegoldenrod !important;
+}
+
+.stars {
+    color: #FFD700;
+    margin-bottom: 10px;
+    display: block;
+}
