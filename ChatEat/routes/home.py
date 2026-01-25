@@ -274,6 +274,7 @@ def adicionar(id):
 
     return redirect(url_for('home.index'))
 
+
 @home_route.route('/carinho')
 def carinho():
     ids_no_banco = get_itens_carrinho(session['usuario_nome'])

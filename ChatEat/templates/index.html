@@ -8,8 +8,7 @@
     <link rel="shortcut icon" href="../img/logo.png" type="image/x-icon">
 </head>
 <body>
-    <nav>
-    <nav>
+<nav>
     <div class="nav-links">
         {% if 'usuario_nome' in session %}
             <span class="welcome-msg">Bem vindo {{ session['usuario_nome'] }}!</span>
@@ -19,17 +18,16 @@
             <a href="/perfil" class="profile-link">
                 <img src="{{ session['usuario_image'] }}" alt="perfil">
             </a>
+            <a href="/carinho" class="profile-link">
+                <img src="../static/img/carrinho.webp" alt="carrinho">
+            </a>
         {% else %}
             <a href="/login">Login</a>
             <a href="/sobre">Sobre</a>
         {% endif %}
     </div>
 
-    <form action="/search" method="post">
-        <input type="text" id="search" placeholder="pesquisar produto" name="search">
-    </form>
-</nav>
-    <form action="/search" method="post">
+    <formm method="post">
         <input type="text" id="search" placeholder="pesquisar produto" name="search">
     </form>
 </nav>
