@@ -186,12 +186,16 @@ def logout():
     session.pop('usuario_nome', None)
     session.clear()
     return redirect(url_for('home.index'))
-from flask import session, redirect, url_for
 
 @home_route.route('/deletar/<int:id>/<string:user>', methods=['POST'])
+@login_required
 def delete(id, user):
-    if not id and user:
+    if not user:
         return 'Erro'
+    
+    if session['usuario_id'] != id:
+        return "Acesso negado", 403
+
  
     if deletar(int(id), str(user)):
         session.clear()
@@ -211,7 +215,7 @@ def delete(id, user):
 def perfil():
     
     if 'usuario_id' not in session:
-        redirect(url_for('home.index'))
+        return redirect(url_for('home.index'))
         
     return render_template('perfil.html', usuario_nome=session['usuario_nome'])
 
@@ -235,13 +239,13 @@ def feed():
 @home_route.route('/enviar-feed', methods=['POST'])
 @login_required
 def enviar_comentario():
-    user = session.get('usuario')
+    user = session.get('usuario_id')
     comentario = request.form.get('comentario', '')
     nota = request.form.get('nota', '')
     
     if not comentario or not nota:
         flash('Por favor, preencha todos os campos.', 'warning')
-        return redirect(url_for('home.feedback'))
+        return redirect(url_for('home.feed'))
     
     r = add_com(user, comentario, nota)
     
@@ -250,7 +254,7 @@ def enviar_comentario():
     else:
         flash('Erro ao enviar comentário.', 'danger')
         
-    return redirect(url_for('home.feedback'))
+    return redirect(url_for('home.feed'))
 
 # ==========================================
 # ROTAS DE PEDIDOS E VENDAS
@@ -265,6 +269,7 @@ def products_page(id):
         pass
 
 @home_route.route('/adicionar-carinho/<int:id>')
+@login_required
 def adicionar(id):
     for produto in products:
         if produto['id'] == id:
@@ -276,6 +281,7 @@ def adicionar(id):
 
 
 @home_route.route('/carinho')
+@login_required
 def carinho():
     ids_no_banco = get_itens_carrinho(session['usuario_nome'])
 
@@ -289,6 +295,7 @@ def carinho():
     return render_template('carinho.html', carrinho=carrinho_completo)
 
 @home_route.route('/remover-carinho/<int:id>')
+@login_required
 def deletar_item(id):
     sucesso = del_carinho(session['usuario_nome'], id)
     

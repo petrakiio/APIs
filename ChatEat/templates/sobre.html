@@ -5,21 +5,16 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Sobre Nós | Seu Nome</title>
     <link rel="stylesheet" href="../static/sobre.css">
-    <link rel="shortcut icon" href="../img/logo.png" type="image/x-icon">
+   <link rel="shortcut icon" href="{{ url_for('static', filename='img/logo.png') }}" type="image/x-icon">
 </head>
 <body>
     
     <header>
         <nav class="navbar">
-            <div class="nav-brand">
-                <a href="/index">MeuProjeto</a>
-            </div>
-            
             <div class="nav-links">
-                <a href="/index">Início</a>
-                
                 {% if 'usuario_nome' in session %}
-                    <span class="welcome-text">Olá, <strong>{{ session['usuario_nome'] }}</strong></span>
+                    <span class="user-greeting">Bem-vindo {{ session['usuario_nome'] }}!</span>
+                    <a href="/index">Início</a>
                     <a href="/perfil" class="profile-link">
                         <img src="{{ session['usuario_image'] }}" alt="Foto de perfil de {{ session['usuario_nome'] }}" class="avatar">
                     </a>

@@ -5,7 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Login</title>
     <link rel="stylesheet" href="../static/login.css">
-    <link rel="shortcut icon" href="../img/logo.png" type="image/x-icon">
+    <link rel="shortcut icon" href="{{ url_for('static', filename='img/logo.png') }}" type="image/x-icon">
 </head>
 <body>
     <nav>
@@ -32,6 +32,9 @@
             <button>Entrar!</button>
             <a href="/cadastro">Não tem conta? Cadastre-se</a>
         </form>
+        <button id="btn"></button>
     </div>
+<script src="../static/script/modes.js"></script>
+<script src="../static/script/time.js"></script>
 </body>
 </html>

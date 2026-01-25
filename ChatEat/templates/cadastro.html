@@ -5,7 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Cadastro</title>
     <link rel="stylesheet" href="../static/login.css">
-    <link rel="shortcut icon" href="../img/logo.png" type="image/x-icon">
+    <link rel="shortcut icon" href="{{ url_for('static', filename='img/logo.png') }}" type="image/x-icon">
 </head>
 <body>
     <nav>
@@ -37,6 +37,9 @@
             <button>Cadastrar!</button>
             <a href="/login">Já tem uma conta? Faça login aqui.</a>
         </form>
+        <button id="btn"></button>
     </div>
+<script src="../static/script/modes.js"></script>
+<script src="../static/script/time.js"></script>
 </body>
 </html>

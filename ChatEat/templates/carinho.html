@@ -5,12 +5,12 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Carrinho</title>
     <link rel="stylesheet" href="../static/carrinho.css">
-    <link rel="shortcut icon" href="../img/logo.png" type="image/x-icon">
+    <link rel="shortcut icon" href="{{ url_for('static', filename='img/logo.png') }}" type="image/x-icon">
 </head>
 <body>
     <nav>
         {% if 'usuario_nome' in session %}
-            <span class="user-greeting">Bem-vindo, {{ session['usuario_nome'] }}!</span>
+            <span class="user-greeting">Bem-vindo {{ session['usuario_nome'] }}!</span>
             <div class="nav-links">
                 <a href="/sobre">Sobre</a>
                 <a href="/logout" class="logout-btn">Logout</a>
