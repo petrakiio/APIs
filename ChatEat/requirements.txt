@@ -6,3 +6,5 @@ os
 datetime
 requests
 time
+argon2
+functools 

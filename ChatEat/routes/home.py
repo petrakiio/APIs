@@ -5,7 +5,6 @@ import os
 from connection.conn import inserir_cliente, buscar_cliente, criptografar_senha, buscar_senha,get_itens_carrinho,atualizar_imagem_perfil, verificar_email,deletar,add_carinho,del_carinho,add_com
 from time import time
 from routes.auth import login_required
-from connection.pedidos import inserir_pedido, gerar_codigo_pedido, consultar_pedido_db
 from routes.itens import products
 from datetime import datetime
 
@@ -19,11 +18,8 @@ MAX_TENTATIVAS = 5
 BLOQUEIO_TEMPO = 300  
 login_attempts = {}
 ip_last_order = {}
-bot_disc = os.getenv('DISCORD')
 home_route = Blueprint('home', __name__)
 
-def limpar(text):
-    return text.replace('@','').replace('<','').replace('>','')
 
 def get_client_ip():
     if request.headers.get('X-Forwarded-For'):
