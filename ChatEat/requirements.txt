@@ -1,0 +1,8 @@
+flask
+pymysql
+jinja2
+dotenv
+os
+datetime
+requests
+time
