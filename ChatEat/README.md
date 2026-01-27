@@ -1,62 +1,51 @@
-# 🚀 Sistema de Delivery & Autenticação — Thrownlift
+<div align="center">
+  <img src="https://img.shields.io/badge/Python-3776AB?style=for-the-badge&logo=python&logoColor=white" alt="Python">
+  <img src="https://img.shields.io/badge/Flask-000000?style=for-the-badge&logo=flask&logoColor=white" alt="Flask">
+  <img src="https://img.shields.io/badge/MySQL-4479A1?style=for-the-badge&logo=mysql&logoColor=white" alt="MySQL">
+  <img src="https://img.shields.io/badge/Security-Shield-green?style=for-the-badge" alt="Security">
+</div>
 
-Este projeto é uma aplicação web desenvolvida com **Flask**, focada em autenticação segura, envio de pedidos e boas práticas de backend.  
-O sistema gerencia cadastro, login, controle de sessão
+<h1 align="center">🚀 Thrownlift - Delivery & Auth System</h1>
 
-O projeto foi desenvolvido com atenção especial à **segurança**, **organização de código** e **proteção contra abusos comuns** (spam e brute force).
+<p align="center">
+  <strong>Sistema de autenticação robusto e gestão de pedidos com foco em segurança cibernética e boas práticas de Back-end.</strong>
+</p>
 
----
-
-## 🛡️ Segurança (Ponto Forte do Projeto)
-
-Este projeto vai além do básico e implementa medidas reais de segurança:
-
-- 🔐 **Hash de Senhas com Argon2**  
-  As senhas nunca são armazenadas em texto puro. O algoritmo **Argon2** é utilizado por ser resistente a ataques de força bruta e considerado padrão moderno de segurança.
-
-- 🔑 **Autenticação por Sessão**  
-  O login é gerenciado via sessões do Flask, protegendo rotas sensíveis contra acesso não autorizado.
-
-- 🚫 **Proteção contra Brute Force**  
-  Limite de tentativas de login por IP, com bloqueio temporário após múltiplas falhas.
-
-- 🛑 **Proteção contra Spam de Pedidos**  
-  Controle de tempo mínimo entre pedidos por IP, evitando flood e abuso do sistema.
-
-- 🔒 **Variáveis Sensíveis com `.env`**  
-  Tokens e chaves privadas não ficam no código-fonte.
+<p align="center">
+  <img src="https://img.shields.io/github/last-commit/petrakiio/NOME_DO_REPOSITORIO?style=flat-square" alt="Last Commit">
+  <img src="https://img.shields.io/badge/Auth-Argon2-blue?style=flat-square" alt="Argon2">
+  <img src="https://img.shields.io/badge/Proteções-Brute_Force_%7C_Spam-red?style=flat-square" alt="Protections">
+</p>
 
 ---
 
-## 🛠️ Tecnologias Utilizadas
+### 🛡️ O Diferencial: Foco em Segurança
+Diferente de sistemas simples, o **Thrownlift** foi projetado para mitigar ataques comuns e proteger os dados dos usuários:
 
-- **Backend:** Python 3 + Flask
-- **Banco de Dados:** MySQL
-- **Segurança:** Argon2 (hash de senhas)
-- **Sessões:** Flask Sessions
-- **Integração Externa:** Discord Webhooks
-- **Ambiente:** python-dotenv
-- **Templates:** Jinja2
+* **Argon2 Hashing:** Utilização do algoritmo vencedor da *Password Hashing Competition* para garantir que senhas nunca sejam expostas.
+* **Rate Limiting:** Proteção ativa contra **Brute Force** (limite de tentativas de login) e **Spam** de pedidos por IP.
+* **Gestão de Sessão Segura:** Controle rigoroso de rotas privadas e persistência de login via Flask Sessions.
+* **Segurança de Dados:** Uso de variáveis de ambiente (`.env`) e proteção contra SQL Injection.
 
 ---
 
-## 📋 Funcionalidades
+### 🛠️ Stack Tecnológica
+* **Core:** Python 3 & Flask.
+* **Database:** MySQL (Relacional).
+* **Template Engine:** Jinja2 (Renderização dinâmica de Front-end).
+* **Webhooks:** Integração com Discord para notificações de pedidos em tempo real.
 
-- ✅ Cadastro de usuários com validações no backend
-- ✅ Login seguro com verificação de hash
-- ✅ Controle de sessão (login / logout)
-- ✅ Proteção de rotas privadas
-- ✅ Navbar dinâmica baseada no estado de autenticação
-- ✅ Proteções contra SQL Injection, brute force e spam
+### 📋 Funcionalidades Principais
+- [x] **Auth System:** Cadastro e Login com validações complexas no servidor.
+- [x] **Dynamic UI:** Navbar que se adapta automaticamente se o usuário está logado ou não.
+- [x] **Order Management:** Sistema de envio de pedidos integrado ao Banco de Dados.
+- [x] **Private Routes:** Bloqueio de acesso a páginas restritas para usuários não autenticados.
 
 ---
 
-## ⚙️ Configuração Local
+### ⚙️ Configuração e Instalação
 
-### 1️⃣ Banco de Dados (MySQL)
-
-Estrutura da tabela de usuários:
-
+#### 1. Banco de Dados (MySQL)
 ```sql
 CREATE TABLE clientes (
     id INT AUTO_INCREMENT PRIMARY KEY,
@@ -65,7 +54,3 @@ CREATE TABLE clientes (
     email VARCHAR(100) NOT NULL UNIQUE,
     data_nascimento DATE
 );
-
-
-Caso queira um projeto parecido entre em contato:
-🟢 WhatsApp: (16) 99312-0042
