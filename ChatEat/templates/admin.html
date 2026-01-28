@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <title>Feedbacks</title>
+    <link rel="stylesheet" href="../static/admin.css">
+</head>
+<body>
+    <nav>
+        <span>Painel Admin</span>
+        <div class="nav-links">
+           <span class="user-greeting">Bem-vindo {{ session['usuario_nome'] }}!</span>
+            <div class="nav-links">
+                <a href="/sobre">Sobre</a>
+                <a href="/logout" class="logout-btn">Logout</a>
+                <a href="/index">Inicio</a>
+                <a href="/perfil" class="profile-link">
+                    <img src="{{ session['usuario_image'] }}" alt="Foto de Perfil">
+                </a>
+            </div>
+        </div>
+    </nav>
+
+    <div id="products-grid">
+        {% for fb in feedbacks %}
+        <div class="product-card">
+            <div class="card-header">
+                <h3>{{ fb.usuario }}</h3>
+                <span class="feedback-date">{{ fb.criado_em }}</span>
+            </div>
+            <p class="feedback-message">{{ fb.mensagem }}</p>
+            <a href="{{ url_for('deletar_feedback', feedback_id=fb.id) }}" class="delete-btn">
+                🗑 Deletar
+            </a>
+        </div>
+        {% endfor %}
+    </div>
+</body>
+</html>
