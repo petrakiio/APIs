@@ -1,5 +1,5 @@
 from functools import wraps
-from flask import session, redirect, url_for
+from flask import session, redirect, url_for,flash
 
 
 def login_required(func):
@@ -7,5 +7,18 @@ def login_required(func):
     def wrapper(*args, **kwargs):
         if 'usuario_id' not in session:
             return redirect(url_for('home.login'))
+        return func(*args, **kwargs)
+    return wrapper
+
+def admin_required(func):
+    @wraps(func)
+    def wrapper(*args, **kwargs):
+        if 'usuario_id' not in session:
+            return redirect(url_for('home.login'))
+        
+        if not session.get('is_admin', False):
+            flash("Você não tem permissão para acessar esta página.", "error")
+            return redirect(url_for('home.index'))
+        
         return func(*args, **kwargs)
     return wrapper
