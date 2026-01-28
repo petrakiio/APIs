@@ -61,10 +61,15 @@ def inserir_cliente(usuario, senha, email, data):
 
 def buscar_cliente(usuario):
     db = get_connection()
-    if not db: return None
+    if not db:
+        return None
     try:
-        with db.cursor() as cursor:
-            sql = "SELECT id, usuario, senha, foto_perfil FROM clientes WHERE usuario = %s"
+        with db.cursor(pymysql.cursors.DictCursor) as cursor:
+            sql = """
+                SELECT id, usuario, senha, foto_perfil, is_admin
+                FROM clientes
+                WHERE usuario = %s
+            """
             cursor.execute(sql, (usuario,))
             return cursor.fetchone()
     except Exception as e:
@@ -72,6 +77,8 @@ def buscar_cliente(usuario):
         return None
     finally:
         db.close()
+
+
 def buscar_senha(senha: str,senha_hash: str)-> bool:
     try:
         ph.verify(senha_hash, senha)
