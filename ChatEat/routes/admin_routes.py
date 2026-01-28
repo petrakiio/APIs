@@ -1,6 +1,6 @@
 from flask import Blueprint,render_template,url_for,redirect
 from connection.admin_method import feeds,deletar
-from auth import admin_required
+from routes.auth import admin_required
 
 admin_route = Blueprint('admin', __name__)
 

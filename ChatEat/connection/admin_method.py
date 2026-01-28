@@ -1,35 +1,35 @@
-from conn import get_connection
+from connection.conn import get_connection
 import pymysql
-from flask import jsonify
 
-#Feedbacks methods
-
+# Feedbacks methods
 def feeds():
     db = None
     try:
         db = get_connection()
-        cursor = db.cursor()
+        cursor = db.cursor(pymysql.cursors.DictCursor)
         sql = 'SELECT * FROM feedback'
         cursor.execute(sql)
-        r = cursor.fetchall()
-        return jsonify(r)
+        return cursor.fetchall()
     except Exception as e:
-        return print('Erro:',e)
+        print('Erro:', e)
+        return []
     finally:
-        if db not in None:
+        if db is not None:
             db.close()
 
-def deletar(id):
+
+def deletar(feedback_id):
     db = None
     try:
         db = get_connection()
         cursor = db.cursor()
         sql = 'DELETE FROM feedback WHERE id = %s'
-        cursor.execute(sql,(id))
+        cursor.execute(sql, (feedback_id,))
         db.commit()
-        return True
+        return cursor.rowcount > 0
     except Exception as e:
+        print('Erro:', e)
         return False
     finally:
-        if db not in None:
+        if db is not None:
             db.close()
