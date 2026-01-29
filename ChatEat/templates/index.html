@@ -13,13 +13,19 @@
         {% if 'usuario_nome' in session %}
             <span class="welcome-msg">Bem vindo {{ session['usuario_nome'] }}!</span>
             <a href="/sobre">Sobre</a>
+            
+            {# Se for True, mostra. Se for False, ignora #}
+            {% if session['is_admin'] %}
+                <a href="/admin">Tela Admin</a>
+            {% endif %}
+            
             <a href="/logout">Logout</a>
             <a href="/feedback">Feedbacks</a>
             <a href="/perfil" class="profile-link">
                 <img src="{{ session['usuario_image'] }}" alt="perfil">
             </a>
             <a href="/carinho" class="profile-link">
-                <img src="../static/img/carrinho.webp" alt="carrinho">
+                <img src="{{ url_for('static', filename='img/carrinho.webp') }}" alt="carrinho">
             </a>
         {% else %}
             <a href="/login">Login</a>
