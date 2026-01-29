@@ -13,5 +13,8 @@ def admin():
 @admin_required
 def deletar_feed(id):
     if deletar(id):
-        return redirect(url_for('admin.admin'))
-    return flash('erro ao deletar')
+        flash('Item removido!')
+    else:
+        flash('Erro ao remover')
+        
+    return redirect(url_for('admin.admin'))

@@ -2,54 +2,64 @@
 <html lang="pt-br">
 <head>
     <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Painel Admin - Feedbacks</title>
     <link rel="stylesheet" href="{{ url_for('static', filename='admin.css') }}">
 </head>
 <body>
     <nav>
-        <span>Painel Admin</span>
+        <span style="font-weight: bold; font-size: 1.2rem;">Painel Admin</span>
         <div class="nav-links">
-            <span class="user-greeting">Bem-vindo, {{ session['usuario_nome'] }}!</span>
-            <a href="{{ url_for('home.index') }}">Início</a>
-            <a href="/logout" class="logout-btn">Sair</a>
-            <img src="{{ session['usuario_image'] }}" alt="Perfil" class="nav-profile-img">
+            {% if 'usuario_nome' in session %}
+                <span class="welcome-msg" style="color: var(--text-muted);">Olá, {{ session['usuario_nome'] }}</span>
+                <a href="{{ url_for('home.index') }}">Início</a>
+                <a href="/sobre">Sobre</a>
+                <a href="/logout" style="color: #ed4245;">Sair</a>
+                <a href="/perfil" class="profile-link">
+                    <img src="{{ session['usuario_image'] }}" alt="Perfil">
+                </a>
+            {% endif %}
         </div>
     </nav>
 
-    {% with messages = get_flashed_messages() %}
-      {% if messages %}
-        {% for message in messages %}
-          <div class="alert">{{ message }}</div>
-        {% endfor %}
-      {% endif %}
-    {% endwith %}
-
-    <div class="container">
-        <h2>Gerenciar Feedbacks dos Clientes</h2>
-        
-        <div id="products-grid">
-            {% for fb in feedbacks %}
-            <div class="product-card">
-                <div class="card-header">
-                    <h3>Usuário ID: {{ fb['usuario_id'] }}</h3>
-                    <span class="nota-badge">Nota: {{ fb['nota'] }}/5</span>
-                </div>
-                
-                <p class="feedback-message">
-                    <strong>Comentário:</strong><br>
-                    "{{ fb['comentario'] }}"
-                </p>
-                
-                <a href="{{ url_for('admin.deletar_feed', id=fb['id']) }}" 
-                   class="delete-btn" 
-                   onclick="return confirm('Deseja realmente excluir este feedback?')">
-                   🗑 Excluir
-                </a>
-            </div>
-            {% else %}
-            <p>Não há feedbacks para exibir.</p>
+    <div style="width: 92%; max-width: 1400px; margin: 0 auto;">
+        {% with messages = get_flashed_messages() %}
+          {% if messages %}
+            {% for message in messages %}
+              <div style="background: var(--discord-blue); padding: 15px; border-radius: 8px; margin-bottom: 20px;">
+                  {{ message }}
+              </div>
             {% endfor %}
-        </div>
+          {% endif %}
+        {% endwith %}
     </div>
+
+    <div id="products-grid">
+        {% for fb in feedbacks %}
+        <div class="product-card">
+            <div class="card-header">
+                <h3>ID Usuário: {{ fb['usuario_id'] }}</h3>
+                <span class="feedback-date" style="background: var(--bg-dark); padding: 4px 8px; border-radius: 5px; color: var(--discord-green);">
+                    Nota: {{ fb['nota'] }}/5
+                </span>
+            </div>
+            
+            <p class="feedback-message">
+                {{ fb['comentario'] }}
+            </p>
+            
+            <a href="{{ url_for('admin.deletar_feed', id=fb['id']) }}" 
+               class="delete-btn" 
+               onclick="return confirm('Tem certeza que deseja apagar este comentário?')">
+                🗑 Deletar
+            </a>
+        </div>
+        {% else %}
+        <div style="grid-column: 1/-1; text-align: center; color: var(--text-muted);">
+            <p>Nenhum feedback encontrado no banco de dados.</p>
+        </div>
+        {% endfor %}
+    </div>]
+<script src="../static/script/time.js"></script>
 </body>
 </html>
