@@ -164,7 +164,7 @@ def busca():
                 session['usuario_id'] = usuario_id
                 session['usuario_nome'] = usuario_nome
                 session['usuario_image'] = img
-                session['is_admin'] = bool(usuario['is_admin'])
+                session['is_admin'] = bool(cliente['is_admin'])
                 session.permanent = True
                 flash('Login realizado com sucesso!')
                 return redirect(url_for('home.index'))
