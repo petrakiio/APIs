@@ -8,6 +8,7 @@ from routes.auth import login_required
 from routes.itens import products
 from datetime import datetime
 
+
 load_dotenv()
 
 # ==========================================

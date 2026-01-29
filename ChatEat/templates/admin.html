@@ -2,38 +2,54 @@
 <html lang="pt-br">
 <head>
     <meta charset="UTF-8">
-    <title>Feedbacks</title>
-    <link rel="stylesheet" href="../static/admin.css">
+    <title>Painel Admin - Feedbacks</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='admin.css') }}">
 </head>
 <body>
     <nav>
         <span>Painel Admin</span>
         <div class="nav-links">
-           <span class="user-greeting">Bem-vindo {{ session['usuario_nome'] }}!</span>
-            <div class="nav-links">
-                <a href="/sobre">Sobre</a>
-                <a href="/logout" class="logout-btn">Logout</a>
-                <a href="/index">Inicio</a>
-                <a href="/perfil" class="profile-link">
-                    <img src="{{ session['usuario_image'] }}" alt="Foto de Perfil">
-                </a>
-            </div>
+            <span class="user-greeting">Bem-vindo, {{ session['usuario_nome'] }}!</span>
+            <a href="{{ url_for('home.index') }}">Início</a>
+            <a href="/logout" class="logout-btn">Sair</a>
+            <img src="{{ session['usuario_image'] }}" alt="Perfil" class="nav-profile-img">
         </div>
     </nav>
 
-    <div id="products-grid">
-        {% for fb in feedbacks %}
-        <div class="product-card">
-            <div class="card-header">
-                <h3>{{ fb.usuario }}</h3>
-                <span class="feedback-date">{{ fb.criado_em }}</span>
-            </div>
-            <p class="feedback-message">{{ fb.mensagem }}</p>
-            <a href="{{ url_for('deletar_feedback', feedback_id=fb.id) }}" class="delete-btn">
-                🗑 Deletar
-            </a>
-        </div>
+    {% with messages = get_flashed_messages() %}
+      {% if messages %}
+        {% for message in messages %}
+          <div class="alert">{{ message }}</div>
         {% endfor %}
+      {% endif %}
+    {% endwith %}
+
+    <div class="container">
+        <h2>Gerenciar Feedbacks dos Clientes</h2>
+        
+        <div id="products-grid">
+            {% for fb in feedbacks %}
+            <div class="product-card">
+                <div class="card-header">
+                    <h3>Usuário ID: {{ fb['usuario_id'] }}</h3>
+                    <span class="nota-badge">Nota: {{ fb['nota'] }}/5</span>
+                </div>
+                
+                <p class="feedback-message">
+                    <strong>Comentário:</strong><br>
+                    "{{ fb['comentario'] }}"
+                </p>
+                
+                <a href="{{ url_for('admin.deletar_feed', id=fb['id']) }}" 
+                   class="delete-btn" 
+                   onclick="return confirm('Deseja realmente excluir este feedback?')">
+                   🗑 Excluir
+                </a>
+            </div>
+            {% else %}
+            <p>Não há feedbacks para exibir.</p>
+            {% endfor %}
+        </div>
     </div>
 </body>
 </html>

@@ -59,6 +59,20 @@ nav a:hover {
     color: var(--text-main);
 }
 
+.profile-link img, nav a img {
+    height: 40px;
+    width: 40px;
+    border-radius: 50%;
+    object-fit: cover;
+    border: 2px solid transparent;
+    transition: var(--transition);
+    display: block;
+}
+
+.profile-link img:hover {
+    border-color: var(--discord-blue);
+    transform: scale(1.1);
+}
 #products-grid {
     display: grid;
     grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
