@@ -20,7 +20,7 @@
         {% endwith %}
 
         <h1>Perfil do Usuário</h1>
-        
+        {% if session['is_admin'] %}
         <div class="profile-card">
             <img src="{{ session['usuario_image'] }}" alt="Foto de Perfil" class="profile-img">
             
@@ -31,7 +31,18 @@
                     <button type="submit" class="btn-save">Atualizar Foto</button>
                 </form>
             </section>
-
+            {% else %}
+            <div class="profile-card">
+            <img src="{{ session['usuario_image'] }}" alt="Foto de Perfil" class="profile-img">
+            
+            <section class="settings">
+                <h3>Alterar Foto</h3>
+                <form action="/upload-image" method="post">
+                    <input type="url" name="img" placeholder="Cole a URL da imagem aqui" required>
+                    <button type="submit" class="btn-save">Atualizar Foto</button>
+                </form>
+            </section>
+            
             <hr>
 
             <section class="danger-zone">
@@ -41,7 +52,7 @@
                 </form>
             </section>
         </div>
-
+        {% endif %}
         <a href="/index" class="back-link">← Voltar ao Início</a>
     </main>
 </body>

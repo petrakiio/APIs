@@ -98,13 +98,7 @@ def sobre():
 # ROTAS DE AUTENTICAÇÃO (LOGIN E CADASTRO)
 # ==========================================
 
-@home_route.route('/login')
-def login():
-    return render_template('login.html')
 
-@home_route.route('/cadastro')
-def cadastro():
-    return render_template('cadastro.html')
 
 @home_route.route('/cadastro_cliente', methods=['POST'])
 def cadastro_cliente():

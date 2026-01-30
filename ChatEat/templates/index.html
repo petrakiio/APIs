@@ -13,8 +13,7 @@
         {% if 'usuario_nome' in session %}
             <span class="welcome-msg">Bem vindo {{ session['usuario_nome'] }}!</span>
             <a href="/sobre">Sobre</a>
-            
-            {# Se for True, mostra. Se for False, ignora #}
+        
             {% if session['is_admin'] %}
                 <a href="/admin">Tela Admin</a>
             {% endif %}
