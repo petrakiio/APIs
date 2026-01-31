@@ -64,6 +64,5 @@ class PersonaService():
     
     @staticmethod
     def atulizar(usuario_id, imagem_path):
-        
         sucesso = atualizar_imagem_perfil(usuario_id, imagem_path)
         return sucesso

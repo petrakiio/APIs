@@ -24,7 +24,7 @@
                 <img src="{{ session['usuario_image'] }}" alt="perfil">
             </a>
             <a href="/carinho" class="profile-link">
-                <img src="{{ url_for('static', filename='img/carrinho.webp') }}" alt="carrinho">
+                <img src="{{ url_for('carrinho.deletar_item', id=produto.id) }}" alt="carrinho">
             </a>
         {% else %}
             <a href="/login">Login</a>

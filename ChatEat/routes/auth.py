@@ -6,7 +6,7 @@ def login_required(func):
     @wraps(func)
     def wrapper(*args, **kwargs):
         if 'usuario_id' not in session:
-            return redirect(url_for('home.login'))
+            return redirect(url_for('Login.login'))
         return func(*args, **kwargs)
     return wrapper
 
@@ -14,7 +14,7 @@ def admin_required(func):
     @wraps(func)
     def wrapper(*args, **kwargs):
         if 'usuario_id' not in session:
-            return redirect(url_for('home.login'))
+            return redirect(url_for('Login.login'))
         
         if not session.get('is_admin', False):
             flash("Você não tem permissão para acessar esta página.", "error")

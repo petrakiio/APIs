@@ -23,7 +23,7 @@ def carrinho():
         return redirect(url_for('home.index'))
 
     return render_template(
-        'carrinho.html',
+        'carinho.html',
         carrinho=resultado['carrinho']
     )
 
@@ -47,3 +47,4 @@ def deletar_item(id):
         flash(r['msg'],'sucess')
     else:
         flash(r['msg'],'danger')
+    return redirect(url_for('carrinho.carrinho'))

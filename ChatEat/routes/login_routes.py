@@ -6,12 +6,10 @@ from class_profile.login_class import Pessoa,PersonaService
 login_route = Blueprint('Login',__name__)
 
 @login_route.route('/login')
-@login_required
 def login():
     return render_template('login.html')
 
 @login_route.route('/cadastro')
-@login_required
 def cadastro():
     return render_template('cadastro.html')
 
