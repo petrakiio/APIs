@@ -33,18 +33,21 @@ class PersonaService():
 
         return True if sucesso else False
     @staticmethod
-    def busca(pessoa: Pessoa):
+    def login(pessoa: Pessoa):
         ip = get_client_ip()
-        if pode_tentar_login(ip):
-            return 'Muitas tentativas, tente depois'
+
+        if not pode_tentar_login(ip):
+            return {'ok': False, 'msg': 'Muitas tentativas, tente depois'}
+
         if len(pessoa.nome) > 50 or len(pessoa.senha) > 100:
-             return False
-        #logica do login 
+            return {'ok': False, 'msg': 'Dados inválidos'}
+
         cliente = buscar_cliente(pessoa.nome)
-        if cliente:
-            hash = cliente['senha']
-            r = buscar_senha(pessoa.senha,hash)
-            if r:
-                return True,cliente
-            else:
-                return False
+
+        if not cliente:
+            return {'ok': False, 'msg': 'Usuário não encontrado'}
+
+        if not buscar_senha(pessoa.senha, cliente['senha']):
+            return {'ok': False, 'msg': 'Senha incorreta'}
+
+        return {'ok': True, 'cliente': cliente}

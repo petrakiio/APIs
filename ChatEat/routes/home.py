@@ -94,50 +94,6 @@ def sobre():
     return render_template('sobre.html')
 
 
-# ==========================================
-# ROTAS DE AUTENTICAÇÃO (LOGIN E CADASTRO)
-# ==========================================
-
-
-@home_route.route('/busca', methods=['POST', 'GET'])
-def busca():
-    if request.method == 'POST':
-        ip = get_client_ip()
-        if not pode_tentar_login(ip):
-            flash('Muitas tentativas, tente depois')
-            return redirect(url_for('home.index'))
-        
-        usuario = request.form.get('usuario')
-        senha = request.form.get('senha')
-        if len(usuario) > 50 or len(senha) > 100:
-            return redirect(url_for('home.login'))
-        if usuario == '' or senha == '':
-            flash('Dados faltando!')
-            return redirect(url_for('home.login'))
-        
-        cliente = buscar_cliente(usuario)
-        if cliente:
-            usuario_id = cliente['id']
-            usuario_nome = cliente['usuario']
-            senha_hash = cliente['senha']
-            img = cliente['foto_perfil']
-            if buscar_senha(senha, senha_hash):
-                resetar_tentativas(ip)
-                session['usuario_id'] = usuario_id
-                session['usuario_nome'] = usuario_nome
-                session['usuario_image'] = img
-                session['is_admin'] = bool(cliente['is_admin'])
-                session.permanent = True
-                flash('Login realizado com sucesso!')
-                return redirect(url_for('home.index'))
-            else:
-                registrar_erro_login(ip)
-                flash('Usario ou senha incorretos')
-                return redirect(url_for('home.login'))
-        else:
-            registrar_erro_login(ip)
-            return '<p>Usuário ou senha incorretos.</p><br><a href="/login">Voltar</a>'
-    return redirect(url_for('home.login'))
 
 @home_route.route('/logout')
 def logout():
