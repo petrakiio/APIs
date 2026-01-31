@@ -15,61 +15,7 @@ load_dotenv()
 # CONFIGURAÇÕES E UTILITÁRIOS
 # ==========================================
 
-MAX_TENTATIVAS = 5
-BLOQUEIO_TEMPO = 300  
-login_attempts = {}
-ip_last_order = {}
 home_route = Blueprint('home', __name__)
-
-
-def get_client_ip():
-    if request.headers.get('X-Forwarded-For'):
-        return request.headers.get('X-Forwarded-For').split(',')[0]
-    return request.remote_addr
-
-# ==========================================
-# Validação de idade
-# ==========================================
-
-def validar_idade(data_nascimento_str, idade_minima):
-    try:
-        data_nasc = datetime.strptime(data_nascimento_str, '%Y-%m-%d')
-        hoje = datetime.today()
-        idade = hoje.year - data_nasc.year - ((hoje.month, hoje.day) < (data_nasc.month, data_nasc.day))
-        return idade >= idade_minima
-    except Exception as e:
-        print(f"Erro na data: {e}")
-        return False
-
-# ==========================================
-# SEGURANÇA E TENTATIVAS DE LOGIN
-# ==========================================
-
-def pode_tentar_login(ip):
-    dados = login_attempts.get(ip)
-    if not dados:
-        return True
-    tentativas, ultimo_erro = dados
-    if tentativas >= MAX_TENTATIVAS:
-        if time() - ultimo_erro < BLOQUEIO_TEMPO:
-            return False
-        else:
-            del login_attempts[ip]
-    return True
-
-def registrar_erro_login(ip):
-    if ip not in login_attempts:
-        login_attempts[ip] = [1, time()]
-    else:
-        login_attempts[ip][0] += 1
-        login_attempts[ip][1] = time()
-
-def resetar_tentativas(ip):
-    login_attempts.pop(ip, None)
-
-# ==========================================
-# ROTAS DE NAVEGAÇÃO E BUSCA
-# ==========================================
 
 @home_route.route('/')
 @home_route.route('/index') 
@@ -93,10 +39,6 @@ def search():
 def sobre():
     return render_template('sobre.html')
 
-# ==========================================
-# ROTAS DE PEDIDOS E VENDAS
-# ==========================================
-
 @home_route.route('/products/<int:id>')
 def products_page(id):
     for produto in products:
@@ -117,19 +59,7 @@ def adicionar(id):
     return redirect(url_for('home.index'))
 
 
-@home_route.route('/carinho')
-@login_required
-def carinho():
-    ids_no_banco = get_itens_carrinho(session['usuario_nome'])
 
-    carrinho_completo = []
-    for p_id in ids_no_banco:
-        for p in products:
-            if p['id'] == p_id:
-                carrinho_completo.append(p)
-                break
-    
-    return render_template('carinho.html', carrinho=carrinho_completo)
 
 @home_route.route('/remover-carinho/<int:id>')
 @login_required

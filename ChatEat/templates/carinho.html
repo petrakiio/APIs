@@ -30,7 +30,6 @@
     <div class="cart-container">
         <h1>Meu Carrinho</h1>
 
-        {# Exibe mensagens de feedback como 'Item removido' #}
         {% with messages = get_flashed_messages() %}
           {% if messages %}
             {% for message in messages %}
