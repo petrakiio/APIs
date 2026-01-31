@@ -21,7 +21,7 @@ def atualizar_imagem():
         flash('Por favor, insira a URL da imagem.', 'danger')
         return redirect(url_for('profile.perfil'))
     
-    sucesso = PersonaService.atualizar_imagem_perfil(session['usuario_id'], img_url)
+    sucesso = PersonaService.atulizar(session.get('usuario_id'),img_url)
     if sucesso:
         session['usuario_image'] = img_url
         flash('Imagem de perfil atualizada com sucesso!', 'success')
