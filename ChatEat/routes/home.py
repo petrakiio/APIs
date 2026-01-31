@@ -100,14 +100,7 @@ def sobre():
 # ROTAS DE PERFIL DO USUÁRIO
 # ==========================================
 
-@home_route.route('/perfil')
-@login_required
-def perfil():
-    
-    if 'usuario_id' not in session:
-        return redirect(url_for('home.index'))
-        
-    return render_template('perfil.html', usuario_nome=session['usuario_nome'])
+
 
 @home_route.route('/upload-image', methods=['POST'])
 @login_required
@@ -119,6 +112,11 @@ def upload_image():
     atualizar_imagem_perfil(session['usuario_id'], img_url)
     session['usuario_image'] = img_url
     return redirect(url_for('home.perfil'))
+
+
+
+
+
 
 @home_route.route('/feedback')
 @login_required

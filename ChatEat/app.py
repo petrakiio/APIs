@@ -2,6 +2,7 @@ from flask import Flask
 from routes.home import home_route
 from routes.admin_routes import admin_route
 from routes.login_routes import login_route
+from routes.profile import profile_route
 from dotenv import load_dotenv
 import os
 load_dotenv()
@@ -12,6 +13,7 @@ app = Flask(__name__)
 app.register_blueprint(home_route)
 app.register_blueprint(admin_route)
 app.register_blueprint(login_route)
+app.register_blueprint(profile_route)
 app.secret_key = os.getenv('SECRET_KEY')
 if __name__ == '__main__':
     app.run(host='localhost', port=5000,debug=True)
