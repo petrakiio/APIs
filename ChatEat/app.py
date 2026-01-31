@@ -17,6 +17,7 @@ app.register_blueprint(admin_route)
 app.register_blueprint(carrinho_route)
 app.register_blueprint(login_route)
 app.register_blueprint(profile_route)
+app.register_blueprint(feedback_route)
 app.secret_key = os.getenv('SECRET_KEY')
 if __name__ == '__main__':
     app.run(host='localhost', port=5000,debug=True)
