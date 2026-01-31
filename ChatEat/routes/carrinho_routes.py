@@ -10,9 +10,7 @@ def products_page(id):
     for produto in products:
         if produto['id'] == id:
             return render_template('comprar.html',product=produto)
-    else:
-        pass
-
+    return redirect('home.index')
 
 @carrinho_route.route('/carinho')
 @login_required
