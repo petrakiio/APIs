@@ -3,6 +3,7 @@ from routes.home import home_route
 from routes.admin_routes import admin_route
 from routes.login_routes import login_route
 from routes.profile import profile_route
+from routes.feedback_routes import feedback_route
 from dotenv import load_dotenv
 import os
 load_dotenv()

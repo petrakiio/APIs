@@ -96,32 +96,9 @@ def sobre():
 
 
 
-# ==========================================
-# ROTAS DE PERFIL DO USUÁRIO
-# ==========================================
 
 
 
-@home_route.route('/upload-image', methods=['POST'])
-@login_required
-def upload_image():
-    img_url = request.form.get('img', '')
-    if img_url == '':
-        return '<p>Por favor, insira a URL da imagem.</p><br><a href="/perfil">Voltar</a>'
-    
-    atualizar_imagem_perfil(session['usuario_id'], img_url)
-    session['usuario_image'] = img_url
-    return redirect(url_for('home.perfil'))
-
-
-
-
-
-
-@home_route.route('/feedback')
-@login_required
-def feed():
-    return render_template('feedback.html')
 
 
 @home_route.route('/enviar-feed', methods=['POST'])

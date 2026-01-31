@@ -61,3 +61,9 @@ class PersonaService():
         user = cliente['usuario']
         sucesso = deletar(usuario_id)
         return sucesso
+    
+    @staticmethod
+    def atulizar(usuario_id, imagem_path):
+        
+        sucesso = atualizar_imagem_perfil(usuario_id, imagem_path)
+        return sucesso

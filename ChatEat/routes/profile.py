@@ -1,4 +1,4 @@
-from flask import Blueprint,render_template,redirect,url_for,request,session
+from flask import Blueprint,render_template,redirect,url_for,request,session,flash
 import os
 from routes.auth import login_required
 from class_profile.login_class import PersonaService
@@ -15,7 +15,19 @@ def perfil():
 
 @profile_route.route('/upload-image', methods=['POST'])
 @login_required
-
+def atualizar_imagem():
+    img_url = request.form.get('img', '')
+    if img_url == '':
+        flash('Por favor, insira a URL da imagem.', 'danger')
+        return redirect(url_for('profile.perfil'))
+    
+    sucesso = PersonaService.atualizar_imagem_perfil(session['usuario_id'], img_url)
+    if sucesso:
+        session['usuario_image'] = img_url
+        flash('Imagem de perfil atualizada com sucesso!', 'success')
+    else:
+        flash('Erro ao atualizar a imagem de perfil.', 'danger')
+    return redirect(url_for('profile.perfil'))
 
 
 @profile_route.route('/deletar/<int:usuario_id>', methods=['POST'])
