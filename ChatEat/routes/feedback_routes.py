@@ -1,5 +1,6 @@
 from flask import Blueprint, render_template, request, session, redirect, url_for,flash
 from routes.auth import login_required
+from class_profile.feedback_class import FeedbackService
 
 feedback_route = Blueprint('feed',__name__)
 
@@ -10,5 +11,13 @@ def feedback():
 
 @feedback_route.route('/enviar-feed', methods=['POST'])
 @login_required
-def enviar()
-    
+def enviar():
+    user = session.get('usuario_id')
+    comentario = request.form.get('comentario', '')
+    nota = request.form.get('nota', '')
+    r = FeedbackService(user,comentario,nota)
+    if r['ok']:
+        flash(r['msg'],'sucess')
+    else:
+        flash(r['msg'],'danger')
+    return redirect('home.index')

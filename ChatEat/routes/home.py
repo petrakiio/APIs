@@ -93,34 +93,6 @@ def search():
 def sobre():
     return render_template('sobre.html')
 
-
-
-
-
-
-
-
-
-@home_route.route('/enviar-feed', methods=['POST'])
-@login_required
-def enviar_comentario():
-    user = session.get('usuario_id')
-    comentario = request.form.get('comentario', '')
-    nota = request.form.get('nota', '')
-    
-    if not comentario or not nota:
-        flash('Por favor, preencha todos os campos.', 'warning')
-        return redirect(url_for('home.feed'))
-    
-    r = add_com(user, comentario, nota)
-    
-    if r:
-        flash('Comentário enviado com sucesso!', 'success')
-    else:
-        flash('Erro ao enviar comentário.', 'danger')
-        
-    return redirect(url_for('home.feed'))
-
 # ==========================================
 # ROTAS DE PEDIDOS E VENDAS
 # ==========================================
