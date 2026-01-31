@@ -14,13 +14,13 @@ class PersonaService():
     def cadastrar(pessoa: Pessoa):
 
         if not all([pessoa.nome, pessoa.senha, pessoa.email, pessoa.data]):
-            return 'Por favor, preencha todos os campos.',False
+            return 'Por favor, preencha todos os campos.'
 
         if not validar_idade(18, pessoa.data):
-            return 'Você deve ter pelo menos 18 anos para se cadastrar.',False
+            return 'Você deve ter pelo menos 18 anos para se cadastrar.'
 
         if verificar_email(pessoa.email):
-            return 'Este e-mail já está em uso!',False
+            return 'Este e-mail já está em uso!'
 
         senha_hash = criptografar_senha(pessoa.senha)
 

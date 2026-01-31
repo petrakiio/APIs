@@ -32,4 +32,5 @@ def inserir():
             flash('Erro ao realizar cadastro. Tente novamente.', 'danger')
             return redirect(url_for('Login.cadastro'))
     else:
-        
+        flash(resultado,'danger')
+        return redirect(url_for('Login.cadastro'))

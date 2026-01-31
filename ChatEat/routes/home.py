@@ -99,39 +99,6 @@ def sobre():
 # ==========================================
 
 
-
-@home_route.route('/cadastro_cliente', methods=['POST'])
-def cadastro_cliente():
-    usuario = request.form.get('usuario')
-    senha = request.form.get('senha')
-    email = request.form.get('email')
-    data = request.form.get('data')
-
-    if not all([usuario, senha, email, data]):
-        flash('Por favor, preencha todos os campos.', 'danger')
-        return redirect(url_for('home.cadastro'))
-
-    # Validação de idade
-    if not validar_idade(data, 18):
-        flash('Você deve ter pelo menos 18 anos para se cadastrar.', 'danger')
-        return redirect(url_for('home.cadastro'))
-
-    # Verificação de email já cadastrado
-    if verificar_email(email):
-        flash('Este e-mail já está em uso!', 'danger')
-        return redirect(url_for('home.cadastro'))
-
-    hash = criptografar_senha(senha)
-    r = inserir_cliente(usuario,hash,email,data)
-
-    if r:
-        flash('Cadastro realizado com sucesso! Faça seu login.', 'success')
-        return redirect(url_for('home.login')) 
-    else:
-        flash('Erro ao realizar cadastro. Tente novamente.', 'danger')
-        return redirect(url_for('home.cadastro'))
-    
-
 @home_route.route('/busca', methods=['POST', 'GET'])
 def busca():
     if request.method == 'POST':
