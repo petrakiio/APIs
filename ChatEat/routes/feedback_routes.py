@@ -15,9 +15,9 @@ def enviar():
     user = session.get('usuario_id')
     comentario = request.form.get('comentario', '')
     nota = request.form.get('nota', '')
-    r = FeedbackService(user,comentario,nota)
+    r = FeedbackService.enviar(user,comentario,nota)
     if r['ok']:
         flash(r['msg'],'success')
     else:
         flash(r['msg'],'danger')
-    return redirect('home.index')
+    return redirect(url_for('home.index'))
