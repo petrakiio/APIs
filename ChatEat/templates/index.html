@@ -24,7 +24,7 @@
                 <img src="{{ session['usuario_image'] }}" alt="perfil">
             </a>
             <a href="/carinho" class="profile-link">
-                <img src="{{ url_for('carrinho.deletar_item', id=produto.id) }}" alt="carrinho">
+                <img src="{{ url_for('static', filename='img/carrinho.webp') }}" alt="carrinho">
             </a>
         {% else %}
             <a href="/login">Login</a>
@@ -32,7 +32,7 @@
         {% endif %}
     </div>
 
-    <formm method="post">
+    <form action="/search" method="post">
         <input type="text" id="search" placeholder="pesquisar produto" name="search">
     </form>
 </nav>
@@ -50,6 +50,7 @@
         </div>
     {% endfor %}
 </div>
+
 {% if products|length == 0 %}
     <p style="color: white; margin-top: 20px;">Nenhum prato encontrado com esse nome.</p>
     <a href="/" style="color: #7289DA;">Ver todo o cardápio</a>
