@@ -39,4 +39,11 @@ def adicionar(id):
         flash(r['msg'],'danger')
     return redirect(url_for('home.index'))
 
-@carrinho_route.route()
+@carrinho_route.route('/remover-carinho/<int:id>')
+@login_required
+def deletar_item(id):
+    r = CarrinhoService.dell(id)
+    if r['ok']:
+        flash(r['msg'],'sucess')
+    else:
+        flash(r['msg'],'danger')

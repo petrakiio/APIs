@@ -20,6 +20,7 @@ class CarrinhoService():
             'ok': True,
             'carrinho': carrinho_completo
         }
+    
     @staticmethod
     def add(id,nome):
         for produto in products:
@@ -29,3 +30,11 @@ class CarrinhoService():
                 else:
                     return {'ok':False,'msg':'Erro ao adicionar o produto'}
         return {'ok': None,'msg':'produto não encontrado'}
+    
+    @staticmethod
+    def dell(id):
+        resultado = del_carinho(id)
+        if resultado:
+            return {'ok':True,'msg':'Item deletado com sucesso!'}
+        else:
+            return {'ok':False,'msg':'Erro ao deletar o item'}

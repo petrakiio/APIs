@@ -4,6 +4,7 @@ from routes.admin_routes import admin_route
 from routes.login_routes import login_route
 from routes.profile import profile_route
 from routes.feedback_routes import feedback_route
+from routes.carrinho_routes import carrinho_route
 from dotenv import load_dotenv
 import os
 load_dotenv()
@@ -13,6 +14,7 @@ app = Flask(__name__)
 #Rotas
 app.register_blueprint(home_route)
 app.register_blueprint(admin_route)
+app.register_blueprint(carrinho_route)
 app.register_blueprint(login_route)
 app.register_blueprint(profile_route)
 app.secret_key = os.getenv('SECRET_KEY')

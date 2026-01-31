@@ -1,15 +1,6 @@
-import requests
 from flask import Blueprint, render_template, request, session, redirect, url_for,flash
-from dotenv import load_dotenv
-import os
-from connection.conn import inserir_cliente, buscar_cliente, criptografar_senha, buscar_senha,get_itens_carrinho,atualizar_imagem_perfil, verificar_email,deletar,add_carinho,del_carinho,add_com
-from time import time
-from routes.auth import login_required
 from routes.itens import products
-from datetime import datetime
 
-
-load_dotenv()
 
 # ==========================================
 # CONFIGURAÇÕES E UTILITÁRIOS
@@ -46,29 +37,3 @@ def products_page(id):
             return render_template('comprar.html',product=produto)
     else:
         pass
-
-@home_route.route('/adicionar-carinho/<int:id>')
-@login_required
-def adicionar(id):
-    for produto in products:
-        if produto['id'] == id:
-            add_carinho(session['usuario_nome'], produto['id'])
-            flash('Item adicionado ao carrinho')
-            return redirect(url_for('home.carinho'))
-
-    return redirect(url_for('home.index'))
-
-
-
-
-@home_route.route('/remover-carinho/<int:id>')
-@login_required
-def deletar_item(id):
-    sucesso = del_carinho(session['usuario_nome'], id)
-    
-    if sucesso:
-        flash('Item removido!')
-        return redirect(url_for('home.carinho'))
-    
-    flash('Erro ao remover item')
-    return redirect(url_for('home.carinho'))
