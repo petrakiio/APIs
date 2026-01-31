@@ -17,7 +17,7 @@ def enviar():
     nota = request.form.get('nota', '')
     r = FeedbackService(user,comentario,nota)
     if r['ok']:
-        flash(r['msg'],'sucess')
+        flash(r['msg'],'success')
     else:
         flash(r['msg'],'danger')
     return redirect('home.index')

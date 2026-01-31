@@ -32,8 +32,8 @@ class CarrinhoService():
         return {'ok': None,'msg':'produto não encontrado'}
     
     @staticmethod
-    def dell(id):
-        resultado = del_carinho(id)
+    def dell(user,id):
+        resultado = del_carinho(user,id)
         if resultado:
             return {'ok':True,'msg':'Item deletado com sucesso!'}
         else:

@@ -51,10 +51,9 @@
                         </div>
 
                         <div class="cart-actions">
-                           <a href="{{ url_for('carrinho.remover_carinho', id=produto.id) }}">
-                                <button class="remove-btn">Remover</button>
-                            </a>
-
+                          <a href="{{ url_for('carrinho.deletar_item', id=produto.id) }}">
+                            <button class="remove-btn">Remover</button>
+                        </a>
                         </div>
                     </div>
                 {% endfor %}

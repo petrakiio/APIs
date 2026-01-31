@@ -32,7 +32,7 @@ def carrinho():
 def adicionar(id):
     r = CarrinhoService.add(id,session.get('usuario_nome'))
     if r['ok']:
-        flash(r['msg'],'sucess')
+        flash(r['msg'],'success')
     elif r['ok'] == None:
         flash(r['msg'],'danger')
     else:
@@ -42,9 +42,9 @@ def adicionar(id):
 @carrinho_route.route('/remover-carinho/<int:id>')
 @login_required
 def deletar_item(id):
-    r = CarrinhoService.dell(id)
+    r = CarrinhoService.dell(session.get('usuario_nome'),id)
     if r['ok']:
-        flash(r['msg'],'sucess')
+        flash(r['msg'],'success')
     else:
         flash(r['msg'],'danger')
     return redirect(url_for('carrinho.carrinho'))
