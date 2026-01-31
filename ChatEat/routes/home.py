@@ -27,7 +27,9 @@ def sobre():
 
 @home_route.route('/products/<int:id>')
 def products_page(id):
-    produto_encontrado = next((p for p in products if p['id'] == id), None)
-    if produto_encontrado:
-        return render_template('comprar.html', produto=produto_encontrado)
+    product_found = next((p for p in products if int(p['id']) == id), None)
+    
+    if product_found:
+        return render_template('comprar.html', product=product_found)
+    
     return redirect(url_for('home.index'))

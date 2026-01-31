@@ -5,12 +5,7 @@ from routes.auth import login_required
 
 carrinho_route = Blueprint('carrinho',__name__)
 
-@carrinho_route.route('/products/<int:id>')
-def products_page(id):
-    for produto in products:
-        if produto['id'] == id:
-            return render_template('comprar.html',product=produto)
-    return redirect('home.index')
+
 
 @carrinho_route.route('/carinho')
 @login_required
@@ -25,7 +20,7 @@ def carrinho():
         carrinho=resultado['carrinho']
     )
 
-@carrinho_route.route('/adicionar-carinho/<int:id>')
+@carrinho_route.route('/adicionar-carinho/<int:id>',methods=['POST'])
 @login_required
 def adicionar(id):
     r = CarrinhoService.add(id,session.get('usuario_nome'))
