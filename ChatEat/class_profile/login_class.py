@@ -1,4 +1,4 @@
-from routes.tools import validar_idade
+from routes.tools import validar_idade,get_client_ip,pode_tentar_login
 from connection.conn import inserir_cliente,buscar_cliente,buscar_senha,verificar_email,criptografar_senha
 
 class Pessoa():
@@ -32,3 +32,19 @@ class PersonaService():
         )
 
         return True if sucesso else False
+    @staticmethod
+    def busca(pessoa: Pessoa):
+        ip = get_client_ip()
+        if pode_tentar_login(ip):
+            return 'Muitas tentativas, tente depois'
+        if len(pessoa.nome) > 50 or len(pessoa.senha) > 100:
+             return False
+        #logica do login 
+        cliente = buscar_cliente(pessoa.nome)
+        if cliente:
+            hash = cliente['senha']
+            r = buscar_senha(pessoa.senha,hash)
+            if r:
+                return True,cliente
+            else:
+                return False

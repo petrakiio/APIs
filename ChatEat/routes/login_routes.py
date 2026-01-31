@@ -1,6 +1,6 @@
 from flask import Blueprint,flash,render_template,url_for,request,redirect
 import os
-from auth import login_required
+from routes.auth import login_required
 from class_profile.login_class import Pessoa,PersonaService
 
 login_route = Blueprint('Login',__name__)
@@ -34,3 +34,7 @@ def inserir():
     else:
         flash(resultado,'danger')
         return redirect(url_for('Login.cadastro'))
+@login_route.route('/busca', methods=['POST', 'GET'])
+def busca():
+    if request.method == ['GET']:
+        pass

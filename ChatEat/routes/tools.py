@@ -12,12 +12,10 @@ def validar_idade(data_nascimento_str, idade_minima):
         print(f"Erro na data: {e}")
         return False
     
-
 MAX_TENTATIVAS = 5
 BLOQUEIO_TEMPO = 300  
 login_attempts = {}
 ip_last_order = {}
-
 
 def get_client_ip():
     if request.headers.get('X-Forwarded-For'):
