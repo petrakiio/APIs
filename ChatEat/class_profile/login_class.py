@@ -51,3 +51,6 @@ class PersonaService():
             return {'ok': False, 'msg': 'Senha incorreta'}
 
         return {'ok': True, 'cliente': cliente}
+
+
+    #Metodos de Perfil

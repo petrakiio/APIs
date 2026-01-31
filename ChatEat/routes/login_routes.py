@@ -60,6 +60,7 @@ def busca():
     return redirect(url_for('home.index'))
 
 @login_route.route('/logout')
+@login_required
 def logout():
     session.pop('usuario_id', None)
     session.pop('usuario_nome', None)

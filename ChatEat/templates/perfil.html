@@ -47,7 +47,7 @@
 
             <section class="danger-zone">
                 <h3>Zona de Perigo</h3>
-                <form action="/deletar/{{ session['usuario_id'] }}/{{ session['usuario_nome'] }}" method="post" onsubmit="return confirm('Tem certeza que deseja excluir sua conta? Esta ação é irreversível.')">
+                <form action="/deletar/{{ session['usuario_id'] }}" method="post" onsubmit="return confirm('Tem certeza que deseja excluir sua conta? Esta ação é irreversível.')">
                     <button type="submit" id="delete">Deletar Minha Conta</button>
                 </form>
             </section>

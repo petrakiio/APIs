@@ -95,31 +95,6 @@ def sobre():
 
 
 
-@home_route.route('/logout')
-def logout():
-    session.pop('usuario_id', None)
-    session.pop('usuario_nome', None)
-    session.clear()
-    return redirect(url_for('home.index'))
-
-@home_route.route('/deletar/<int:id>/<string:user>', methods=['POST'])
-@login_required
-def delete(id, user):
-    if not user:
-        return 'Erro'
-    
-    if session['usuario_id'] != id:
-        return "Acesso negado", 403
-
- 
-    if deletar(int(id), str(user)):
-        session.clear()
-        flash("Sua conta foi excluída com sucesso. Sentiremos sua falta!", "success")
-        return redirect(url_for('home.index'))
-    
-    flash("Não foi possível excluir sua conta. Tente novamente mais tarde.", "danger")
-    return "Erro ao deletar", 500
-
 
 # ==========================================
 # ROTAS DE PERFIL DO USUÁRIO
