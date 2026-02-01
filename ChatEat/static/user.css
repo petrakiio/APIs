@@ -73,99 +73,106 @@ nav a:hover {
     border-color: var(--discord-blue);
     transform: scale(1.1);
 }
-/* Estilização da Tabela */
 table {
-    width: 92%;
-    max-width: 1400px;
-    margin: 20px auto;
-    border-collapse: separate;
-    border-spacing: 0;
-    background-color: var(--bg-nav);
-    border-radius: 12px;
-    overflow: hidden;
-    border: 1px solid #42454A;
-}
+            width: 92%;
+            max-width: 1400px;
+            margin: 20px auto;
+            border-collapse: separate;
+            border-spacing: 0;
+            background-color: var(--bg-nav);
+            border-radius: 12px;
+            overflow: hidden;
+            border: 1px solid #42454A;
+        }
 
-th, td {
-    padding: 15px 20px;
-    text-align: left;
-    border-bottom: 1px solid #42454A;
-}
+        th, td {
+            padding: 15px 20px;
+            text-align: left;
+            border-bottom: 1px solid #42454A;
+        }
 
-th {
-    background-color: rgba(0, 0, 0, 0.2);
-    color: var(--discord-blue);
-    text-transform: uppercase;
-    font-size: 0.85rem;
-    letter-spacing: 1px;
-}
+        th {
+            background-color: rgba(0, 0, 0, 0.2);
+            color: var(--discord-blue);
+            text-transform: uppercase;
+            font-size: 0.85rem;
+            letter-spacing: 1px;
+        }
 
-tr:last-child td {
-    border-bottom: none;
-}
+        .user-img-table {
+            height: 35px;
+            width: 35px;
+            border-radius: 50%;
+            object-fit: cover;
+        }
 
-tr:hover td {
-    background-color: rgba(255, 255, 255, 0.03);
-    transition: var(--transition);
-}
+        .forms-container {
+            display: flex;
+            justify-content: center;
+            gap: 20px;
+            width: 92%;
+            max-width: 1400px;
+            margin: 20px auto;
+            flex-wrap: wrap;
+        }
 
-.user-img-table {
-    height: 35px;
-    width: 35px;
-    border-radius: 50%;
-    object-fit: cover;
-}
+        .input {
+            flex: 1;
+            min-width: 300px;
+            max-width: 450px;
+            background-color: var(--bg-nav);
+            padding: 25px;
+            border-radius: 12px;
+            display: flex;
+            flex-direction: column;
+            gap: 15px;
+            border: 1px solid #42454A;
+        }
 
-.status-admin {
-    padding: 4px 8px;
-    border-radius: 4px;
-    font-size: 0.75rem;
-    font-weight: bold;
-    background-color: var(--discord-green);
-    color: white;
-}
+        .input p {
+            color: var(--text-main);
+            font-size: 0.95rem;
+            font-weight: 500;
+        }
 
-/* Responsividade da Tabela */
-@media (max-width: 768px) {
-    table, thead, tbody, th, td, tr {
-        display: block;
-    }
+        .input input[type="number"] {
+            background-color: var(--bg-dark);
+            border: 1px solid #42454A;
+            border-radius: 8px;
+            padding: 12px;
+            color: var(--text-main);
+            outline: none;
+            transition: var(--transition);
+        }
 
-    thead tr {
-        position: absolute;
-        top: -9999px;
-        left: -9999px;
-    }
+        .input button {
+            color: var(--text-main);
+            border: none;
+            padding: 12px;
+            border-radius: 8px;
+            font-weight: bold;
+            cursor: pointer;
+            transition: var(--transition);
+        }
 
-    tr {
-        border: 1px solid #42454A;
-        margin-bottom: 10px;
-        border-radius: 8px;
-    }
+        .form-delete { border-color: #ed4245; }
+        .form-delete button { background-color: #ed4245; }
+        .form-delete button:hover { background-color: #c03537; }
 
-    td {
-        border: none;
-        border-bottom: 1px solid rgba(66, 69, 74, 0.5);
-        position: relative;
-        padding-left: 50%;
-        text-align: right;
-    }
+        .form-admin { border-color: var(--discord-blue); }
+        .form-admin button { background-color: var(--discord-blue); }
+        .form-admin button:hover { background-color: #5865F2; }
 
-    td:before {
-        position: absolute;
-        top: 15px;
-        left: 20px;
-        width: 45%;
-        padding-right: 10px;
-        white-space: nowrap;
-        content: attr(data-label);
-        text-align: left;
-        font-weight: bold;
-        color: var(--text-muted);
-    }
-}
-@media (max-width: 1024px) {
-    .nav-links {
-        gap: 20px;
-    }
-}
+        .input input::-webkit-outer-spin-button,
+        .input input::-webkit-inner-spin-button {
+            -webkit-appearance: none;
+            margin: 0;
+        }
+
+        @media (max-width: 768px) {
+            table, thead, tbody, th, td, tr { display: block; }
+            thead tr { position: absolute; top: -9999px; left: -9999px; }
+            tr { border: 1px solid #42454A; margin-bottom: 10px; border-radius: 8px; }
+            td { border: none; border-bottom: 1px solid rgba(66, 69, 74, 0.5); position: relative; padding-left: 50%; text-align: right; }
+            td:before { position: absolute; top: 15px; left: 20px; width: 45%; padding-right: 10px; content: attr(data-label); text-align: left; font-weight: bold; color: var(--text-muted); }
+        }

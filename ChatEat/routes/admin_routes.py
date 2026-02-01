@@ -24,3 +24,8 @@ def deletar_feed(id):
         flash(r['msg'],'danger')
 
     return redirect(url_for('admin.admin'))
+
+@admin_route.route('/del_user')
+@admin_required
+def deletar_user():
+    r = AdminService.

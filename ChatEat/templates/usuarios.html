@@ -5,7 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Usuarios</title>
     <link rel="shortcut icon" href="{{ url_for('static', filename='img/logo.png') }}" type="image/x-icon">
-    <link rel="stylesheet" href="../static/user.css">
+    <link rel="stylesheet" href="{{ url_for('static', filename='user.css') }}">
 </head>
 <body>
      <nav>
@@ -20,6 +20,21 @@
                 </a>
         </div>
     </nav>
+
+    <div class="forms-container">
+        <form action="" method="POST" class="input form-delete" onsubmit="return confirm('Tem certeza que deseja banir esse usuario?')">
+            <p>Digite um id do cliente pra deletar</p>
+            <input type="number" name="id" required placeholder="ID para banir">
+            <button type="submit">Banir Usuário</button>
+        </form>
+
+        <form action="" method="POST" class="input form-admin">
+            <p>Me diga um usuario pra dar adminstração</p>
+            <input type="number" name="id_admin" required placeholder="ID para admin">
+            <button type="submit">Conceder Admin</button>
+        </form>
+    </div>
+
     <table>
         <thead>
             <tr>
@@ -28,6 +43,7 @@
                 <th>Email</th>
                 <th>Img</th>
                 <th>Nascimento</th>
+                <th>Admin</th>
             </tr>
         </thead>
         <tbody>
@@ -36,17 +52,14 @@
                 <td data-label="Id">{{ c.id }}</td>
                 <td data-label="Nome">{{ c.usuario }}</td>
                 <td data-label="Email">{{ c.email }}</td>
-                <td data-label="Img"><img src="{{ c.foto_perfil }}" class="user-img-table"></td>
+                <td data-label="Img">
+                    <img src="{{ c.foto_perfil }}" class="user-img-table">
+                </td>
                 <td data-label="Nascimento">{{ c.data_nascimento }}</td>
+                <td data-label="Admin">{{ 'Sim' if c.is_admin == 1 else 'Não' }}</td>
             </tr>
             {% endfor %}
         </tbody>
     </table>
-    <form action="" class="form">
-        <p>Digite um id do cliente pra deletar</p>
-        <input type="number" name="id">
-        <button onsubmit="
-        return confirm('Tem certeza que deseja banir esse usuario?.')">Clique Aqui</button>
-    </form>
 </body>
 </html>

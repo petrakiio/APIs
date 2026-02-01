@@ -1,4 +1,4 @@
-from connection.conn import feeds,deletar,users_get
+from connection.conn import feeds,deletar,users_get,users_admin,users_del
 
 class AdminService():
     @staticmethod
@@ -16,4 +16,6 @@ class AdminService():
     @staticmethod
     def users():
         return users_get()
-        
+    
+    @staticmethod
+    def del_user(id):
