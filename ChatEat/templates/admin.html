@@ -4,13 +4,13 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Painel Admin - Feedbacks</title>
+    <link rel="shortcut icon" href="{{ url_for('static', filename='img/logo.png') }}" type="image/x-icon">
     <link rel="stylesheet" href="{{ url_for('static', filename='admin.css') }}">
 </head>
 <body>
     <nav>
-        <span style="font-weight: bold; font-size: 1.2rem;">Painel Admin</span>
+        <span style="font-weight: bold; font-size: 1.2rem;">Painel Admin-Feedbacks</span>
         <div class="nav-links">
-            {% if 'usuario_nome' in session %}
                 <span class="welcome-msg" style="color: var(--text-muted);">Olá, {{ session['usuario_nome'] }}</span>
                 <a href="{{ url_for('home.index') }}">Início</a>
                 <a href="/sobre">Sobre</a>
@@ -18,7 +18,6 @@
                 <a href="/perfil" class="profile-link">
                     <img src="{{ session['usuario_image'] }}" alt="Perfil">
                 </a>
-            {% endif %}
         </div>
     </nav>
 

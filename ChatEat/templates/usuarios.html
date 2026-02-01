@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Usuarios</title>
+    <link rel="shortcut icon" href="{{ url_for('static', filename='img/logo.png') }}" type="image/x-icon">
+    <link rel="stylesheet" href="../static/user.css">
+</head>
+<body>
+     <nav>
+        <span style="font-weight: bold; font-size: 1.2rem;">Painel Admin-Usuarios</span>
+        <div class="nav-links">
+                <span class="welcome-msg" style="color: var(--text-muted);">Olá, {{ session['usuario_nome'] }}</span>
+                <a href="{{ url_for('home.index') }}">Início</a>
+                <a href="/sobre">Sobre</a>
+                <a href="/logout" style="color: #ed4245;">Sair</a>
+                <a href="/perfil" class="profile-link">
+                    <img src="{{ session['usuario_image'] }}" alt="Perfil">
+                </a>
+        </div>
+    </nav>
+    <table>
+        <tr>
+            <th>Id</th>
+            <th>Nome</th>
+            <th>email</th>
+            <th>Img</th>
+            <th>Nascimento</th>
+        </tr>
+        <tr>
+            <td>{{clientes['nome']}}</td>
+            
+        </tr>
+    </table>
+</body>
+</html>
