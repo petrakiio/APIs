@@ -33,16 +33,20 @@
         <tbody>
             {% for c in cliente %}
             <tr>
-                <td>{{ c.id }}</td>
-                <td>{{ c.usuario }}</td>
-                <td>{{ c.email }}</td>
-                <td>
-                    <img src="{{ c.foto_perfil }}" alt="Foto" style="width: 40px; border-radius: 50%;">
-                </td>
-                <td>{{ c.data_nascimento }}</td>
+                <td data-label="Id">{{ c.id }}</td>
+                <td data-label="Nome">{{ c.usuario }}</td>
+                <td data-label="Email">{{ c.email }}</td>
+                <td data-label="Img"><img src="{{ c.foto_perfil }}" class="user-img-table"></td>
+                <td data-label="Nascimento">{{ c.data_nascimento }}</td>
             </tr>
             {% endfor %}
         </tbody>
     </table>
+    <form action="" class="form">
+        <p>Digite um id do cliente pra deletar</p>
+        <input type="number" name="id">
+        <button onsubmit="
+        return confirm('Tem certeza que deseja banir esse usuario?.')">Clique Aqui</button>
+    </form>
 </body>
 </html>
