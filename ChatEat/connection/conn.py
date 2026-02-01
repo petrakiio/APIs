@@ -233,3 +233,18 @@ def deletar(feedback_id):
     finally:
         if db is not None:
             db.close()
+
+def users_get():
+    db = None
+    try:
+        db = get_connection()
+        cursor = db.cursor()
+        sql = 'SELECT * FROM clientes'
+        cursor.execute(sql)
+        return cursor.fetchall()
+    except Exception as err:
+        print('Erro:',err)
+        return None
+    finally:
+        if db is not None:
+            db.close()

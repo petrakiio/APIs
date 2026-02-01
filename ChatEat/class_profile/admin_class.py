@@ -1,4 +1,4 @@
-from connection.conn import feeds,deletar
+from connection.conn import feeds,deletar,users_get
 
 class AdminService():
     @staticmethod
@@ -12,3 +12,8 @@ class AdminService():
             return {'ok':True,'msg':'Item removido!'}
         else:
             return {'ok':False,'msg':'Erro ao remover item'}
+    
+    @staticmethod
+    def users():
+        return users_get()
+        

@@ -21,17 +21,28 @@
         </div>
     </nav>
     <table>
-        <tr>
-            <th>Id</th>
-            <th>Nome</th>
-            <th>email</th>
-            <th>Img</th>
-            <th>Nascimento</th>
-        </tr>
-        <tr>
-            <td>{{clientes['nome']}}</td>
-            
-        </tr>
+        <thead>
+            <tr>
+                <th>Id</th>
+                <th>Nome</th>
+                <th>Email</th>
+                <th>Img</th>
+                <th>Nascimento</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for c in cliente %}
+            <tr>
+                <td>{{ c.id }}</td>
+                <td>{{ c.usuario }}</td>
+                <td>{{ c.email }}</td>
+                <td>
+                    <img src="{{ c.foto_perfil }}" alt="Foto" style="width: 40px; border-radius: 50%;">
+                </td>
+                <td>{{ c.data_nascimento }}</td>
+            </tr>
+            {% endfor %}
+        </tbody>
     </table>
 </body>
 </html>
