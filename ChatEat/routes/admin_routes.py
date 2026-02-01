@@ -1,5 +1,5 @@
 from flask import Blueprint,render_template,url_for,redirect,flash
-from class_profile import admin_class
+from class_profile.admin_class import AdminService
 from routes.auth import admin_required
 
 admin_route = Blueprint('admin', __name__)
@@ -7,7 +7,7 @@ admin_route = Blueprint('admin', __name__)
 @admin_route.route('/admin')
 @admin_required
 def admin():
-    return render_template('admin.html',feedbacks=feeds())
+    return render_template('admin.html',feedbacks=AdminService.feedback())
 
 @admin_route.route('/admin_user')
 @admin_required
@@ -17,9 +17,10 @@ def admin_user():
 @admin_route.route('/deletar_feedback/<int:id>')
 @admin_required
 def deletar_feed(id):
-    if deletar(id):
-        flash('Item removido!')
+    r = AdminService.del_fed(id)
+    if r:
+        flash(r['msg'],'sucess')
     else:
-        flash('Erro ao remover')
+        flash(r['msg'],'danger')
         
     return redirect(url_for('admin.admin'))
