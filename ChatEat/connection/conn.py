@@ -279,3 +279,8 @@ def users_admin(id):
     finally:
         if db is not None:
             db.close()
+
+def users_rm_admin(id):
+    db = None
+    try:
+        db = get 
