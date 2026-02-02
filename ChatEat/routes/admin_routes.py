@@ -35,6 +35,7 @@ def deletar_user():
         flash(r['msg'],'sucess')
     else:
         flash(r['msg'],'danger')
+    return redirect(url_for('admin.admin_user'))
 
 @admin_route.route('/add_admin',methods=['POST'])
 @admin_required
@@ -45,3 +46,10 @@ def add_admin():
         flash(r['msg'],'sucess')
     else:
         flash(r['msg'],'danger')
+    return redirect(url_for('admin.admin_user'))
+
+@admin_route.route('/rm_admin',methods=['POST'])
+@admin_required
+def rm_admin():
+    id = request.form.get('id_admin_remove')
+    r = AdminService

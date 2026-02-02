@@ -28,10 +28,16 @@
             <button type="submit">Banir Usuário</button>
         </form>
 
-        <form action="/add_admin" method="POST" class="input form-admin">
+        <form action="/add_admin" method="POST" class="input form-admin" onsubmit="return confirm('Tem certeza que deseja dar administrador a esse usuario?')">
             <p>Me diga um usuario pra dar adminstração</p>
             <input type="number" name="id_admin" required placeholder="ID para admin">
             <button type="submit">Conceder Admin</button>
+        </form>
+
+        <form action="" method="POST" class="input form-admin" onsubmit="return confirm('Tem certeza de tirar o administrador desse usuario?')">
+            <p>Me diga um usuario pra tirar adminstração</p>
+            <input type="number" name="id_admin_remove" required placeholder="ID para admin">
+            <button type="submit">Tirar Admin</button>
         </form>
     </div>
 

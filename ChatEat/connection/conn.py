@@ -256,6 +256,7 @@ def users_del(id):
         cursor = db.cursor()
         sql = 'DELETE FROM clientes WHERE id = %s'
         cursor.execute(sql,(id))
+        db.commit()
         return True
     except Exception as err:
         print('Erro:',err)
@@ -271,6 +272,7 @@ def users_admin(id):
         cursor = db.cursor()
         sql = 'UPDATE clientes SET is_admin = 1 WHERE id = %s'
         cursor.execute(sql,(id))
+        db.commit()
         return True
     except Exception as err:
         print('Erro:',err)
