@@ -52,4 +52,9 @@ def add_admin():
 @admin_required
 def rm_adm():
     id = request.form.get('id_admin_remove')
-    r = AdminService
+    r = AdminService.rm_admin(id)
+    if r['ok']:
+        flash(r['msg'],'sucess')
+    else:
+        flash(r['msg'],'danger')
+    return redirect(url_for('admin.admin_user'))
