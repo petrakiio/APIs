@@ -26,7 +26,7 @@ def deletar_feed(id):
 
     return redirect(url_for('admin.admin'))
 
-@admin_route.route('/del_user')
+@admin_route.route('/del_user',methods=['POST'])
 @admin_required
 def deletar_user():
     id = request.form.get('id')
@@ -36,7 +36,7 @@ def deletar_user():
     else:
         flash(r['msg'],'danger')
 
-@admin_route.route('/add_admin')
+@admin_route.route('/add_admin',methods=['POST'])
 @admin_required
 def add_admin():
     id = request.form.get('id_admin')
