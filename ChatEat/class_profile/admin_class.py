@@ -1,4 +1,4 @@
-from connection.conn import feeds,deletar,users_get,users_admin,users_del
+from connection.conn import feeds,deletar,users_get,users_admin,users_del,users_rm_admin
 
 class AdminService():
     @staticmethod
@@ -32,4 +32,6 @@ class AdminService():
             return {'ok':True,'msg':'Admin Adicionado!'}
         else:
             return {'ok':True,'msg':'Erro ao conceder Adm'}
-    
+
+    @staticmethod
+    def rm_admin

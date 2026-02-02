@@ -283,4 +283,15 @@ def users_admin(id):
 def users_rm_admin(id):
     db = None
     try:
-        db = get 
+        db = get_connection()
+        cursor = db.cursor()
+        sql = 'UPDATE clientes SET is_admin = 0 WHERE id = %s'
+        cursor.execute(sql,(id))
+        db.commit()
+        return True
+    except Exception as e:
+        print('Erro:',e)
+        return False
+    finally:
+        if db is not None:
+            db.close()

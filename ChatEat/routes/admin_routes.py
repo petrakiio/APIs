@@ -50,6 +50,6 @@ def add_admin():
 
 @admin_route.route('/rm_admin',methods=['POST'])
 @admin_required
-def rm_admin():
+def rm_adm():
     id = request.form.get('id_admin_remove')
     r = AdminService
