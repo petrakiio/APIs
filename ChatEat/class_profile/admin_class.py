@@ -34,4 +34,10 @@ class AdminService():
             return {'ok':True,'msg':'Erro ao conceder Adm'}
 
     @staticmethod
-    def rm_admin
+    def rm_admin(id):
+        r = users_rm_admin(id)
+        if r:
+            return {'ok':True,'msg':'Admin Removido!'}
+        else:
+            return {'ok':True,'msg':'Erro ao remover Adm'}
+        
