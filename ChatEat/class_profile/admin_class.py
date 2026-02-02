@@ -19,3 +19,17 @@ class AdminService():
     
     @staticmethod
     def del_user(id):
+        r = users_del(id)
+        if r:
+            return {'ok':True,'msg':'Usuario deletado com sucesso!'}
+        else:
+            return {'ok':True,'msg':'Erro ao deletar usuario'}
+        
+    @staticmethod
+    def add_new_admin(id):
+        r = users_admin(id)
+        if r:
+            return {'ok':True,'msg':'Admin Adicionado!'}
+        else:
+            return {'ok':True,'msg':'Erro ao conceder Adm'}
+    

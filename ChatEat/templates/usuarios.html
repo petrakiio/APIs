@@ -22,13 +22,13 @@
     </nav>
 
     <div class="forms-container">
-        <form action="" method="POST" class="input form-delete" onsubmit="return confirm('Tem certeza que deseja banir esse usuario?')">
+        <form action="/del_user" method="POST" class="input form-delete" onsubmit="return confirm('Tem certeza que deseja banir esse usuario?')">
             <p>Digite um id do cliente pra deletar</p>
             <input type="number" name="id" required placeholder="ID para banir">
             <button type="submit">Banir Usuário</button>
         </form>
 
-        <form action="" method="POST" class="input form-admin">
+        <form action="/add_admin" method="POST" class="input form-admin">
             <p>Me diga um usuario pra dar adminstração</p>
             <input type="number" name="id_admin" required placeholder="ID para admin">
             <button type="submit">Conceder Admin</button>
