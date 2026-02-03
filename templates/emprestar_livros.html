@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Emprestar Livro</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+<nav class="navbar">
+    <div class="nav-brand">📚 Biblioteca</div>
+
+    <ul class="nav-links">
+        <li><a href="#">Livros</a></li>
+        <li><a href="#">Adicionar</a></li>
+        <li><a href="#">Emprestar</a></li>
+    </ul>
+
+    <div class="nav-user">Admin</div>
+</nav>
+
+<div class="container">
+    <div class="card">
+        <h1>Emprestar Livro</h1>
+
+        <form method="POST" action="">
+            <div class="form-group">
+                <label>Livro</label>
+                <select name="id_livro" required>
+                    <option value="">Selecione um livro</option>
+                    <option value="1">Clean Code</option>
+                    <option value="2">O Senhor dos Anéis</option>
+                </select>
+            </div>
+
+            <div class="form-group">
+                <label>Nome do Leitor</label>
+                <input type="text" name="leitor" placeholder="Digite o nome do leitor" required>
+            </div>
+
+            <div class="form-group">
+                <label>Data do Empréstimo</label>
+                <input type="date" name="data_emprestimo" required>
+            </div>
+
+            <div class="form-group">
+                <label>Data de Devolução</label>
+                <input type="date" name="data_devolucao" required>
+            </div>
+
+            <button type="submit">Confirmar Empréstimo</button>
+        </form>
+    </div>
+</div>
+
+</body>
+</html>
