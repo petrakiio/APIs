@@ -5,6 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Vale Ler</title>
     <link rel="stylesheet" href="../static/style.css">
+    <link rel="shortcut icon" href="../static/img/valeLer.png" type="image/x-icon">
 </head>
 <body>
     <nav class="navbar">
@@ -36,18 +37,19 @@
         </thead>
         <tbody>
             <tr>
-                <td></td>
-                <td>Exemplo de Livro</td>
-                <td>Autor Exemplo</td>
-                <td>Editora X</td>
-                <td>2024</td>
-                <td>9781234567890</td>
-                <td>Tecnologia</td>
-                <td>10</td>
-                <td>7</td>
-                <td>2026-02-02</td>
+                <td>{{livro.id_livro}}</td>
+                <td>{{livro.titulo}}</td>
+                <td>{{livro.autor}}</td>
+                <td>{{livro.editora}}</td>
+                <td>{{livro.ano_publicacao}}</td>
+                <td>{{livro.isbn}}</td>
+                <td>{{livro.categoria}}</td>
+                <td>{{livro.total_unidades}}</td>
+                <td>{{livro.unidades_disponiveis}}</td>
+                <td>{{livro.data_cadastro}}</td>
             </tr>
         </tbody>
+        {% endfor%}
 </table>
 </body>
 </html>
