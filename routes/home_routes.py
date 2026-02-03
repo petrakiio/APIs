@@ -1,8 +1,10 @@
 from flask import Blueprint,render_template,redirect,url_for
+from objects.administração import BibliotecaService
 
 home = Blueprint('Home',__name__)
 
 @home.route('/')
 @home.route('/index')
 def index():
-    return render_template('index.html')
+    return render_template('index.html',livros=BibliotecaService.home())
+

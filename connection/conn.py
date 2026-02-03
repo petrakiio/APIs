@@ -20,3 +20,18 @@ def get_connection():
         print(f"Erro ao conectar ao banco de dados: {e}")
         return None
 
+def get_books() -> dict | bool:
+    db = None
+    try:
+        db = get_connection()
+        cursor = db.cursor()
+        sql = 'SELECT * FROM livros'
+        cursor.execute(sql)
+        return cursor.fetchall()
+    except Exception as erro:
+        print('Erro:',erro)
+        return False
+    finally:
+        if db is not None:
+            db.close()
+
