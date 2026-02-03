@@ -35,3 +35,10 @@ def get_books() -> dict | bool:
         if db is not None:
             db.close()
 
+def insert_books() -> bool:
+    db = None
+    try:
+        db = get_connection()
+        sql = "INSERT INTO livros (titulo, autor, editora, ano_publicacao, isbn, categoria, total_unidades, unidades_disponiveis) " \
+        "VALUES (%s, %s, %s, %s, %s, %s, %s, %s)"
+        cursor = db.cursor()

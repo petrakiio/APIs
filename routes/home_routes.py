@@ -11,3 +11,7 @@ def index():
 @home.route('/add_livros')
 def add_livros():
     return render_template('adicionar_livros.html')
+
+@home.route('/add_livros_form')
+def add():
+    nome =
