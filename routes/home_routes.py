@@ -8,3 +8,6 @@ home = Blueprint('Home',__name__)
 def index():
     return render_template('index.html',livros=BibliotecaService.home())
 
+@home.route('/add_livros')
+def add_livros():
+    return render_template('adicionar_livros.html')

@@ -1,0 +1,74 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Adicionar Livro</title>
+    <link rel="stylesheet" href="../static/add_livros.css">
+    <link rel="shortcut icon" href="../static/img/valeLer.png" type="image/x-icon">
+</head>
+<body>
+
+<nav class="navbar">
+    <div class="nav-brand">📚 Biblioteca</div>
+
+    <ul class="nav-links">
+        <li><a href="/index">Livros</a></li>
+        <li><a href="#">Devolução</a></li>
+    </ul>
+
+    <div class="nav-user">Admin</div>
+</nav>
+
+<div class="container">
+    <div class="card">
+        <h1>Adicionar Livro</h1>
+
+        <form method="POST" action="">
+            <div class="form-group">
+                <label>Título</label>
+                <input type="text" name="titulo" required>
+            </div>
+
+            <div class="form-group">
+                <label>Autor</label>
+                <input type="text" name="autor" required>
+            </div>
+
+            <div class="form-group">
+                <label>Editora</label>
+                <input type="text" name="editora">
+            </div>
+
+            <div class="form-group">
+                <label>Ano de Publicação</label>
+                <input type="number" name="ano_publicacao">
+            </div>
+
+            <div class="form-group">
+                <label>ISBN</label>
+                <input type="text" name="isbn">
+            </div>
+
+            <div class="form-group">
+                <label>Categoria</label>
+                <input type="text" name="categoria">
+            </div>
+
+            <div class="form-group">
+                <label>Total de Unidades</label>
+                <input type="number" name="total_unidades" required>
+            </div>
+
+            <div class="form-group">
+                <label>Unidades Disponíveis</label>
+                <input type="number" name="unidades_disponiveis" required>
+            </div>
+
+            <button type="submit">Cadastrar Livro</button>
+        </form>
+    </div>
+</div>
+
+</body>
+</html>
