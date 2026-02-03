@@ -13,7 +13,7 @@ def index():
 def add_livros():
     return render_template('adicionar_livros.html')
 
-@home.route('/add_livros_form')
+@home.route('/add_livros_form',methods=['POST'])
 def add():
     livro = Livro(
     titulo=request.form.get('titulo'),
