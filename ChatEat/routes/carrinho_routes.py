@@ -1,6 +1,6 @@
 from flask import Blueprint,session,redirect,render_template,url_for,flash
-from class_profile.carrinho_class import CarrinhoService
-from routes.itens import products
+from models.carrinho_class import CarrinhoService
+from models.shopp_class import Product
 from routes.auth import login_required
 
 carrinho_route = Blueprint('carrinho',__name__)

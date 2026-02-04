@@ -1,6 +1,6 @@
 from flask import Blueprint, render_template, request, session, redirect, url_for,flash
 from routes.auth import login_required
-from class_profile.feedback_class import FeedbackService
+from models.feedback_class import FeedbackService
 
 feedback_route = Blueprint('feed',__name__)
 

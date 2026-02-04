@@ -1,7 +1,7 @@
 from flask import Blueprint,render_template,redirect,url_for,request,session,flash
 import os
 from routes.auth import login_required
-from class_profile.login_class import PersonaService
+from models.login_class import PersonaService
 
 profile_route = Blueprint('profile', __name__)
 

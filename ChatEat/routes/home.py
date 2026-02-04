@@ -1,25 +1,26 @@
 from flask import Blueprint, render_template, request, session, redirect, url_for, flash
-from routes.itens import products
+from models.shopp_class import Product
 
 home_route = Blueprint('home', __name__)
 
 @home_route.route('/')
 @home_route.route('/index') 
 def index():
+    products = Product.get_all_products()
     return render_template('index.html', products=products)
 
-@home_route.route('/search', methods=['POST'])
-def search():
-    iten = request.form.get('search', '').lower().strip()
-    if not iten:
-        return render_template('index.html', products=products)
+# @home_route.route('/search', methods=['POST'])
+# def search():
+#     iten = request.form.get('search', '').lower().strip()
+#     if not iten:
+#         return render_template('index.html', products=products)
     
-    resultados = [
-        p for p in products
-        if iten in p['nome'].lower() or iten in p['descricao'].lower()
-    ]
+#     resultados = [
+#         p for p in products
+#         if iten in p['nome'].lower() or iten in p['descricao'].lower()
+#     ]
     
-    return render_template('index.html', products=resultados)
+#     return render_template('index.html', products=resultados)
 
 @home_route.route('/sobre')
 def sobre():

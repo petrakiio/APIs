@@ -295,3 +295,18 @@ def users_rm_admin(id):
     finally:
         if db is not None:
             db.close()
+
+def get_products():
+    db = None
+    try:
+        db = get_connection()
+        cursor = db.cursor(pymysql.cursors.DictCursor)
+        sql = 'SELECT * FROM produtos'
+        cursor.execute(sql)
+        return cursor.fetchall()
+    except Exception as e:
+        print('Erro ao buscar produtos:', e)
+        return []
+    finally:
+        if db is not None:
+            db.close()

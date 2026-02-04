@@ -1,5 +1,5 @@
 from connection.conn import add_carinho,del_carinho,get_itens_carrinho
-from routes.itens import products
+from models.shopp_class import Product
 
 class CarrinhoService():
     @staticmethod
@@ -8,7 +8,7 @@ class CarrinhoService():
             return {'ok': False, 'msg': 'Usuário inválido'}
 
         ids_no_banco = get_itens_carrinho(user)
-
+        products = Product.get_all_products()
         carrinho_completo = []
         for p_id in ids_no_banco:
             for p in products:

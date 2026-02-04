@@ -1,6 +1,6 @@
 from flask import Blueprint,render_template,url_for,redirect,flash,request
 import os
-from class_profile.admin_class import AdminService
+from models.admin_class import AdminService
 from routes.auth import admin_required
 
 admin_route = Blueprint('admin', __name__)
