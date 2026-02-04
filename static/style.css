@@ -106,6 +106,21 @@ tbody td {
 tbody tr:nth-child(even) {
     background-color: #1b1b1b;
 }
+.btn-devolver {
+    padding: 8px 14px;
+    border: none;
+    border-radius: 8px;
+    background-color: #4caf50;
+    color: #fff;
+    font-size: 13px;
+    font-weight: bold;
+    cursor: pointer;
+}
+
+.btn-devolver:hover {
+    background-color: #43a047;
+}
+
 
 /* RESPONSIVO */
 @media (max-width: 900px) {

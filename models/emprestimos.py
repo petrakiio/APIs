@@ -1,6 +1,6 @@
 from connection import conn
 
-class PessoaEmprestimo:
+class PessoaEmprestimo():
     def __init__(self, id_emprestimo, id_livro, nome_pessoa, data_emprestimo, data_devolução,valor):
         self.id_emprestimo = id_emprestimo
         self.id_livro = id_livro

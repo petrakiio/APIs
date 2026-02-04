@@ -8,49 +8,91 @@
     <link rel="shortcut icon" href="../static/img/valeLer.png" type="image/x-icon">
 </head>
 <body>
-    <nav class="navbar">
-        <div class="nav-brand">📚 Biblioteca</div>
-            <ul class="nav-links">
-                <li><a href="/add_livros">Adicionar livros</a></li>
-                <li><a href="/emprestimo">Emprestar livros</a></li>
-                <li><a href="#">Devolver livro</a></li>
-                <li><a href="/deletar">Remover Livros</a></li>
-            </ul>
-        <div class="nav-user">
-            <span>Admin</span>
-        </div>
-    </nav>
-    {% for livro in livros%}
-    <table>
-        <thead>
-            <tr>
-                <th>ID</th>
-                <th>Título</th>
-                <th>Autor</th>
-                <th>Editora</th>
-                <th>Ano</th>
-                <th>ISBN</th>
-                <th>Categoria</th>
-                <th>Total de Unidades</th>
-                <th>Unidades Disponíveis</th>
-                <th>Data de Cadastro</th>
-            </tr>
-        </thead>
-        <tbody>
-            <tr>
-                <td>{{livro.id_livro}}</td>
-                <td>{{livro.titulo}}</td>
-                <td>{{livro.autor}}</td>
-                <td>{{livro.editora}}</td>
-                <td>{{livro.ano_publicacao}}</td>
-                <td>{{livro.isbn}}</td>
-                <td>{{livro.categoria}}</td>
-                <td>{{livro.total_unidades}}</td>
-                <td>{{livro.unidades_disponiveis}}</td>
-                <td>{{livro.data_cadastro}}</td>
-            </tr>
-        </tbody>
-        {% endfor%}
+
+<nav class="navbar">
+    <div class="nav-brand">📚 Biblioteca</div>
+    <ul class="nav-links">
+        <li><a href="/add_livros">Adicionar livros</a></li>
+        <li><a href="/emprestimo">Emprestar livros</a></li>
+        <li><a href="#">Devolver livro</a></li>
+        <li><a href="/deletar">Remover Livros</a></li>
+    </ul>
+    <div class="nav-user">
+        <span>Admin</span>
+    </div>
+</nav>
+
+<h2>📘 Livros Cadastrados</h2>
+
+<table>
+    <thead>
+        <tr>
+            <th>ID</th>
+            <th>Título</th>
+            <th>Autor</th>
+            <th>Editora</th>
+            <th>Ano</th>
+            <th>ISBN</th>
+            <th>Categoria</th>
+            <th>Total de Unidades</th>
+            <th>Unidades Disponíveis</th>
+            <th>Data de Cadastro</th>
+        </tr>
+    </thead>
+    <tbody>
+        {% for livro in livros %}
+        <tr>
+            <td>{{ livro.id_livro }}</td>
+            <td>{{ livro.titulo }}</td>
+            <td>{{ livro.autor }}</td>
+            <td>{{ livro.editora }}</td>
+            <td>{{ livro.ano_publicacao }}</td>
+            <td>{{ livro.isbn }}</td>
+            <td>{{ livro.categoria }}</td>
+            <td>{{ livro.total_unidades }}</td>
+            <td>{{ livro.unidades_disponiveis }}</td>
+            <td>{{ livro.data_cadastro }}</td>
+        </tr>
+        {% endfor %}
+    </tbody>
 </table>
+
+<h2>📕 Livros Emprestados</h2>
+
+<table>
+    <thead>
+        <tr>
+            <th>ID Empréstimo</th>
+            <th>Livro</th>
+            <th>Nome da Pessoa</th>
+            <th>Data do Empréstimo</th>
+            <th>Data de Devolução</th>
+            <th>Valor</th>
+            <th>Ação</th>
+        </tr>
+    </thead>
+    <tbody>
+        {% for emprestimo in emprestimos %}
+        <tr>
+            <td>{{ emprestimo.id_emprestimo }}</td>
+            <td>{{ emprestimo.titulo }}</td>
+            <td>{{ emprestimo.nome_pessoa }}</td>
+            <td>{{ emprestimo.data_emprestimo }}</td>
+            <td>{{ emprestimo.data_devolucao }}</td>
+            <td>R$ {{ emprestimo.valor }}</td>
+            <td>
+                <form method="POST" action="/devolver">
+                    <input type="hidden" name="id_emprestimo" value="{{ emprestimo.id_emprestimo }}">
+                    <button type="submit" class="btn-devolver">
+                        Devolver
+                    </button>
+                </form>
+            </td>
+        </tr>
+        {% endfor %}
+    </tbody>
+</table>
+
+
 </body>
 </html>

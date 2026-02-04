@@ -1,12 +1,13 @@
 from flask import Blueprint,render_template,redirect,url_for,request
 from models.administração import BibliotecaService
+from models.emprestimos import EmprestimoService
 
 home = Blueprint('Home',__name__)
 
 @home.route('/')
 @home.route('/index')
 def index():
-    return render_template('index.html',livros=BibliotecaService.home())
+    return render_template('index.html',livros=BibliotecaService.home(),emprestimos=EmprestimoService.home())
 
 @home.route('/add_livros')
 def add_livros():
