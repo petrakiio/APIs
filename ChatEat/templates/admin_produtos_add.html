@@ -1,0 +1,74 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Novo Produto</title>
+    <link rel="shortcut icon" href="{{ url_for('static', filename='img/logo.png') }}" type="image/x-icon">
+    <link rel="stylesheet" href="{{ url_for('static', filename='admin_produtos_form.css') }}">
+</head>
+<body>
+    <nav>
+        <span style="font-weight: bold; font-size: 1.2rem;">Painel Admin-Produtos</span>
+        <div class="nav-links">
+            <span class="welcome-msg" style="color: var(--text-muted);">Olá, {{ session['usuario_nome'] }}</span>
+            <a href="{{ url_for('home.index') }}">Início</a>
+            <a href="/admin_produtos">Produtos</a>
+            <a href="/admin">Feedbacks</a>
+            <a href="/admin_user">Usuários</a>
+            <a href="/logout" style="color: #ed4245;">Sair</a>
+            <a href="/perfil" class="profile-link">
+                <img src="{{ session['usuario_image'] }}" alt="Perfil">
+            </a>
+        </div>
+    </nav>
+
+    <section class="form-wrapper">
+        <header class="form-header">
+            <h1>Novo produto</h1>
+            <p>Preencha os dados para cadastrar um produto.</p>
+        </header>
+
+        <form class="product-form" method="POST" action="/admin/produtos/novo">
+            <div class="grid">
+                <label>
+                    Nome
+                    <input type="text" name="nome" placeholder="Ex: Hambúrguer Artesanal" required>
+                </label>
+                <label>
+                    Categoria
+                    <input type="text" name="categoria" placeholder="Ex: Lanches" required>
+                </label>
+                <label>
+                    Preço (R$)
+                    <input type="text" name="preco" placeholder="Ex: 29.90" required>
+                </label>
+                <label>
+                    Estoque
+                    <input type="number" name="estoque" placeholder="Ex: 120" min="0" required>
+                </label>
+            </div>
+
+            <label class="full">
+                Descrição
+                <textarea name="descricao" rows="4" placeholder="Descreva o produto..." required></textarea>
+            </label>
+
+            <label class="full">
+                URL da imagem
+                <input type="text" name="imagem" placeholder="https://..." required>
+            </label>
+
+            <div class="toggle">
+                <input type="checkbox" id="ativo" name="ativo" checked>
+                <label for="ativo">Produto ativo no cardápio</label>
+            </div>
+
+            <div class="form-actions">
+                <a class="btn btn-ghost" href="/admin_produtos">Cancelar</a>
+                <button class="btn btn-primary" type="submit">Salvar produto</button>
+            </div>
+        </form>
+    </section>
+</body>
+</html>

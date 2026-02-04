@@ -15,6 +15,11 @@ def admin():
 def admin_user():
     return render_template('usuarios.html',cliente=AdminService.users())
 
+@admin_route.route('/admin_produtos')
+@admin_required
+def admin_produtos():
+    return render_template('admin_produtos.html',produtos=AdminService.products())
+
 @admin_route.route('/deletar_feedback/<int:id>')
 @admin_required
 def deletar_feed(id):

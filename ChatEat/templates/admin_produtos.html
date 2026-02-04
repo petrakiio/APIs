@@ -1,0 +1,87 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Painel Admin - Produtos</title>
+    <link rel="shortcut icon" href="{{ url_for('static', filename='img/logo.png') }}" type="image/x-icon">
+    <link rel="stylesheet" href="{{ url_for('static', filename='admin_produtos.css') }}">
+</head>
+<body>
+    <nav>
+        <span style="font-weight: bold; font-size: 1.2rem;">Painel Admin-Produtos</span>
+        <div class="nav-links">
+            <span class="welcome-msg" style="color: var(--text-muted);">Olá, {{ session['usuario_nome'] }}</span>
+            <a href="{{ url_for('home.index') }}">Início</a>
+            <a href="/sobre">Sobre</a>
+            <a href="/admin">Feedbacks</a>
+            <a href="/admin_user">Usuários</a>
+            <a href="/logout" style="color: #ed4245;">Sair</a>
+            <a href="/perfil" class="profile-link">
+                <img src="{{ session['usuario_image'] }}" alt="Perfil">
+            </a>
+        </div>
+    </nav>
+
+    <div class="page-header">
+        <h1>Produtos</h1>
+        <div class="header-actions">
+            <a class="btn btn-primary" href="/admin/produtos/novo">Novo produto</a>
+            <a class="btn btn-ghost" href="/admin_produtos">Atualizar lista</a>
+        </div>
+    </div>
+
+    <div class="flash-container">
+        {% with messages = get_flashed_messages() %}
+          {% if messages %}
+            {% for message in messages %}
+              <div class="flash">
+                  {{ message }}
+              </div>
+            {% endfor %}
+          {% endif %}
+        {% endwith %}
+    </div>
+
+    <table>
+        <thead>
+            <tr>
+                <th>Id</th>
+                <th>Nome</th>
+                <th>Categoria</th>
+                <th>Preço</th>
+                <th>Estoque</th>
+                <th>Imagem</th>
+                <th>Status</th>
+                <th>Ações</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for p in produtos %}
+            <tr>
+                <td data-label="Id">{{ p.id }}</td>
+                <td data-label="Nome">{{ p.nome }}</td>
+                <td data-label="Categoria">{{ p.categoria }}</td>
+                <td data-label="Preço">R$ {{ p.preco }}</td>
+                <td data-label="Estoque">{{ p.estoque }}</td>
+                <td data-label="Imagem">
+                    <img src="{{ p.imagem }}" class="product-img-table">
+                </td>
+                <td data-label="Status">{{ 'Ativo' if p.ativo else 'Inativo' }}</td>
+                <td data-label="Ações">
+                    <div class="actions">
+                        <a class="btn btn-edit" href="/admin/produtos/editar/{{ p.id }}">Editar</a>
+                        <a class="btn btn-delete" href="/admin/produtos/excluir/{{ p.id }}"
+                           onclick="return confirm('Tem certeza que deseja excluir este produto?')">Excluir</a>
+                    </div>
+                </td>
+            </tr>
+            {% else %}
+            <tr>
+                <td colspan="8" class="empty">Nenhum produto encontrado.</td>
+            </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+</body>
+</html>
