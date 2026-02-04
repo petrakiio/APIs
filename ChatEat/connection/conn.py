@@ -329,3 +329,18 @@ def search_products(term: str):
     finally:
         if db is not None:
             db.close()
+def delete_product(product_id: int) -> bool:
+    db = None
+    try:
+        db = get_connection()
+        cursor = db.cursor()
+        sql = 'DELETE FROM products WHERE id = %s'
+        cursor.execute(sql, (product_id,))
+        db.commit()
+        return cursor.rowcount > 0
+    except Exception as e:
+        print('Erro ao deletar produto:', e)
+        return False
+    finally:
+        if db is not None:
+            db.close()

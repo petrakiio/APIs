@@ -19,4 +19,9 @@ class Product:
             if product['id'] == id:
                 return product
         return None
-    
+    def delete_product(product_id: int) -> bool:
+        r = conn.delete_product(product_id)
+        if r:
+            return {'ok':True,'msg':'Produto deletado com sucesso!'}
+        else:
+            return {'ok':False,'msg':'Erro ao deletar o produto'}

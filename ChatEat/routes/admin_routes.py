@@ -29,7 +29,7 @@ def admin_produtos_novo():
         return redirect(url_for('admin.admin_produtos'))
     return render_template('admin_produtos_add.html')
 
-@admin_route.route('/admin_produtos/editar/<int:id>', methods=['GET', 'POST'])
+@admin_route.route('/admin_produtos/editar/<int:id>')
 @admin_required
 def admin_produtos_editar(id):
     if request.method == 'POST':
@@ -48,10 +48,14 @@ def admin_produtos_editar(id):
     }
     return render_template('admin_produtos_edit.html', produto=produto)
 
-@admin_route.route('/admin_produtos/excluir/<int:id>')
+@admin_route.route('/admin_produtos/excluir/<int:id>', methods=['POST'])
 @admin_required
 def admin_produtos_excluir(id):
-    
+    r = Product.delete_product(id)
+    if r['ok']:
+        flash(r['msg'],'sucess')
+    else:
+        flash(r['msg'],'danger')
     return redirect(url_for('admin.admin_produtos'))
 
 @admin_route.route('/deletar_feedback/<int:id>')

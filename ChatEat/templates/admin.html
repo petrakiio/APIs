@@ -25,7 +25,7 @@
         {% with messages = get_flashed_messages() %}
           {% if messages %}
             {% for message in messages %}
-              <div style="background: var(--discord-blue); padding: 15px; border-radius: 8px; margin-bottom: 20px;">
+              <div class="alert" style="background: var(--discord-blue); padding: 15px; border-radius: 8px; margin-bottom: 20px;">
                   {{ message }}
               </div>
             {% endfor %}
@@ -59,6 +59,6 @@
         </div>
         {% endfor %}
     </div>]
-<script src="../static/script/time.js"></script>
+<script src="{{ url_for('static', filename='script/timer.js') }}"></script>
 </body>
 </html>

@@ -35,7 +35,7 @@
         {% with messages = get_flashed_messages() %}
           {% if messages %}
             {% for message in messages %}
-              <div class="flash">
+              <div class="flash alert">
                   {{ message }}
               </div>
             {% endfor %}
@@ -79,5 +79,6 @@
             {% endfor %}
         </tbody>
     </table>
+<script src="{{ url_for('static', filename='script/timer.js') }}"></script>
 </body>
 </html>
