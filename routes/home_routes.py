@@ -13,6 +13,10 @@ def add_livros():
     return render_template('adicionar_livros.html')
 
 
-@home.route('')
+@home.route('/emprestimo')
 def emprestimo():
-    return render_template('emprestar_livros.html')
+    return render_template('emprestar_livros.html',livros=BibliotecaService.home())
+
+@home.route('/deletar')
+def deletar():
+    return render_template('deletar.html')
