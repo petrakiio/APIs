@@ -23,13 +23,14 @@ class CarrinhoService():
     
     @staticmethod
     def add(id,nome):
-        for produto in products:
-            if produto['id'] == id:
-                if add_carinho(nome,id):
-                    return {'ok': True,'msg':'Produto adicionado ao carrinho'}
-                else:
-                    return {'ok':False,'msg':'Erro ao adicionar o produto'}
-        return {'ok': None,'msg':'produto não encontrado'}
+        Product.get_product_by_id(id)
+        if not Product.get_product_by_id(id):
+            return {'ok':None,'msg':'Produto não encontrado'}
+        resultado = add_carinho(nome,id)
+        if resultado:
+            return {'ok':True,'msg':'Item adicionado ao carrinho com sucesso!'}
+        else:
+            return {'ok':False,'msg':'Erro ao adicionar o item ao carrinho'}
     
     @staticmethod
     def dell(user,id):

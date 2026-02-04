@@ -9,18 +9,11 @@ def index():
     products = Product.get_all_products()
     return render_template('index.html', products=products)
 
-# @home_route.route('/search', methods=['POST'])
-# def search():
-#     iten = request.form.get('search', '').lower().strip()
-#     if not iten:
-#         return render_template('index.html', products=products)
-    
-#     resultados = [
-#         p for p in products
-#         if iten in p['nome'].lower() or iten in p['descricao'].lower()
-#     ]
-    
-#     return render_template('index.html', products=resultados)
+@home_route.route('/search', methods=['POST'])
+def search():
+    term = request.form.get('search_term', '')
+    resultados = Product.search(term)
+    return render_template('index.html', products=resultados)
 
 @home_route.route('/sobre')
 def sobre():
@@ -28,7 +21,7 @@ def sobre():
 
 @home_route.route('/products/<int:id>')
 def products_page(id):
-    product_found = next((p for p in products if int(p['id']) == id), None)
+    product_found = Product.get_product_by_id(id)
     
     if product_found:
         return render_template('comprar.html', product=product_found)

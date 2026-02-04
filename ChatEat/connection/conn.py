@@ -301,11 +301,30 @@ def get_products():
     try:
         db = get_connection()
         cursor = db.cursor(pymysql.cursors.DictCursor)
-        sql = 'SELECT * FROM produtos'
+        sql = 'SELECT * FROM products'
         cursor.execute(sql)
         return cursor.fetchall()
     except Exception as e:
         print('Erro ao buscar produtos:', e)
+        return []
+    finally:
+        if db is not None:
+            db.close()
+
+def search_products(term: str):
+    db = None
+    try:
+        db = get_connection()
+        cursor = db.cursor(pymysql.cursors.DictCursor)
+        like = f"%{term}%"
+        sql = """
+            SELECT * FROM products
+            WHERE nome LIKE %s OR descricao LIKE %s
+        """
+        cursor.execute(sql, (like, like))
+        return cursor.fetchall()
+    except Exception as e:
+        print('Erro ao buscar produtos por termo:', e)
         return []
     finally:
         if db is not None:

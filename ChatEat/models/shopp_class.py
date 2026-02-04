@@ -9,3 +9,14 @@ class Product:
         self.img = img
     def get_all_products() -> dict:
         return conn.get_products()
+    
+    def search(term) -> list:
+        return conn.search_products(term)
+    
+    def get_product_by_id(id) -> dict:
+        products = conn.get_products()
+        for product in products:
+            if product['id'] == id:
+                return product
+        return None
+    
