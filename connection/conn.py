@@ -80,29 +80,38 @@ def insert_emprestimos(emprestimo) -> bool:
     db = None
     try:
         db = get_connection()
-        sql = """
+        cursor = db.cursor()
+        sql_update = """
+            UPDATE livros
+            SET unidades_disponiveis = unidades_disponiveis - 1
+            WHERE id_livro = %s AND unidades_disponiveis > 0
+        """
+        cursor.execute(sql_update, (emprestimo.id_livro,))
+
+        if cursor.rowcount == 0:
+            db.rollback()
+            return False
+
+        sql_insert = """
             INSERT INTO emprestado
             (id_livro, nome_pessoa, data_emprestimo, data_devolucao, valor)
             VALUES (%s, %s, %s, %s, %s)
         """
-        sql2 = """
-            UPDATE livros
-            SET unidades_disponiveis = unidades_disponiveis - 1
-            WHERE id = %s AND unidades_disponiveis > 0
-        """
-        cursor = db.cursor()
-        cursor.execute(sql, (
+        cursor.execute(sql_insert, (
             emprestimo.id_livro,
             emprestimo.nome_pessoa,
             emprestimo.data_emprestimo,
             emprestimo.data_devolucao,
             emprestimo.valor
         ))
-        cursor.execute(sql2, (emprestimo.id_livro,))
+
         db.commit()
         return True
+
     except Exception as err:
         print('Erro:', err)
+        if db:
+            db.rollback()
         return False
     finally:
         if db is not None:

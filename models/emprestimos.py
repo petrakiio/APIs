@@ -1,12 +1,12 @@
 from connection import conn
 
 class PessoaEmprestimo():
-    def __init__(self, id_emprestimo, id_livro, nome_pessoa, data_emprestimo, data_devolução,valor):
+    def __init__(self, id_emprestimo, id_livro, nome_pessoa, data_emprestimo, data_devolucao, valor):
         self.id_emprestimo = id_emprestimo
         self.id_livro = id_livro
         self.nome_pessoa = nome_pessoa
         self.data_emprestimo = data_emprestimo
-        self.data_devolução = data_devolução
+        self.data_devolucao = data_devolucao
         self.valor = valor
 
 class EmprestimoService():
