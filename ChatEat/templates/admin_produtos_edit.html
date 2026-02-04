@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Novo Produto</title>
+    <title>Editar Produto</title>
     <link rel="shortcut icon" href="{{ url_for('static', filename='img/logo.png') }}" type="image/x-icon">
     <link rel="stylesheet" href="{{ url_for('static', filename='admin_produtos_form.css') }}">
 </head>
@@ -25,40 +25,40 @@
 
     <section class="form-wrapper">
         <header class="form-header">
-            <h1>Novo produto</h1>
-            <p>Preencha os dados para cadastrar um produto.</p>
+            <h1>Editar produto</h1>
+            <p>Atualize as informações do produto selecionado.</p>
         </header>
 
-        <form class="product-form" method="POST" action="{{ url_for('admin.admin_produtos_novo') }}">
+        <form class="product-form" method="POST" action="{{ url_for('admin.admin_produtos_editar', id=produto.id) }}">
             <div class="grid">
                 <label>
                     Nome
-                    <input type="text" name="nome" placeholder="Ex: Hambúrguer Artesanal" required>
+                    <input type="text" name="nome" value="{{ produto.nome or '' }}" required>
                 </label>
                 <label>
                     Preço (R$)
-                    <input type="text" name="preco" placeholder="Ex: 29.90" required>
+                    <input type="text" name="preco" value="{{ produto.preco or '' }}" required>
                 </label>
             </div>
 
             <label class="full">
                 Descrição
-                <textarea name="descricao" rows="4" placeholder="Descreva o produto..." required></textarea>
+                <textarea name="descricao" rows="4" required>{{ produto.descricao or '' }}</textarea>
             </label>
 
             <label class="full">
                 URL da imagem
-                <input type="text" name="imagem" placeholder="https://..." required>
+                <input type="text" name="imagem" value="{{ produto.imagem or '' }}" required>
             </label>
 
             <div class="toggle">
-                <input type="checkbox" id="ativo" name="ativo" checked>
+                <input type="checkbox" id="ativo" name="ativo" {% if produto.ativo %}checked{% endif %}>
                 <label for="ativo">Produto ativo no cardápio</label>
             </div>
 
             <div class="form-actions">
                 <a class="btn btn-ghost" href="{{ url_for('admin.admin_produtos') }}">Cancelar</a>
-                <button class="btn btn-primary" type="submit">Salvar produto</button>
+                <button class="btn btn-primary" type="submit">Salvar alterações</button>
             </div>
         </form>
     </section>

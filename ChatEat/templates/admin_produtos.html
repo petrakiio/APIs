@@ -14,8 +14,8 @@
             <span class="welcome-msg" style="color: var(--text-muted);">Olá, {{ session['usuario_nome'] }}</span>
             <a href="{{ url_for('home.index') }}">Início</a>
             <a href="/sobre">Sobre</a>
-            <a href="/admin">Feedbacks</a>
-            <a href="/admin_user">Usuários</a>
+            <a href="{{ url_for('admin.admin') }}">Feedbacks</a>
+            <a href="{{ url_for('admin.admin_user') }}">Usuários</a>
             <a href="/logout" style="color: #ed4245;">Sair</a>
             <a href="/perfil" class="profile-link">
                 <img src="{{ session['usuario_image'] }}" alt="Perfil">
@@ -26,8 +26,8 @@
     <div class="page-header">
         <h1>Produtos</h1>
         <div class="header-actions">
-            <a class="btn btn-primary" href="/admin/produtos/novo">Novo produto</a>
-            <a class="btn btn-ghost" href="/admin_produtos">Atualizar lista</a>
+            <a class="btn btn-primary" href="{{ url_for('admin.admin_produtos_novo') }}">Novo produto</a>
+            <a class="btn btn-ghost" href="{{ url_for('admin.admin_produtos') }}">Atualizar lista</a>
         </div>
     </div>
 
@@ -48,9 +48,7 @@
             <tr>
                 <th>Id</th>
                 <th>Nome</th>
-                <th>Categoria</th>
                 <th>Preço</th>
-                <th>Estoque</th>
                 <th>Imagem</th>
                 <th>Status</th>
                 <th>Ações</th>
@@ -61,24 +59,22 @@
             <tr>
                 <td data-label="Id">{{ p.id }}</td>
                 <td data-label="Nome">{{ p.nome }}</td>
-                <td data-label="Categoria">{{ p.categoria }}</td>
                 <td data-label="Preço">R$ {{ p.preco }}</td>
-                <td data-label="Estoque">{{ p.estoque }}</td>
                 <td data-label="Imagem">
-                    <img src="{{ p.imagem }}" class="product-img-table">
+                    <img src="{{ p.img }}" class="product-img-table">
                 </td>
                 <td data-label="Status">{{ 'Ativo' if p.ativo else 'Inativo' }}</td>
                 <td data-label="Ações">
                     <div class="actions">
-                        <a class="btn btn-edit" href="/admin/produtos/editar/{{ p.id }}">Editar</a>
-                        <a class="btn btn-delete" href="/admin/produtos/excluir/{{ p.id }}"
+                        <a class="btn btn-edit" href="{{ url_for('admin.admin_produtos_editar', id=p.id) }}">Editar</a>
+                        <a class="btn btn-delete" href="{{ url_for('admin.admin_produtos_excluir', id=p.id) }}"
                            onclick="return confirm('Tem certeza que deseja excluir este produto?')">Excluir</a>
                     </div>
                 </td>
             </tr>
             {% else %}
             <tr>
-                <td colspan="8" class="empty">Nenhum produto encontrado.</td>
+                <td colspan="6" class="empty">Nenhum produto encontrado.</td>
             </tr>
             {% endfor %}
         </tbody>
