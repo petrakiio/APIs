@@ -1,6 +1,7 @@
 from flask import Blueprint,request,redirect,url_for
 import os
 from models.administração import Livro,BibliotecaService
+from models.emprestimos import PessoaEmprestimo,EmprestimoService
 
 admin = Blueprint('adm',__name__)
 
@@ -21,3 +22,18 @@ def add():
     else:
         print('erro')
         return redirect(url_for('Home.index'))
+
+admin.route('/emprestimo_method',methods=['POST'])
+def emprestimo_method():
+    emprestimo = PessoaEmprestimo(
+        id_emprestimo=None,
+        id_livro=request.form.get('id_livro'),
+        nome_pessoa=request.form.get('nome_pessoa'),
+        data_emprestimo=request.form.get('data_emprestimo'),
+        data_devolução=request.form.get('data_devolução'),
+        valor = request.form.get('valor')
+    )
+    if EmprestimoService.insert(emprestimo):
+        return redirect(url_for('Home.index'))
+    else:
+        print('erro')

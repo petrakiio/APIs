@@ -59,4 +59,40 @@ def insert_books(livro) -> bool:
     finally:
         if db is not None:
             db.close()
-    
+
+def get_emprestimos() -> dict | bool:
+    db = None
+    try:
+        db = get_connection()
+        cursor = db.cursor()
+        sql = 'SELECT * FROM emprestimos'
+        cursor.execute(sql)
+        return cursor.fetchall()
+    except Exception as erro:
+        print('Erro:',erro)
+        return False
+    finally:
+        if db is not None:
+            db.close()
+
+def insert_emprestimos(emprestimo) -> bool:
+    db = None
+    try:
+        db = get_connection()
+        sql = "INSERT INTO emprestimos (id_livro, nome_pessoa, data_emprestimo, data_devolução, valor) " \
+        "VALUES (%s, %s, %s, %s, %s)"
+        cursor = db.cursor()
+        cursor.execute(sql, (
+            emprestimo.id_livro,
+            emprestimo.nome_pessoa,
+            emprestimo.data_emprestimo,
+            emprestimo.data_devolução,
+            emprestimo.valor
+        ))
+        db.commit()
+        return True
+    except Exception as err:
+        print('Erro:',err)
+    finally:
+        if db is not None:
+            db.close()
