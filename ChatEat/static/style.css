@@ -161,6 +161,37 @@ form[action="/search"] {
     background-color: #5865F2;
 }
 
+.flash-container {
+    width: 92%;
+    max-width: 1400px;
+    margin: 15px auto 0;
+}
+
+.alert {
+    padding: 12px;
+    margin-bottom: 16px;
+    border-radius: 8px;
+    text-align: center;
+    font-weight: bold;
+    font-size: 14px;
+    color: #000;
+}
+
+.alert-success {
+    background-color: #a7d7a9;
+    border: 1px solid #3d8b40;
+}
+
+.alert-danger {
+    background-color: #f4a7a7;
+    border: 1px solid #d32f2f;
+}
+
+.alert-warning {
+    background-color: #ffe082;
+    border: 1px solid #ffa000;
+}
+
 @media (max-width: 1024px) {
     form[action="/search"] {
         margin: 0 25px;
