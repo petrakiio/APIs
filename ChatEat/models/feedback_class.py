@@ -1,6 +1,6 @@
 from connection.conn import add_com
 
-class FeedbackService():
+class FeedbackService:
     @staticmethod
     def enviar(user, comentario, nota):
         if not user or not comentario or nota is None:

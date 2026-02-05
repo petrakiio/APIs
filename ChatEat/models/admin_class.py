@@ -1,6 +1,6 @@
 from connection.conn import feeds,deletar,users_get,users_admin,users_del,users_rm_admin
 
-class AdminService():
+class AdminService:
     @staticmethod
     def feedback():
         return feeds()
