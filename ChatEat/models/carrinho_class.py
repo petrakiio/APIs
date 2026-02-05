@@ -1,4 +1,4 @@
-from connection.conn import add_carinho,del_carinho,get_itens_carrinho
+from connection.cart_conn import add_carinho, del_carinho, get_itens_carrinho
 from models.produtos_class import Product
 
 class CarrinhoService:

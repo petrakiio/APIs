@@ -1,4 +1,4 @@
-from connection.conn import add_com
+from connection.feedback_conn import add_com
 
 class FeedbackService:
     @staticmethod

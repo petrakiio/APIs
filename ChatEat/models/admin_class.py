@@ -1,4 +1,5 @@
-from connection.conn import feeds,deletar,users_get,users_admin,users_del,users_rm_admin
+from connection.feedback_conn import feeds, deletar
+from connection.admin_conn import users_get, users_admin, users_del, users_rm_admin
 
 class AdminService:
     @staticmethod

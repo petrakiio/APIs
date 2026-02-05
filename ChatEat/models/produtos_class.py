@@ -1,4 +1,4 @@
-from connection import conn
+from connection import products_conn as conn
 
 class Product:
     def __init__(self, id, nome, descricao, preco, img):
