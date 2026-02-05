@@ -12,29 +12,29 @@
     <div class="nav-links">
         {% if 'usuario_nome' in session %}
             <span class="welcome-msg">Bem vindo {{ session['usuario_nome'] }}!</span>
-            <a href="/sobre">Sobre</a>
+            <a href="{{ url_for('home.sobre') }}">Sobre</a>
         
             {% if session['is_admin'] %}
-                <a href="/admin">Tela Admin | Feedbacks</a>
-                <a href="/admin_user">Tela  Admin | Usuarios</a>
-                <a href="/admin_produtos">Tela Admin | Produtos</a>
+                <a href="{{ url_for('admin.admin') }}">Tela Admin | Feedbacks</a>
+                <a href="{{ url_for('admin.admin_user') }}">Tela  Admin | Usuarios</a>
+                <a href="{{ url_for('admin.admin_produtos') }}">Tela Admin | Produtos</a>
             {% endif %}
             
-            <a href="/logout">Logout</a>
-            <a href="/feedback">Feedbacks</a>
-            <a href="/perfil" class="profile-link">
+            <a href="{{ url_for('Login.logout') }}">Logout</a>
+            <a href="{{ url_for('feed.feedback') }}">Feedbacks</a>
+            <a href="{{ url_for('profile.perfil') }}" class="profile-link">
                 <img src="{{ session['usuario_image'] }}" alt="perfil">
             </a>
-            <a href="/carinho" class="profile-link">
+            <a href="{{ url_for('carrinho.carrinho') }}" class="profile-link">
                 <img src="{{ url_for('static', filename='img/carrinho.webp') }}" alt="carrinho">
             </a>
         {% else %}
-            <a href="/login">Login</a>
-            <a href="/sobre">Sobre</a>
+            <a href="{{ url_for('Login.login') }}">Login</a>
+            <a href="{{ url_for('home.sobre') }}">Sobre</a>
         {% endif %}
     </div>
 
-    <form action="/search" method="post">
+    <form action="{{ url_for('home.search') }}" method="post">
         <input type="text" id="search" placeholder="pesquisar produto" name="search">
     </form>
 </nav>
@@ -46,7 +46,7 @@
             <h3>{{ product['nome'] }}</h3>
             <p>{{ product['descricao'] }}</p>
             <span class="price">R$ {{ "%.2f"|format(product['preco'])|replace('.', ',') }}</span>
-            <a href="/products/{{ product['id'] }}">
+            <a href="{{ url_for('home.products_page', id=product['id']) }}">
                 <button>Comprar</button>
             </a>
         </div>
@@ -55,7 +55,7 @@
 
 {% if products|length == 0 %}
     <p style="color: white; margin-top: 20px;">Nenhum prato encontrado com esse nome.</p>
-    <a href="/" style="color: #7289DA;">Ver todo o cardápio</a>
+    <a href="{{ url_for('home.index') }}" style="color: #7289DA;">Ver todo o cardápio</a>
 {% endif %}
 <script src="{{ url_for('static', filename='script/timer.js') }}"></script>
 </body>

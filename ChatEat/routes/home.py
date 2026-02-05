@@ -1,5 +1,5 @@
 from flask import Blueprint, render_template, request, session, redirect, url_for, flash
-from models.shopp_class import Product
+from models.produtos_class import Product
 
 home_route = Blueprint('home', __name__)
 

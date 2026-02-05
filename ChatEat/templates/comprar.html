@@ -4,7 +4,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Finalizar Compra - ChatEat</title>
-    <link rel="stylesheet" href="../static/comprar.css">
+    <link rel="stylesheet" href="{{ url_for('static', filename='comprar.css') }}">
     <link rel="shortcut icon" href="{{ url_for('static', filename='img/logo.png') }}" type="image/x-icon">
 </head>
 <body>
@@ -12,18 +12,18 @@
         {% if 'usuario_nome' in session %}
             <span class="user-greeting">Bem-vindo, {{ session['usuario_nome'] }}!</span>
             <div class="nav-links">
-                <a href="/feedback">Feedbacks</a>
-                <a href="/sobre">Sobre</a>
-                <a href="/index">Voltar</a>
-                <a href="/logout" class="logout-btn">Logout</a>
-                <a href="/perfil" class="profile-link">
+                <a href="{{ url_for('feed.feedback') }}">Feedbacks</a>
+                <a href="{{ url_for('home.sobre') }}">Sobre</a>
+                <a href="{{ url_for('home.index') }}">Voltar</a>
+                <a href="{{ url_for('Login.logout') }}" class="logout-btn">Logout</a>
+                <a href="{{ url_for('profile.perfil') }}" class="profile-link">
                     <img src="{{ session['usuario_image'] }}" alt="Foto de Perfil">
                 </a>
             </div>
         {% else %}
             <div class="nav-links">
-                <a href="/sobre">Sobre</a>
-                <a href="/login">Login</a>
+                <a href="{{ url_for('home.sobre') }}">Sobre</a>
+                <a href="{{ url_for('Login.login') }}">Login</a>
             </div>
         {% endif %}
     </nav>
@@ -43,7 +43,7 @@
                         </div>
                     </div>
                     
-                    <form action="/confirmar-compra" method="POST">
+                    <form action="{{ url_for('carrinho.confirmar_compra') }}" method="POST">
                         <button type="submit" class="confirm-btn">Confirmar Pagamento</button>
                     </form>
                     
@@ -59,14 +59,14 @@
                 <div class="login-required">
                     <h1>Produto não encontrado</h1>
                     <p>O item solicitado não existe em nosso cardápio.</p>
-                    <a href="/index" class="login-redirect">Voltar para a Loja</a>
+                    <a href="{{ url_for('home.index') }}" class="login-redirect">Voltar para a Loja</a>
                 </div>
             {% endif %}
         {% else %}
             <section class="login-required">
                 <h1>Acesso Restrito</h1>
                 <p>Você precisa estar logado para finalizar a compra.</p>
-                <a href="/login" class="login-redirect">Ir para Login</a>
+                <a href="{{ url_for('Login.login') }}" class="login-redirect">Ir para Login</a>
             </section>
         {% endif %}
     </main>

@@ -26,7 +26,7 @@
             
             <section class="settings">
                 <h3>Alterar Foto</h3>
-                <form action="/upload-image" method="post">
+                <form action="{{ url_for('profile.atualizar_imagem') }}" method="post">
                     <input type="url" name="img" placeholder="Cole a URL da imagem aqui" required>
                     <button type="submit" class="btn-save">Atualizar Foto</button>
                 </form>
@@ -37,7 +37,7 @@
             
             <section class="settings">
                 <h3>Alterar Foto</h3>
-                <form action="/upload-image" method="post">
+                <form action="{{ url_for('profile.atualizar_imagem') }}" method="post">
                     <input type="url" name="img" placeholder="Cole a URL da imagem aqui" required>
                     <button type="submit" class="btn-save">Atualizar Foto</button>
                 </form>
@@ -47,13 +47,13 @@
 
             <section class="danger-zone">
                 <h3>Zona de Perigo</h3>
-                <form action="/deletar/{{ session['usuario_id'] }}" method="post" onsubmit="return confirm('Tem certeza que deseja excluir sua conta? Esta ação é irreversível.')">
+                <form action="{{ url_for('profile.deletar_conta', usuario_id=session['usuario_id']) }}" method="post" onsubmit="return confirm('Tem certeza que deseja excluir sua conta? Esta ação é irreversível.')">
                     <button type="submit" id="delete">Deletar Minha Conta</button>
                 </form>
             </section>
         </div>
         {% endif %}
-        <a href="/index" class="back-link">← Voltar ao Início</a>
+        <a href="{{ url_for('home.index') }}" class="back-link">← Voltar ao Início</a>
     </main>
 <script src="{{ url_for('static', filename='script/timer.js') }}"></script>
 </body>

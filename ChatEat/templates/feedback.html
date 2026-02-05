@@ -4,21 +4,21 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Feedback</title>
-    <link rel="stylesheet" href="../static/feedback.css">
+    <link rel="stylesheet" href="{{ url_for('static', filename='feedback.css') }}">
     <link rel="shortcut icon" href="{{ url_for('static', filename='img/logo.png') }}" type="image/x-icon">
 </head>
 <body>
     <nav>
       <div class="nav-links">
             <span class="welcome-msg">Bem vindo {{ session['usuario_nome'] }}!</span>
-            <a href="/sobre">Sobre</a>
-            <a href="/logout">Logout</a>
-            <a href="/index">Inicio</a>
-            <a href="/perfil" class="profile-link">
+            <a href="{{ url_for('home.sobre') }}">Sobre</a>
+            <a href="{{ url_for('Login.logout') }}">Logout</a>
+            <a href="{{ url_for('home.index') }}">Inicio</a>
+            <a href="{{ url_for('profile.perfil') }}" class="profile-link">
                 <img src="{{ session['usuario_image'] }}" alt="perfil">
             </a>
-            <a href="/carinho" class="profile-link">
-                <img src="../static/img/carrinho.webp" alt="carrinho">
+            <a href="{{ url_for('carrinho.carrinho') }}" class="profile-link">
+                <img src="{{ url_for('static', filename='img/carrinho.webp') }}" alt="carrinho">
             </a>
       </div>
     </nav>
@@ -33,7 +33,7 @@
           {% endif %}
         {% endwith %}
 
-        <form action="/enviar-feed" method="post">
+        <form action="{{ url_for('feed.enviar') }}" method="post">
             <textarea name="comentario" placeholder="O que achou do ChatEat?"></textarea>
             <select name="nota">
                 <option value="5">⭐⭐⭐⭐⭐ (Excelente)</option>
@@ -46,6 +46,6 @@
         <button id="btn"></button>
     </div>
 <script src="{{ url_for('static', filename='script/timer.js') }}"></script>
-<script src="../static/script/modes.js"></script>
+<script src="{{ url_for('static', filename='script/modes.js') }}"></script>
 </body>
 </html>

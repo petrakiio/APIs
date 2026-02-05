@@ -1,39 +1,58 @@
-from flask import Blueprint,render_template,url_for,redirect,flash,request
-import os
+from flask import Blueprint, render_template, url_for, redirect, flash, request
 from models.admin_class import AdminService
 from routes.auth import admin_required
-from models.shopp_class import Product
+from models.produtos_class import Product
 
 admin_route = Blueprint('admin', __name__)
+
+def _flash_result(result, success_category='success', error_category='danger'):
+    if result.get('ok'):
+        flash(result.get('msg', 'Operação realizada.'), success_category)
+    else:
+        flash(result.get('msg', 'Erro ao executar a operação.'), error_category)
+
 
 @admin_route.route('/admin')
 @admin_required
 def admin():
-    return render_template('admin.html',feedbacks=AdminService.feedback())
+    return render_template('admin.html', feedbacks=AdminService.feedback())
 
 @admin_route.route('/admin_user')
 @admin_required
 def admin_user():
-    return render_template('usuarios.html',cliente=AdminService.users())
+    return render_template('usuarios.html', cliente=AdminService.users())
 
 @admin_route.route('/admin_produtos')
 @admin_required
 def admin_produtos():
-    return render_template('admin_produtos.html',produtos=Product.get_all_products())
+    return render_template('admin_produtos.html', produtos=Product.get_all_products())
 
 @admin_route.route('/admin_produtos/novo', methods=['GET', 'POST'])
 @admin_required
 def admin_produtos_novo():
     if request.method == 'POST':
-        flash('Salvar produto ainda não implementado.', 'danger')
+        r = Product.insert_product(
+            request.form.get('nome'),
+            request.form.get('descricao'),
+            float(request.form.get('preco')),
+            request.form.get('imagem')
+        )
+        _flash_result(r)
         return redirect(url_for('admin.admin_produtos'))
     return render_template('admin_produtos_add.html')
 
-@admin_route.route('/admin_produtos/editar/<int:id>')
+@admin_route.route('/admin_produtos/editar/<int:id>', methods=['GET', 'POST'])
 @admin_required
 def admin_produtos_editar(id):
     if request.method == 'POST':
-        flash('Salvar alterações ainda não implementado.', 'danger')
+        r = Product.update_product(
+            id,
+            request.form.get('nome'),
+            request.form.get('descricao'),
+            float(request.form.get('preco')),
+            request.form.get('imagem')
+        )
+        _flash_result(r)
         return redirect(url_for('admin.admin_produtos'))
     produto = Product.get_product_by_id(id)
     if not produto:
@@ -48,25 +67,18 @@ def admin_produtos_editar(id):
     }
     return render_template('admin_produtos_edit.html', produto=produto)
 
-@admin_route.route('/admin_produtos/excluir/<int:id>', methods=['POST'])
+@admin_route.route('/admin_produtos/excluir/<int:id>', methods=['GET', 'POST'])
 @admin_required
 def admin_produtos_excluir(id):
     r = Product.delete_product(id)
-    if r['ok']:
-        flash(r['msg'],'sucess')
-    else:
-        flash(r['msg'],'danger')
+    _flash_result(r)
     return redirect(url_for('admin.admin_produtos'))
 
 @admin_route.route('/deletar_feedback/<int:id>')
 @admin_required
 def deletar_feed(id):
     r = AdminService.del_fed(id)
-    if r['ok']:
-        flash(r['msg'],'sucess')
-    else:
-        flash(r['msg'],'danger')
-
+    _flash_result(r)
     return redirect(url_for('admin.admin'))
 
 @admin_route.route('/del_user',methods=['POST'])
@@ -74,10 +86,7 @@ def deletar_feed(id):
 def deletar_user():
     id = request.form.get('id')
     r = AdminService.del_user(id)
-    if r['ok']:
-        flash(r['msg'],'sucess')
-    else:
-        flash(r['msg'],'danger')
+    _flash_result(r)
     return redirect(url_for('admin.admin_user'))
 
 @admin_route.route('/add_admin',methods=['POST'])
@@ -85,10 +94,7 @@ def deletar_user():
 def add_admin():
     id = request.form.get('id_admin')
     r = AdminService.add_new_admin(id)
-    if r['ok']:
-        flash(r['msg'],'sucess')
-    else:
-        flash(r['msg'],'danger')
+    _flash_result(r)
     return redirect(url_for('admin.admin_user'))
 
 @admin_route.route('/rm_admin',methods=['POST'])
@@ -96,8 +102,5 @@ def add_admin():
 def rm_adm():
     id = request.form.get('id_admin_remove')
     r = AdminService.rm_admin(id)
-    if r['ok']:
-        flash(r['msg'],'sucess')
-    else:
-        flash(r['msg'],'danger')
+    _flash_result(r)
     return redirect(url_for('admin.admin_user'))

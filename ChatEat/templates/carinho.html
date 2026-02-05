@@ -4,7 +4,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Carrinho</title>
-    <link rel="stylesheet" href="../static/carrinho.css">
+    <link rel="stylesheet" href="{{ url_for('static', filename='carrinho.css') }}">
     <link rel="shortcut icon" href="{{ url_for('static', filename='img/logo.png') }}" type="image/x-icon">
 </head>
 <body>
@@ -12,17 +12,17 @@
         {% if 'usuario_nome' in session %}
             <span class="user-greeting">Bem-vindo {{ session['usuario_nome'] }}!</span>
             <div class="nav-links">
-                <a href="/sobre">Sobre</a>
-                <a href="/logout" class="logout-btn">Logout</a>
-                <a href="/index">Voltar</a>
-                <a href="/perfil" class="profile-link">
+                <a href="{{ url_for('home.sobre') }}">Sobre</a>
+                <a href="{{ url_for('Login.logout') }}" class="logout-btn">Logout</a>
+                <a href="{{ url_for('home.index') }}">Voltar</a>
+                <a href="{{ url_for('profile.perfil') }}" class="profile-link">
                     <img src="{{ session['usuario_image'] }}" alt="Foto de Perfil">
                 </a>
             </div>
         {% else %}
             <div class="nav-links">
-                <a href="/sobre">Sobre</a>
-                <a href="/login">Login</a>
+                <a href="{{ url_for('home.sobre') }}">Sobre</a>
+                <a href="{{ url_for('Login.login') }}">Login</a>
             </div>
         {% endif %}
     </nav>
@@ -70,7 +70,7 @@
         {% else %}
             <div class="empty-cart">
                 <p>Seu carrinho está vazio 🛒</p>
-                <a href="/index" class="checkout-btn" style="margin-top:20px; display:inline-block;">
+                <a href="{{ url_for('home.index') }}" class="checkout-btn" style="margin-top:20px; display:inline-block;">
                     Voltar às compras
                 </a>
             </div>

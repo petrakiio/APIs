@@ -1,7 +1,7 @@
 from routes.tools import validar_idade,get_client_ip,pode_tentar_login
 from connection.conn import inserir_cliente,buscar_cliente,buscar_senha,verificar_email,criptografar_senha,deletar,atualizar_imagem_perfil
 
-class Pessoa():
+class Pessoa:
     def __init__(self,nome,senha,email,data):
         self.nome = nome
         self.senha = senha

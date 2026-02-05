@@ -1,6 +1,6 @@
 from flask import Blueprint,session,redirect,render_template,url_for,flash
 from models.carrinho_class import CarrinhoService
-from models.shopp_class import Product
+from models.produtos_class import Product
 from routes.auth import login_required
 
 carrinho_route = Blueprint('carrinho',__name__)
@@ -41,3 +41,9 @@ def deletar_item(id):
     else:
         flash(r['msg'],'danger')
     return redirect(url_for('carrinho.carrinho'))
+
+@carrinho_route.route('/confirmar-compra', methods=['POST'])
+@login_required
+def confirmar_compra():
+    flash('Checkout ainda não implementado.', 'danger')
+    return redirect(url_for('home.index'))

@@ -344,3 +344,42 @@ def delete_product(product_id: int) -> bool:
     finally:
         if db is not None:
             db.close()
+
+def insert_product(produto) -> bool:
+    db = None
+    try:
+        db = get_connection()
+        cursor = db.cursor()
+        sql = 'INSERT INTO products (nome, descricao, preco, img) VALUES (%s, %s, %s, %s)'
+        cursor.execute(sql, 
+            (produto.nome,
+            produto.descricao,
+            produto.preco,
+            produto.img))
+        db.commit()
+        return True
+    except Exception as e:
+        print('Erro ao inserir produto:', e)
+        return False
+    finally:
+        if db is not None:
+            db.close()
+
+def update_product(produto) -> bool:
+    db = None
+    try:
+        db = get_connection()
+        cursor = db.cursor()
+        sql = 'UPDATE products SET nome = %s, descricao = %s, preco = %s, img = %s WHERE id = %s'
+        cursor.execute(
+            sql,
+            (produto.nome, produto.descricao, produto.preco, produto.img, produto.id)
+        )
+        db.commit()
+        return cursor.rowcount > 0
+    except Exception as e:
+        print('Erro ao atualizar produto:', e)
+        return False
+    finally:
+        if db is not None:
+            db.close()

@@ -13,11 +13,11 @@
         <div class="nav-links">
             <span class="welcome-msg" style="color: var(--text-muted);">Olá, {{ session['usuario_nome'] }}</span>
             <a href="{{ url_for('home.index') }}">Início</a>
-            <a href="/sobre">Sobre</a>
+            <a href="{{ url_for('home.sobre') }}">Sobre</a>
             <a href="{{ url_for('admin.admin') }}">Feedbacks</a>
             <a href="{{ url_for('admin.admin_user') }}">Usuários</a>
-            <a href="/logout" style="color: #ed4245;">Sair</a>
-            <a href="/perfil" class="profile-link">
+            <a href="{{ url_for('Login.logout') }}" style="color: #ed4245;">Sair</a>
+            <a href="{{ url_for('profile.perfil') }}" class="profile-link">
                 <img src="{{ session['usuario_image'] }}" alt="Perfil">
             </a>
         </div>

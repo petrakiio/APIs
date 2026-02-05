@@ -13,28 +13,28 @@
         <div class="nav-links">
                 <span class="welcome-msg" style="color: var(--text-muted);">Olá, {{ session['usuario_nome'] }}</span>
                 <a href="{{ url_for('home.index') }}">Início</a>
-                <a href="/sobre">Sobre</a>
-                <a href="/logout" style="color: #ed4245;">Sair</a>
-                <a href="/perfil" class="profile-link">
+                <a href="{{ url_for('home.sobre') }}">Sobre</a>
+                <a href="{{ url_for('Login.logout') }}" style="color: #ed4245;">Sair</a>
+                <a href="{{ url_for('profile.perfil') }}" class="profile-link">
                     <img src="{{ session['usuario_image'] }}" alt="Perfil">
                 </a>
         </div>
     </nav>
 
     <div class="forms-container">
-        <form action="/del_user" method="POST" class="input form-delete" onsubmit="return confirm('Tem certeza que deseja banir esse usuario?')">
+        <form action="{{ url_for('admin.deletar_user') }}" method="POST" class="input form-delete" onsubmit="return confirm('Tem certeza que deseja banir esse usuario?')">
             <p>Digite um id do cliente pra deletar</p>
             <input type="number" name="id" required placeholder="ID para banir">
             <button type="submit">Banir Usuário</button>
         </form>
 
-        <form action="/add_admin" method="POST" class="input form-admin" onsubmit="return confirm('Tem certeza que deseja dar administrador a esse usuario?')">
+        <form action="{{ url_for('admin.add_admin') }}" method="POST" class="input form-admin" onsubmit="return confirm('Tem certeza que deseja dar administrador a esse usuario?')">
             <p>Me diga um usuario pra dar adminstração</p>
             <input type="number" name="id_admin" required placeholder="ID para admin">
             <button type="submit">Conceder Admin</button>
         </form>
 
-        <form action="/rm_admin" method="POST" class="input form-admin" onsubmit="return confirm('Tem certeza de tirar o administrador desse usuario?')">
+        <form action="{{ url_for('admin.rm_adm') }}" method="POST" class="input form-admin" onsubmit="return confirm('Tem certeza de tirar o administrador desse usuario?')">
             <p>Me diga um usuario pra tirar adminstração</p>
             <input type="number" name="id_admin_remove" required placeholder="ID para admin">
             <button type="submit">Tirar Admin</button>

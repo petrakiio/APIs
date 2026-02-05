@@ -1,5 +1,5 @@
 from connection.conn import add_carinho,del_carinho,get_itens_carrinho
-from models.shopp_class import Product
+from models.produtos_class import Product
 
 class CarrinhoService():
     @staticmethod
