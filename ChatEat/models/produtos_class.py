@@ -42,4 +42,4 @@ class Product:
         r = conn.update_product(produto)
         if r:
             return {'ok': True, 'msg': 'Produto atualizado com sucesso!'}
-        return {'ok': False, 'msg': 'Erro ao atualizar o produto'}
+        return {'ok': False, 'msg': 'Erro ao atualizar o produto'}  
