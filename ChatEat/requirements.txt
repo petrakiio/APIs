@@ -1,0 +1,6 @@
+Flask
+python-dotenv
+PyMySQL
+argon2-cffi
+abacatepay
+qrcode[pil]
