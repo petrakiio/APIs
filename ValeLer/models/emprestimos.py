@@ -18,3 +18,8 @@ class EmprestimoService():
     @staticmethod
     def insert(emprestimo:PessoaEmprestimo):
         return conn.insert_emprestimos(emprestimo)
+
+    @staticmethod
+    def delete(id):
+        r = conn.devolver_emprestimo(id)
+        return r
