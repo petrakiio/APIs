@@ -5,10 +5,11 @@ from routes.login_routes import login_route
 from routes.profile import profile_route
 from routes.feedback_routes import feedback_route
 from routes.carrinho_routes import carrinho_route
+from routes.gatway_routes import gatway_route
 from dotenv import load_dotenv
 import os
 
-# Ensure the .env is loaded even when running from a different CWD
+
 load_dotenv(os.path.join(os.path.dirname(__file__), ".env"))
 
 app = Flask(__name__)
@@ -20,6 +21,7 @@ app.register_blueprint(carrinho_route)
 app.register_blueprint(login_route)
 app.register_blueprint(profile_route)
 app.register_blueprint(feedback_route)
+app.register_blueprint(gatway_route)
 app.secret_key = os.getenv('SECRET_KEY')
 if not app.secret_key:
     raise RuntimeError("SECRET_KEY not found. Set it in ChatEat/.env")
