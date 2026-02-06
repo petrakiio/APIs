@@ -3,8 +3,8 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Adicionar Livro</title>
-    <link rel="stylesheet" href="../static/add_livros.css">
+    <title>Editar Livro</title>
+    <link rel="stylesheet" href="../static/editar_livros.css">
     <link rel="shortcut icon" href="../static/img/valeLer.png" type="image/x-icon">
 </head>
 <body>
@@ -14,10 +14,9 @@
 
     <ul class="nav-links">
         <li><a href="/index">Livros</a></li>
-        <li><a href="#">Devolução</a></li>
-        <li><a href="/emprestimo">Emprestar livros</a></li>
-        <li><a href="/editar">Editar livros</a></li>
-        <li><a href="/deletar">Remover Livros</a></li>
+        <li><a href="/add_livros">Adicionar</a></li>
+        <li><a href="/emprestimo">Emprestar</a></li>
+        <li><a href="/deletar">Remover</a></li>
     </ul>
 
     <div class="nav-user">Admin</div>
@@ -25,9 +24,17 @@
 
 <div class="container">
     <div class="card">
-        <h1>Adicionar Livro</h1>
+        <h1>Editar Livro</h1>
+        <p class="helper">
+            Informe o ID do livro e os novos dados.
+        </p>
 
-        <form method="POST" action="/add_livros_form">
+        <form method="POST" action="/editar_livros_form">
+            <div class="form-group">
+                <label>ID do Livro</label>
+                <input type="number" name="id_livro" placeholder="Ex: 12" required>
+            </div>
+
             <div class="form-group">
                 <label>Título</label>
                 <input type="text" name="titulo" required>
@@ -68,7 +75,7 @@
                 <input type="number" name="unidades_disponiveis" required>
             </div>
 
-            <button type="submit">Cadastrar Livro</button>
+            <button type="submit">Salvar Alterações</button>
         </form>
     </div>
 </div>

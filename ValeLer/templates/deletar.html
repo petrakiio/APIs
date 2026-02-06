@@ -14,6 +14,7 @@
         <li><a href="/index">Livros</a></li>
         <li><a href="/emprestimo">Empréstimos</a></li>
         <li><a href="/add_livros">Adicionar</a></li>
+        <li><a href="/editar">Editar livros</a></li>
     </ul>
 </nav>
 
@@ -24,7 +25,7 @@
             Atenção: esta ação não pode ser desfeita.
         </p>
 
-        <form method="POST">
+        <form method="POST" action="/del_book">
             <div class="form-group">
                 <label>ID do Livro</label>
                 <input type="number" name="id_livro" placeholder="Ex: 12" required>

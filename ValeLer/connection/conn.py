@@ -152,3 +152,21 @@ def devolver_emprestimo(id_emprestimo) -> bool:
     finally:
         if db is not None:
             db.close()
+
+def delete_book(id_livro) -> bool:
+    db = None
+    try:
+        db = get_connection()
+        cursor = db.cursor()
+        sql = "DELETE FROM livros WHERE id_livro = %s"
+        cursor.execute(sql, (id_livro,))
+        db.commit()
+        return True
+    except Exception as err:
+        print('Erro:', err)
+        if db:
+            db.rollback()
+        return False
+    finally:
+        if db is not None:
+            db.close()

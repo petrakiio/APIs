@@ -23,3 +23,7 @@ class EmprestimoService():
     def delete(id):
         r = conn.devolver_emprestimo(id)
         return r
+    @staticmethod
+    def delete_livro(id):
+        r = conn.delete_book(id)
+        return r

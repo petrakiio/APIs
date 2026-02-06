@@ -33,3 +33,11 @@ def emprestimo_method():
     EmprestimoService.insert(emprestimo)
     print('funcionou')
     return redirect(url_for('Home.index'))
+
+@admin.route('/del_book', methods=['POST'])
+def del_book():
+    id_livro = request.form.get('id_livro')
+    if EmprestimoService.delete_livro(id_livro):
+        return redirect(url_for('Home.index'))
+    else:
+        return "Erro ao deletar o livro", 400
