@@ -158,6 +158,10 @@ def delete_book(id_livro) -> bool:
     try:
         db = get_connection()
         cursor = db.cursor()
+        sql_check = "SELECT 1 FROM emprestado WHERE id_livro = %s LIMIT 1"
+        cursor.execute(sql_check, (id_livro,))
+        if cursor.fetchone():
+            return False
         sql = "DELETE FROM livros WHERE id_livro = %s"
         cursor.execute(sql, (id_livro,))
         db.commit()

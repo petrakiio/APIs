@@ -22,3 +22,6 @@ class BibliotecaService():
     def insert(book:Livro):
         return conn.insert_books(book)
     
+    @staticmethod
+    def edit_book(id, book:Livro):
+        return conn.update_book(id, book)

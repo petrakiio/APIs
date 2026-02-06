@@ -41,3 +41,21 @@ def del_book():
         return redirect(url_for('Home.index'))
     else:
         return "Erro ao deletar o livro", 400
+
+@admin.route('/edit_book', methods=['POST'])
+def edit_book():
+    id = request.form.get('id_livro')
+    livro = Livro(
+        titulo=request.form.get('titulo'),
+        autor=request.form.get('autor'),
+        editora=request.form.get('editora'),
+        ano_publicacao=request.form.get('ano_publicacao'),
+        isbn=request.form.get('isbn'),
+        categoria=request.form.get('categoria'),
+        total_unidades=request.form.get('total_unidades'),
+        unidades_disponiveis=request.form.get('unidades_disponiveis')
+    )
+    if BibliotecaService.edit_book(id, livro):
+        return redirect(url_for('Home.index'))
+    else:
+        return "Erro ao editar o livro", 400
