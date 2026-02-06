@@ -1,0 +1,95 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Status da Entrega - ChatEat</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='status_entrega.css') }}">
+    <link rel="shortcut icon" href="{{ url_for('static', filename='img/logo.png') }}" type="image/x-icon">
+</head>
+<body>
+    <nav>
+        {% if 'usuario_nome' in session %}
+            <span class="user-greeting">Bem-vindo, {{ session['usuario_nome'] }}!</span>
+            <div class="nav-links">
+                <a href="{{ url_for('feed.feedback') }}">Feedbacks</a>
+                <a href="{{ url_for('home.sobre') }}">Sobre</a>
+                <a href="{{ url_for('home.index') }}">Voltar</a>
+                <a href="{{ url_for('Login.logout') }}" class="logout-btn">Logout</a>
+                <a href="{{ url_for('profile.perfil') }}" class="profile-link">
+                    <img src="{{ session['usuario_image'] }}" alt="Foto de Perfil">
+                </a>
+            </div>
+        {% else %}
+            <div class="nav-links">
+                <a href="{{ url_for('home.sobre') }}">Sobre</a>
+                <a href="{{ url_for('Login.login') }}">Login</a>
+            </div>
+        {% endif %}
+    </nav>
+
+    <main class="container">
+        <section class="status-card">
+            <header class="status-header">
+                <div>
+                    <h1>Status da entrega</h1>
+                    <p class="muted">Pedido #CE-2041</p>
+                </div>
+                <div class="eta">
+                    <span class="eta-label">Previsao</span>
+                    <span class="eta-time">25-35 min</span>
+                </div>
+            </header>
+
+            <div class="status-current">
+                <span class="badge">Saiu para entrega</span>
+                <p class="muted">Seu pedido esta a caminho. Fique de olho no telefone.</p>
+            </div>
+
+            <div class="progress">
+                <div class="progress-track">
+                    <div class="progress-fill"></div>
+                </div>
+                <div class="progress-steps">
+                    <div class="step done">
+                        <span class="dot"></span>
+                        <span class="label">Confirmado</span>
+                    </div>
+                    <div class="step done">
+                        <span class="dot"></span>
+                        <span class="label">Em preparo</span>
+                    </div>
+                    <div class="step active">
+                        <span class="dot"></span>
+                        <span class="label">Saiu para entrega</span>
+                    </div>
+                    <div class="step">
+                        <span class="dot"></span>
+                        <span class="label">Entregue</span>
+                    </div>
+                </div>
+            </div>
+
+            <div class="details">
+                <div class="detail">
+                    <span class="detail-label">Endereco</span>
+                    <span class="detail-value">Rua Central, 245 - Centro</span>
+                </div>
+                <div class="detail">
+                    <span class="detail-label">Entregador</span>
+                    <span class="detail-value">Lucas N. (Bike)</span>
+                </div>
+                <div class="detail">
+                    <span class="detail-label">Contato</span>
+                    <span class="detail-value">(11) 90000-0000</span>
+                </div>
+            </div>
+
+            <div class="actions">
+                <a class="btn" href="{{ url_for('home.index') }}">Voltar para a Loja</a>
+                <a class="btn ghost" href="{{ url_for('feed.feedback') }}">Enviar feedback</a>
+            </div>
+        </section>
+    </main>
+</body>
+</html>
