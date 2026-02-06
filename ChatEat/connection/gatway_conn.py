@@ -43,7 +43,7 @@ def create_gatway(produto):
         if request_dada is not None:
             print(f"Request data: {request_dada}")
 
-def generate_qr_code(url, filename="qr_code.png"):
+def generate_qr_code(url, filename="qrcode.png"):
     try:
         qr = qrcode.QRCode(version=1, box_size=10, border=5)
         qr.add_data(url)
