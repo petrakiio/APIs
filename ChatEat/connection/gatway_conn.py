@@ -14,6 +14,7 @@ def create_gatway(produto):
                 {
                     "id": int(produto["id"]),
                     "title": produto["nome"],
+                    "description": produto.get("descricao", ""),
                     "quantity": 1,
                     "currency_id": "BRL",
                     "unit_price": float(produto["preco"]),
@@ -38,12 +39,14 @@ def create_gatway(produto):
     finally:
         print(f"Request data: {request_dada}")
 
-produto = {
-    "id": 1,
-    "nome": "Produto de Teste",
-    "preco": 100.00
-}
-link = create_gatway(produto)
-print(link)
-qrcode = qrcode.make(link)
-qrcode.save("qrcode.png")
+def generate_qr_code(url):
+    try:
+        qr = qrcode.QRCode(version=1, box_size=10, border=5)
+        qr.add_data(url)
+        qr.make(fit=True)
+        img = qr.make_image(fill='black', back_color='white')
+        img.save('static/img/qr_code.png')
+        return img
+    except Exception as e:
+        print(f"Error generating QR code: {e}")
+        return None
