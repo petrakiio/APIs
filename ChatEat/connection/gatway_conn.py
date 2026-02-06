@@ -57,3 +57,15 @@ def generate_qr_code(url, filename="qrcode.png"):
     except Exception as e:
         print(f"Error generating QR code: {e}")
         return None
+
+def delete_qr_code(filename="qrcode.png"):
+    try:
+        project_root = Path(__file__).resolve().parents[1]
+        file_path = project_root / "static" / "img" / filename
+        if file_path.exists():
+            file_path.unlink()
+            return True
+        return False
+    except Exception as e:
+        print(f"Error deleting QR code: {e}")
+        return False

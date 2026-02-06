@@ -150,7 +150,9 @@ h1 {
 .confirm-btn:active {
     transform: scale(0.98);
 }
-
+.confirm-btn.cancel{
+    background-color: #f04747;
+}
 /* --- ESTADO DESLOGADO --- */
 .login-required {
     background-color: #2F3136;

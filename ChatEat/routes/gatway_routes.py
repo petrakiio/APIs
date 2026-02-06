@@ -21,6 +21,8 @@ def compra_sucesso():
 
 @gatway_route.route('/falha')
 def compra_falha():
+    if not GatwayService.deletar_qr_code():
+        print("Erro ao deletar o QR code.")
     return render_template('compra_falha.html')
 
 

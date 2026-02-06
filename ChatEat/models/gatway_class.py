@@ -26,3 +26,7 @@ class GatwayService:
     @staticmethod
     def gerar_qr_code(url):
         return gatway_conn.generate_qr_code(url)
+
+    @staticmethod
+    def deletar_qr_code():
+        return gatway_conn.delete_qr_code()
