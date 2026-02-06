@@ -14,7 +14,6 @@
     <ul class="nav-links">
         <li><a href="/add_livros">Adicionar livros</a></li>
         <li><a href="/emprestimo">Emprestar livros</a></li>
-        <li><a href="#">Devolver livro</a></li>
         <li><a href="/deletar">Remover Livros</a></li>
     </ul>
     <div class="nav-user">
@@ -81,7 +80,7 @@
             <td>{{ emprestimo.data_devolucao }}</td>
             <td>R$ {{ emprestimo.valor }}</td>
             <td>
-                <form method="POST" action="/devolver">
+                <form method="POST" action="/devolver/{{ emprestimo.id_emprestimo }}">
                     <input type="hidden" name="id_emprestimo" value="{{ emprestimo.id_emprestimo }}">
                     <button type="submit" class="btn-devolver">
                         Devolver

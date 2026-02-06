@@ -18,6 +18,18 @@ def add_livros():
 def emprestimo():
     return render_template('emprestar_livros.html',livros=BibliotecaService.home())
 
+@home.route('/devolver/<int:id>', methods=['POST'])
+def devolver(id):
+    try:
+        r = EmprestimoService.delete(id)
+        if r:
+            return redirect(url_for('Home.index'))
+        else:
+            return "Erro ao devolver o livro", 400
+    except Exception as err:
+        print("Erro ao devolver livro:", err)
+        return "Erro interno ao devolver o livro", 500
+
 @home.route('/deletar')
 def deletar():
     return render_template('deletar.html')
