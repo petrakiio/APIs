@@ -15,12 +15,12 @@ class GatwayService:
         if not id_produto:
             return None
         
-        produto = {
-            "id": id_produto["id"],
-            "nome": id_produto["nome"],
-            "descricao": id_produto["descricao"],
-            "preco": id_produto["preco"],
-        }
+        produto = Gatway(
+            id=id_produto['id'],
+            nome=id_produto['nome'],
+            descricao=id_produto['descricao'],
+            preco=id_produto['preco']
+        )
         return gatway_conn.create_gatway(produto)
     
     @staticmethod

@@ -1,6 +1,8 @@
+import os
+from pathlib import Path
+
 import mercadopago
 from dotenv import load_dotenv
-import os
 import qrcode
 
 load_dotenv()
@@ -13,12 +15,12 @@ def create_gatway(produto):
         request_dada = {
             "items": [
                 {
-                    "id": int(produto["id"]),
-                    "title": produto["nome"],
-                    "description": produto.get("descricao", ""),
+                    "id": int(produto.id),
+                    "title": produto.nome,
+                    "description": produto.descricao or "",
                     "quantity": 1,
                     "currency_id": "BRL",
-                    "unit_price": float(produto["preco"]),
+                    "unit_price": float(produto.preco),
                 }
             ],
             "back_urls":
@@ -41,13 +43,16 @@ def create_gatway(produto):
         if request_dada is not None:
             print(f"Request data: {request_dada}")
 
-def generate_qr_code(url):
+def generate_qr_code(url, filename="qr_code.png"):
     try:
         qr = qrcode.QRCode(version=1, box_size=10, border=5)
         qr.add_data(url)
         qr.make(fit=True)
         img = qr.make_image(fill='black', back_color='white')
-        img.save('static/img/qr_code.png')
+        project_root = Path(__file__).resolve().parents[1]
+        output_path = project_root / "static" / "img" / filename
+        output_path.parent.mkdir(parents=True, exist_ok=True)
+        img.save(output_path)
         return img
     except Exception as e:
         print(f"Error generating QR code: {e}")
