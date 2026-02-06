@@ -4,7 +4,7 @@ from models.produtos_class import Product
 
 gatway_route = Blueprint('gatway', __name__)
 
-@gatway_route.route('/iniciar_pagamento/<int:id>')
+@gatway_route.route('/iniciar_pagamento/<int:id>',methods=['GET','POST'])
 def iniciar_pagamento(id):
     url_pagamento = GatwayService.criar_gatway(id)
     if not url_pagamento:

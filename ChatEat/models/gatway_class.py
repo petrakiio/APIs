@@ -1,5 +1,5 @@
 from connection import gatway_conn
-from connection import products_conn
+from models.produtos_class import Product
 
 class Gatway:
     def __init__(self, id, nome, descricao, preco):
@@ -11,7 +11,7 @@ class Gatway:
 class GatwayService:
     @staticmethod
     def criar_gatway(id):
-        id_produto = products_conn.get_product_by_id(id)
+        id_produto = Product.get_product_by_id(id)
         if not id_produto:
             return None
         

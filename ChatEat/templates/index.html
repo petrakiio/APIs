@@ -58,7 +58,7 @@
             <h3>{{ product['nome'] }}</h3>
             <p>{{ product['descricao'] }}</p>
             <span class="price">R$ {{ "%.2f"|format(product['preco'])|replace('.', ',') }}</span>
-            <form action="{{ url_for('gatway.iniciar_pagamento', id=product['id']) }}" method="POST">
+            <form action="{{ url_for('home.products_page', id=product['id']) }}" method="GET">
                 <button type="submit">Comprar</button>
             </form>
         </div>
