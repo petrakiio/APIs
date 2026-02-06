@@ -170,3 +170,35 @@ def delete_book(id_livro) -> bool:
     finally:
         if db is not None:
             db.close()
+
+def update_book(id_livro, livro) -> bool:
+    db = None
+    try:
+        db = get_connection()
+        cursor = db.cursor()
+        sql = """
+            UPDATE livros
+            SET titulo = %s, autor = %s, editora = %s, ano_publicacao = %s, isbn = %s, categoria = %s, total_unidades = %s, unidades_disponiveis = %s
+            WHERE id_livro = %s
+        """
+        cursor.execute(sql, (
+            livro.titulo,
+            livro.autor,
+            livro.editora,
+            livro.ano_publicacao,
+            livro.isbn,
+            livro.categoria,
+            livro.total_unidades,
+            livro.unidades_disponiveis,
+            id_livro
+        ))
+        db.commit()
+        return True
+    except Exception as err:
+        print('Erro:', err)
+        if db:
+            db.rollback()
+        return False
+    finally:
+        if db is not None:
+            db.close()
