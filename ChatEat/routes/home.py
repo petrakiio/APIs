@@ -19,6 +19,10 @@ def search():
 def sobre():
     return render_template('sobre.html')
 
+@home_route.route('/status_entrega')
+def status_entrega():
+    return render_template('status_entrega.html')
+
 @home_route.route('/products/<int:id>')
 def products_page(id):
     product_found = Product.get_product_by_id(id)

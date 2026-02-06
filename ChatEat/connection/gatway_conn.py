@@ -8,6 +8,9 @@ import qrcode
 load_dotenv()
 
 sdk = mercadopago.SDK(os.getenv('ACESS_TOKEN'))
+WEBHOOK_URL = os.getenv('MERCADOPAGO_WEBHOOK_URL')
+
+_payment_status_cache = {}
 
 def create_gatway(produto):
     request_dada = None
@@ -28,8 +31,11 @@ def create_gatway(produto):
                 "success": "http://localhost:5000/sucesso",
                 "failure": "http://localhost:5000/falha",
                 "pending": "http://localhost:5000/pendente"
-            }
+            },
+            "auto_return": "approved",
         }
+        if WEBHOOK_URL:
+            request_dada["notification_url"] = WEBHOOK_URL
         response = sdk.preference().create(request_dada)
         if response.get("status") not in (200, 201):
             print(f"Mercado Pago error: {response}")
@@ -42,6 +48,29 @@ def create_gatway(produto):
     finally:
         if request_dada is not None:
             print(f"Request data: {request_dada}")
+
+def get_payment(payment_id):
+    try:
+        return sdk.payment().get(payment_id)
+    except Exception as e:
+        print(f"Error fetching payment: {e}")
+        return None
+
+def get_payment_status(payment_id):
+    cached = _payment_status_cache.get(str(payment_id))
+    if cached:
+        return cached
+    response = get_payment(payment_id)
+    if not response or response.get("status") != 200:
+        return None
+    status = response.get("response", {}).get("status")
+    if status:
+        _payment_status_cache[str(payment_id)] = status
+    return status
+
+def set_payment_status(payment_id, status):
+    if payment_id and status:
+        _payment_status_cache[str(payment_id)] = status
 
 def generate_qr_code(url, filename="qrcode.png"):
     try:
