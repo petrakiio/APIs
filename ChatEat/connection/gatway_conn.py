@@ -8,6 +8,7 @@ load_dotenv()
 sdk = mercadopago.SDK(os.getenv('ACESS_TOKEN'))
 
 def create_gatway(produto):
+    request_dada = None
     try:
         request_dada = {
             "items": [
@@ -37,7 +38,8 @@ def create_gatway(produto):
         print(f"Error creating preference: {e}")
         return None
     finally:
-        print(f"Request data: {request_dada}")
+        if request_dada is not None:
+            print(f"Request data: {request_dada}")
 
 def generate_qr_code(url):
     try:

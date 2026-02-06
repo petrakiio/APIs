@@ -9,7 +9,7 @@ def iniciar_pagamento(id):
     url_pagamento = GatwayService.criar_gatway(id)
     if not url_pagamento:
         flash("Erro ao criar pagamento. Tente novamente.")
-        return redirect(url_for('home.home'))
+        return redirect(url_for('home.index'))
     GatwayService.gerar_qr_code(url_pagamento)
     return render_template('pagamento.html',product=Product.get_product_by_id(id))
 
