@@ -1,4 +1,4 @@
-from flask import Blueprint, request, redirect, url_for
+from flask import Blueprint, request, redirect, url_for, jsonify
 from models.administração import Livro, BibliotecaService
 from models.emprestimos import PessoaEmprestimo, EmprestimoService
 
@@ -59,3 +59,9 @@ def edit_book():
         return redirect(url_for('Home.index'))
     else:
         return "Erro ao editar o livro", 400
+
+@admin.route('/search_books', methods=['GET'])
+def search_books():
+    query = request.args.get('q')
+    results = BibliotecaService.search_books(query)
+    return jsonify(results)

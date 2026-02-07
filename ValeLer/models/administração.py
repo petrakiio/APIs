@@ -25,3 +25,6 @@ class BibliotecaService():
     @staticmethod
     def edit_book(id, book:Livro):
         return conn.update_book(id, book)
+    @staticmethod
+    def search_books(query):
+        return conn.search_books(query)

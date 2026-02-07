@@ -206,3 +206,22 @@ def update_book(id_livro, livro) -> bool:
     finally:
         if db is not None:
             db.close()
+
+def search_books(query) -> dict:
+    db = None
+    try:
+        db = get_connection()
+        cursor = db.cursor()
+        sql = 'SELECT * FROM livros'
+        cursor.execute(sql)
+        livros = cursor.fetchall()
+        for livro in livros:
+            if query.lower() in livro['titulo'].lower():
+                return livro
+        return {}
+    except Exception as err:
+        print('Erro:', err)
+        return {}
+    finally:
+        if db is not None:
+            db.close()
