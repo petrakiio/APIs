@@ -36,6 +36,23 @@ body {
     color: var(--primary);
 }
 
+.nav-links {
+    list-style: none;
+    display: flex;
+    gap: 24px;
+}
+
+.nav-links a {
+    text-decoration: none;
+    color: var(--text-main);
+    font-size: 15px;
+    transition: color 0.2s ease;
+}
+
+.nav-links a:hover {
+    color: var(--primary);
+}
+
 .nav-user {
     font-size: 14px;
     color: var(--text-muted);
@@ -106,6 +123,10 @@ button:hover {
 }
 
 @media (max-width: 600px) {
+    .nav-links {
+        display: none;
+    }
+
     .card {
         padding: 24px;
     }
