@@ -1,7 +1,7 @@
 from flask import Blueprint,render_template,redirect,url_for,request,flash
 from connection import gatway_conn
 from models.gatway_class import Gatway,GatwayService
-from auth import login_required
+from routes.auth import login_required
 from models.produtos_class import Product
 
 gatway_route = Blueprint('gatway', __name__)
