@@ -10,20 +10,28 @@
 
 <nav class="navbar">
     <div class="nav-brand">📚 Biblioteca</div>
-
+    {%if session.get('is_admin')%}
     <ul class="nav-links">
         <li><a href="/index">Voltar</a></li>
         <li><a href="/editar">Editar livros</a></li>
         <li><a href="/deletar">Remover livros</a></li>
         <li><a href="/add_livros">Adicionar livros</a></li>
     </ul>
-
+    {% endif %}
+    <ul class="nav-links">
+        <li><a href="/index">Voltar</a></li>
+        <li><a href="/logout">Logout</a></li>
+    </ul>
     <div class="nav-user">Admin</div>
 </nav>
 
 <div class="container">
     <div class="card">
+        {%if session.get('is_admin')%}
         <h1>Emprestar Livro</h1>
+        {% else %}
+        <h1>Pedir Livro</h1>
+        {% endif %}
 
         <form method="POST" action="/emprestimo_method">
             <div class="form-group">
@@ -37,11 +45,12 @@
                     {% endfor %}
                 </select>
             </div>
-
+            {%if session.get('is_admin')%}
             <div class="form-group">
                 <label>Nome da Pessoa</label>
                 <input type="text" name="nome_pessoa" required>
             </div>
+            {% endif %}
 
             <div class="form-group">
                 <label>Data do Empréstimo</label>
@@ -52,13 +61,21 @@
                 <label>Data de Devolução</label>
                 <input type="date" name="data_devolucao" required>
             </div>
-
+            {%if session.get('is_admin')%}
             <div class="form-group">
                 <label>Preço</label>
                 <input type="number" name="valor" step="0.01" min="0" required>
             </div>
-
+            {% endif %}
+            <div class="form-group">
+                <label>Preço(fixo)</label>
+                <p value="10,00">R$ 10,00</p>
+            </div>
+            {%if session.get('is_admin')%}
             <button type="submit">Confirmar Empréstimo</button>
+            {% else %}
+            <button type="submit">Confirmar Empréstimo (R$ 10,00)</button>
+            {% endif %}
         </form>
     </div>
 </div>

@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Login - Vale Ler</title>
+    <link rel="stylesheet" href="../static/style.css">
+    <link rel="stylesheet" href="../static/auth.css">
+    <link rel="shortcut icon" href="../static/img/valeLer.png" type="image/x-icon">
+</head>
+<body>
+
+<nav class="navbar">
+    <div class="nav-brand">📚 Biblioteca</div>
+    <ul class="nav-links">
+        <li><a href="/index">Livros</a></li>
+    </ul>
+    <div class="nav-user">
+        <span>Entrar</span>
+    </div>
+</nav>
+
+<div class="auth-container">
+    <div class="auth-card">
+        <h2>Entrar</h2>
+        <form method="POST" action="/login" class="auth-form">
+            <label for="gmail">Gmail</label>
+            <input type="email" id="gmail" name="gmail" placeholder="seuemail@gmail.com" required>
+
+            <label for="password">Senha</label>
+            <input type="password" id="password" name="password" placeholder="Sua senha" required>
+
+            <button type="submit" class="btn-primary">Login</button>
+        </form>
+        <p class="auth-hint">Ainda não tem conta? <a href="/cadastro">Crie uma</a></p>
+    </div>
+</div>
+
+</body>
+</html>

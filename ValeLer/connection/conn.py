@@ -1,25 +1,4 @@
-import pymysql
-from dotenv import load_dotenv
-import os
-
-load_dotenv()
-
-
-def get_connection():
-    try:
-        return pymysql.connect(
-            host=os.getenv('DB_HOST'),
-            user=os.getenv('DB_USER'),
-            password=os.getenv('DB_PASSWORD'),
-            database=os.getenv('DB_NAME'),
-            port=int(os.getenv('DB_PORT')),
-            cursorclass=pymysql.cursors.DictCursor 
-        )
-    
-    except Exception as e:
-        print(f"Erro ao conectar ao banco de dados: {e}")
-        return None
-
+from connection.core import get_connection
 def get_books() -> dict | bool:
     db = None
     try:
@@ -65,7 +44,11 @@ def get_emprestimos() -> dict:
     try:
         db = get_connection()
         cursor = db.cursor()
-        sql = 'SELECT * FROM emprestado'
+        sql = """
+            SELECT e.*, l.titulo AS titulo
+            FROM emprestado e
+            LEFT JOIN livros l ON l.id_livro = e.id_livro
+        """
         cursor.execute(sql)
         return cursor.fetchall()
     except Exception as erro:
@@ -150,6 +133,26 @@ def devolver_emprestimo(id_emprestimo) -> bool:
             db.rollback()
         return False
     finally:
+        if db is not None:
+            db.close()
+
+def get_livros_usuario(nome_pessoa) -> dict:
+    db = None
+    try:
+        db = get_connection()
+        cursor = db.cursor()
+        sql = """
+            SELECT e.*, l.titulo AS titulo
+            FROM emprestado e
+            LEFT JOIN livros l ON l.id_livro = e.id_livro
+            WHERE e.nome_pessoa = %s
+        """
+        cursor.execute(sql, (nome_pessoa,))
+        return cursor.fetchall()
+    except Exception as err:
+        print('Erro:', err)
+        return []
+    finally:        
         if db is not None:
             db.close()
 

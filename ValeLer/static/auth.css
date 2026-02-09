@@ -1,0 +1,135 @@
+/* AUTH */
+.auth-container {
+    min-height: calc(100vh - 72px);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 24px;
+}
+
+.auth-card {
+    width: 100%;
+    max-width: 420px;
+    background: var(--bg-card);
+    border: 1px solid var(--border);
+    border-radius: 14px;
+    padding: 24px;
+    box-shadow: 0 8px 24px rgba(0, 0, 0, 0.25);
+}
+
+.auth-card h2 {
+    margin-bottom: 18px;
+    font-size: 22px;
+    color: var(--text-main);
+}
+
+.auth-form {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+}
+
+.auth-error {
+    background: #2a1b1b;
+    border: 1px solid #5a2a2a;
+    color: #f0b3b3;
+    padding: 10px 12px;
+    border-radius: 8px;
+    font-size: 13px;
+}
+
+.auth-form label {
+    font-size: 14px;
+    color: var(--text-muted);
+}
+
+.auth-form input {
+    padding: 12px 14px;
+    border-radius: 10px;
+    border: 1px solid var(--border);
+    background-color: #12141a;
+    color: var(--text-main);
+    font-size: 14px;
+}
+
+.auth-form textarea {
+    padding: 12px 14px;
+    border-radius: 10px;
+    border: 1px solid var(--border);
+    background-color: #12141a;
+    color: var(--text-main);
+    font-size: 14px;
+    resize: vertical;
+}
+
+.auth-form input:focus {
+    outline: none;
+    border-color: var(--primary);
+}
+
+.btn-primary {
+    margin-top: 6px;
+    padding: 12px 18px;
+    border: none;
+    border-radius: 10px;
+    background-color: var(--primary);
+    color: #fff;
+    font-size: 14px;
+    font-weight: bold;
+    cursor: pointer;
+}
+
+.btn-primary:hover {
+    background-color: #3a6fd9;
+}
+
+.auth-hint {
+    margin-top: 14px;
+    font-size: 13px;
+    color: var(--text-muted);
+}
+
+.auth-hint a {
+    color: var(--primary);
+    text-decoration: none;
+}
+
+.profile-info {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+    margin-bottom: 16px;
+    font-size: 14px;
+}
+
+.profile-actions {
+    display: flex;
+    gap: 10px;
+}
+
+.profile-image {
+    display: flex;
+    justify-content: center;
+    margin: 10px 0 16px 0;
+}
+
+.profile-image img {
+    width: 120px;
+    height: 120px;
+    border-radius: 50%;
+    object-fit: cover;
+    border: 2px solid var(--border);
+}
+
+.profile-placeholder {
+    width: 120px;
+    height: 120px;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background: #161616;
+    border: 2px dashed var(--border);
+    color: var(--text-muted);
+    font-size: 12px;
+}

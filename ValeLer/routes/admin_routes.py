@@ -1,4 +1,4 @@
-from flask import Blueprint, request, redirect, url_for, jsonify
+from flask import Blueprint, request, redirect, url_for, jsonify,session
 from models.administração import Livro, BibliotecaService
 from models.emprestimos import PessoaEmprestimo, EmprestimoService
 
@@ -25,10 +25,10 @@ def emprestimo_method():
     emprestimo = PessoaEmprestimo(
         id_emprestimo=None,
         id_livro=request.form.get('id_livro'),
-        nome_pessoa=request.form.get('nome_pessoa'),
+        nome_pessoa=request.form.get('nome_pessoa') or session.get('nome'),
         data_emprestimo=request.form.get('data_emprestimo'),
         data_devolucao=request.form.get('data_devolucao'),
-        valor=request.form.get('valor')
+        valor=request.form.get('valor') or '10,00'
     )
     EmprestimoService.insert(emprestimo)
     print('funcionou')

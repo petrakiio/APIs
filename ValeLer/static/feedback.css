@@ -1,0 +1,75 @@
+/* FEEDBACK PAGE */
+.feedback-shell {
+    min-height: calc(100vh - 72px);
+    padding: 32px 16px 48px 16px;
+    display: flex;
+    justify-content: center;
+    align-items: flex-start;
+    position: relative;
+    overflow: hidden;
+}
+
+.feedback-shell::before {
+    content: "";
+    position: absolute;
+    inset: -40% -20% auto -20%;
+    height: 60%;
+    background: radial-gradient(600px 240px at 50% 0%, rgba(79, 140, 255, 0.25), transparent 70%);
+    pointer-events: none;
+}
+
+.feedback-card {
+    width: 100%;
+    max-width: 620px;
+    background: linear-gradient(160deg, rgba(30, 30, 30, 0.95), rgba(18, 18, 18, 0.98));
+    border: 1px solid var(--border);
+    border-radius: 16px;
+    padding: 26px 24px;
+    box-shadow: 0 12px 30px rgba(0, 0, 0, 0.35);
+    position: relative;
+    z-index: 1;
+}
+
+.feedback-head h2 {
+    font-size: 24px;
+    margin-bottom: 8px;
+    color: var(--text-main);
+}
+
+.feedback-head p {
+    font-size: 14px;
+    color: var(--text-muted);
+    margin-bottom: 18px;
+}
+
+.feedback-form {
+    display: grid;
+    gap: 10px;
+}
+
+.feedback-form input,
+.feedback-form textarea {
+    padding: 12px 14px;
+    border-radius: 10px;
+    border: 1px solid var(--border);
+    background-color: #12141a;
+    color: var(--text-main);
+    font-size: 14px;
+}
+
+.feedback-form input:focus,
+.feedback-form textarea:focus {
+    outline: none;
+    border-color: var(--primary);
+}
+
+.btn-wide {
+    width: 100%;
+    margin-top: 6px;
+}
+
+@media (max-width: 600px) {
+    .feedback-card {
+        padding: 22px 18px;
+    }
+}

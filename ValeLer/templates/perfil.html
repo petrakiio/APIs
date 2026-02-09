@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Perfil - Vale Ler</title>
+    <link rel="stylesheet" href="../static/style.css">
+    <link rel="stylesheet" href="../static/auth.css">
+    <link rel="shortcut icon" href="../static/img/valeLer.png" type="image/x-icon">
+</head>
+<body>
+
+<nav class="navbar">
+    <div class="nav-brand">📚 Biblioteca</div>
+    <ul class="nav-links">
+        <li><a href="/index">Livros</a></li>
+    </ul>
+    <div class="nav-user">
+        <span>Perfil</span>
+    </div>
+</nav>
+
+<div class="auth-container">
+    <div class="auth-card">
+        <h2>Seu Perfil</h2>
+        <div class="profile-image">
+            {% if session.get('img') %}
+                <img src="{{ session.get('img') }}" alt="Foto de perfil">
+            {% else %}
+                <div class="profile-placeholder">Sem imagem</div>
+            {% endif %}
+        </div>
+        <div class="profile-info">
+            <div><strong>Nome:</strong> {{ nome or 'Usuário' }}</div>
+            <div><strong>Gmail:</strong> {{ gmail or 'email@exemplo.com' }}</div>
+            <div><strong>Admin:</strong> {{ 'Sim' if is_admin else 'Não' }}</div>
+        </div>
+        <form method="POST" action="/perfil" class="auth-form">
+            <label for="profile_image_url">Imagem por URL</label>
+            <input type="url" id="profile_image_url" name="profile_image_url" placeholder="https://exemplo.com/foto.jpg">
+            <button type="submit" class="btn-primary">Atualizar imagem</button>
+        </form>
+        <div class="profile-actions">
+            <a class="btn-primary" href="/index">Voltar</a>
+        </div>
+    </div>
+ </div>
+
+</body>
+</html>

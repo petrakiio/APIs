@@ -27,3 +27,6 @@ class EmprestimoService():
     def delete_livro(id):
         r = conn.delete_book(id)
         return r
+    @staticmethod
+    def user_livros(nome_pessoa):
+        return conn.get_livros_usuario(nome_pessoa)

@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Admin Feedbacks - Vale Ler</title>
+    <link rel="stylesheet" href="../static/style.css">
+    <link rel="shortcut icon" href="../static/img/valeLer.png" type="image/x-icon">
+</head>
+<body>
+
+<nav class="navbar">
+    <div class="nav-brand">📚 Biblioteca Vale Ler</div>
+    <ul class="nav-links">
+        <li><a href="/index">Voltar</a></li>
+    </ul>
+</nav>
+
+<div class="container">
+    <h2>Feedbacks Recebidos</h2>
+
+    {% if feedbacks and feedbacks|length > 0 %}
+    <table>
+        <thead>
+            <tr>
+                <th>Nome</th>
+                <th>Gmail</th>
+                <th>Mensagem</th>
+                <th>deletar</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for fb in feedbacks %}
+            <tr>
+                <td>{{ fb.nome }}</td>
+                <td>{{ fb.gmail }}</td>
+                <td>{{ fb.mensagem }}</td>
+                <td>
+                    <form action="/del_feed/{{ fb.id_feedback }}" method="POST">
+                        <button class="btn-delete">Delete</button>
+                    </form>
+                </td>
+            </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+    {% else %}
+    <p>Nenhum feedback enviado ainda.</p>
+    {% endif %}
+</div>
+
+</body>
+</html>

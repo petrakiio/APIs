@@ -1,6 +1,6 @@
 # 📚 ValeLer
 
-> Sistema simples de biblioteca com cadastro de livros e controle de empréstimos.
+> Sistema de biblioteca inteligente com controle de estoque, perfis de usuário e gestão de empréstimos.
 
 <p align="left">
   <img src="https://img.shields.io/badge/Flask-000000?style=for-the-badge&logo=flask&logoColor=white" />
@@ -16,34 +16,28 @@
 * **Arquitetura:** Programação Orientada a Objetos (POO)
 
 ## ✨ Funcionalidades
-* [x] Listagem de livros cadastrados.
-* [x] Cadastro de novos livros.
+* [x] Listagem dinâmica de livros.
+* [x] Gestão de usuários (Admin e Cliente) com fotos de perfil.
 * [x] Registro de empréstimos com atualização automática de estoque.
+* [x] Sistema de Feedback e Devoluções.
 
 ## 📂 Estrutura do Projeto
 ```text
 ValeLer/
 ├─ app.py
 ├─ connection/
-│  └─ conn.py
+│  └─ conn.py
 ├─ models/
-│  ├─ administração.py
-│  └─ emprestimos.py
+│  ├─ administração.py
+│  └─ emprestimos.py
 ├─ routes/
-│  ├─ admin_routes.py
-│  └─ home_routes.py
+│  ├─ admin_routes.py
+│  └─ home_routes.py
 ├─ templates/
-│  ├─ index.html
-│  ├─ adicionar_livros.html
-│  ├─ emprestar_livros.html
-│  └─ deletar.html
+│  ├─ index.html
+│  ├─ perfil.html
+│  ├─ feedback.html
+│  └─ ...
 └─ static/
-   ├─ style.css
-   ├─ add_livros.css
-   ├─ emprestar.css
-   └─ deletar.css
-🔗 **Acesse o projeto:** [https://valeler.seu-dominio.com](https://valeler.seu-dominio.com)
-
-<p align="left">
-  <img src="senior-rosamond-petrakiio-48bbb25c.koyeb.app/"/>
-</p>
+   ├─ style.css
+   └─ script/
