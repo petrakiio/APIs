@@ -7,6 +7,8 @@ from connection.auth_conn import (
     criptografar_senha,
     deletar,
     atualizar_imagem_perfil,
+    get_email,
+    update_password
 )
 
 class Pessoa:
@@ -74,3 +76,14 @@ class PersonaService():
     def atulizar(usuario_id, imagem_path):
         sucesso = atualizar_imagem_perfil(usuario_id, imagem_path)
         return sucesso
+
+    @staticmethod
+    def get_em(email):
+        id = get_email(email)
+        return id
+    
+    @staticmethod
+    def atualizar_password(password,id):
+        result = update_password(id,password)
+        if result:
+            {'msg':'Senha atualizada com sucesso!'}

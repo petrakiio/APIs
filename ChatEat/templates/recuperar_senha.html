@@ -1,9 +1,9 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="pt-BR">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Login</title>
+    <title>Recuperar Senha</title>
     <link rel="stylesheet" href="{{ url_for('static', filename='login.css') }}">
     <link rel="shortcut icon" href="{{ url_for('static', filename='img/logo.png') }}" type="image/x-icon">
 </head>
@@ -12,9 +12,9 @@
         <a href="{{ url_for('home.index') }}">Inicio</a>
         <a href="{{ url_for('home.sobre') }}">Sobre</a>
     </nav>
-    <h1>Login</h1>
+    <h1>Recuperar Senha</h1>
+    <span>Informe seu e-mail para receber as instrucoes.</span>
     <div class="container">
-
         {% with messages = get_flashed_messages(with_categories=true) %}
           {% if messages %}
             {% for category, message in messages %}
@@ -24,14 +24,11 @@
             {% endfor %}
           {% endif %}
         {% endwith %}
-        <form action="{{ url_for('Login.busca') }}" method="post">
-            <p>Usuário:</p>
-            <input type="text" placeholder="Seu Usuário" name="usuario">
-            <p>Senha:</p>
-            <input type="password" placeholder="Sua Senha" name="senha"><br>
-            <button>Entrar!</button>
-            <a href="{{ url_for('Login.cadastro') }}">Não tem conta? Cadastre-se</a>
-            <a href="{{ url_for('Login.recuperar_senha') }}">Esqueceu senha?</a>
+        <form action="{{ url_for('Login.recuperar_senha') }}" method="post">
+            <p>E-mail:</p>
+            <input type="email" placeholder="seu@email.com" name="email" required>
+            <button>Enviar</button>
+            <a href="{{ url_for('Login.login') }}">Voltar para login</a>
         </form>
         <button id="btn"></button>
     </div>

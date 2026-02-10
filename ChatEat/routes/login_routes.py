@@ -9,6 +9,37 @@ login_route = Blueprint('Login',__name__)
 def login():
     return render_template('login.html')
 
+@login_route.route('/recuperar-senha', methods=['GET', 'POST'])
+def recuperar_senha():
+    if request.method == 'POST':
+        email = request.form.get('email')
+        if not email:
+            flash('Informe um e-mail valido.', 'danger')
+            return redirect(url_for('Login.recuperar_senha'))
+        
+        
+
+    return render_template('recuperar_senha.html')
+
+@login_route.route('/nova-senha', methods=['GET', 'POST'])
+def nova_senha():
+    if request.method == 'POST':
+        senha = request.form.get('senha')
+        confirmar = request.form.get('confirmar_senha')
+
+        if not senha or not confirmar:
+            flash('Preencha todos os campos.', 'danger')
+            return redirect(url_for('Login.nova_senha'))
+
+        if senha != confirmar:
+            flash('As senhas nao conferem.', 'danger')
+            return redirect(url_for('Login.nova_senha'))
+
+        flash('Senha atualizada com sucesso. Faca login.', 'success')
+        return redirect(url_for('Login.login'))
+
+    return render_template('nova_senha.html')
+
 @login_route.route('/cadastro')
 def cadastro():
     return render_template('cadastro.html')

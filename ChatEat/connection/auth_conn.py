@@ -106,3 +106,38 @@ def deletar(id: int, user: str) -> bool:
     finally:
         if db:
             db.close()
+
+def get_email(email):
+    db = None
+    try:
+        db = get_connection()
+        cursor = db.cursor()
+        sql = 'SELECT * FROM clientes'
+        cursor.execute(sql)
+        pessoas = cursor.fetchall()
+        for pessoa in pessoas:
+            if pessoa['email'] == email:
+                return pessoa['id']
+        return None
+    except Exception as err:
+        print('Erro:',err)
+        return False
+    finally:
+        if db is not None:
+            db.close()
+
+def update_password(id,newpassword):
+    db = None
+    try:
+        db = get_connection()
+        cursor = db.cursor()
+        sql = 'UPDATE cliente SET senha = %s WHERE id = %s'
+        cursor.execute(sql,(newpassword,id))
+        db.commit()
+        return True
+    except Exception as err:
+        print('Erro:',err)
+        return False
+    finally:
+        if db is not None:
+            db.close()
