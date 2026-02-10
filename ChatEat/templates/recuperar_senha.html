@@ -13,7 +13,7 @@
         <a href="{{ url_for('home.sobre') }}">Sobre</a>
     </nav>
     <h1>Recuperar Senha</h1>
-    <span>Informe seu e-mail para receber as instrucoes.</span>
+    <span>Informe seu e-mail e defina uma nova senha.</span>
     <div class="container">
         {% with messages = get_flashed_messages(with_categories=true) %}
           {% if messages %}
@@ -27,7 +27,11 @@
         <form action="{{ url_for('Login.recuperar_senha') }}" method="post">
             <p>E-mail:</p>
             <input type="email" placeholder="seu@email.com" name="email" required>
-            <button>Enviar</button>
+            <p>Nova senha:</p>
+            <input type="password" placeholder="Nova senha" name="senha" required>
+            <p>Confirmar senha:</p>
+            <input type="password" placeholder="Confirmar senha" name="confirmar_senha" required>
+            <button>Salvar</button>
             <a href="{{ url_for('Login.login') }}">Voltar para login</a>
         </form>
         <button id="btn"></button>

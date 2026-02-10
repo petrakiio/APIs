@@ -13,33 +13,31 @@ def login():
 def recuperar_senha():
     if request.method == 'POST':
         email = request.form.get('email')
-        if not email:
-            flash('Informe um e-mail valido.', 'danger')
-            return redirect(url_for('Login.recuperar_senha'))
-        id = PersonaService.get_em()
-        if id is not None or id is not False:
-            return redirect(url_for('Login.nova-senha'))
-
-    return render_template('recuperar_senha.html')
-
-@login_route.route('/nova-senha', methods=['GET', 'POST'])
-def nova_senha():
-    if request.method == 'POST':
         senha = request.form.get('senha')
         confirmar = request.form.get('confirmar_senha')
 
-        if not senha or not confirmar:
+        if not email or not senha or not confirmar:
             flash('Preencha todos os campos.', 'danger')
-            return redirect(url_for('Login.nova_senha'))
+            return redirect(url_for('Login.recuperar_senha'))
 
         if senha != confirmar:
             flash('As senhas nao conferem.', 'danger')
-            return redirect(url_for('Login.nova_senha'))
+            return redirect(url_for('Login.recuperar_senha'))
 
-        flash('Senha atualizada com sucesso. Faca login.', 'success')
+        usuario_id = PersonaService.get_em(email)
+        if not usuario_id:
+            flash('E-mail nao encontrado.', 'danger')
+            return redirect(url_for('Login.recuperar_senha'))
+
+        resultado = PersonaService.atualizar_password(senha, usuario_id)
+        if not resultado['ok']:
+            flash(resultado['msg'], 'danger')
+            return redirect(url_for('Login.recuperar_senha'))
+
+        flash(resultado['msg'], 'success')
         return redirect(url_for('Login.login'))
 
-    return render_template('nova_senha.html')
+    return render_template('recuperar_senha.html')
 
 @login_route.route('/cadastro')
 def cadastro():

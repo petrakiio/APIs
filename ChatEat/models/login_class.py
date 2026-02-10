@@ -84,7 +84,8 @@ class PersonaService():
     
     @staticmethod
     def atualizar_password(password,id):
-        result = update_password(id,password)
+        senha_hash = criptografar_senha(password)
+        result = update_password(id,senha_hash)
         if result:
-            return {'msg':'Senha atualizada com sucesso!'}
-        return {'msg':'Erro ao atualizar sua senha :('}
+            return {'ok': True, 'msg':'Senha atualizada com sucesso!'}
+        return {'ok': False, 'msg':'Erro ao atualizar sua senha :('}

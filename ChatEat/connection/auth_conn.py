@@ -131,7 +131,7 @@ def update_password(id,newpassword):
     try:
         db = get_connection()
         cursor = db.cursor()
-        sql = 'UPDATE cliente SET senha = %s WHERE id = %s'
+        sql = 'UPDATE clientes SET senha = %s WHERE id = %s'
         cursor.execute(sql,(newpassword,id))
         db.commit()
         return True
