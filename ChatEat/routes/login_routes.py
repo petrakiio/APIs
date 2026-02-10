@@ -16,8 +16,9 @@ def recuperar_senha():
         if not email:
             flash('Informe um e-mail valido.', 'danger')
             return redirect(url_for('Login.recuperar_senha'))
-        
-        
+        id = PersonaService.get_em()
+        if id is not None or id is not False:
+            return redirect(url_for('Login.nova-senha'))
 
     return render_template('recuperar_senha.html')
 
