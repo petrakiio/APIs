@@ -86,4 +86,5 @@ class PersonaService():
     def atualizar_password(password,id):
         result = update_password(id,password)
         if result:
-            {'msg':'Senha atualizada com sucesso!'}
+            return {'msg':'Senha atualizada com sucesso!'}
+        return {'msg':'Erro ao atualizar sua senha :('}
