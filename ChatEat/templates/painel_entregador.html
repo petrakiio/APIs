@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Painel do Entregador - ChatEat</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='painel_entregador.css') }}">
+    <link rel="shortcut icon" href="{{ url_for('static', filename='img/logo.png') }}" type="image/x-icon">
+</head>
+<body>
+    <nav>
+        <span class="user-greeting">Entregador: {{ session['usuario_nome'] }}</span>
+        <div class="nav-links">
+            <a href="{{ url_for('home.index') }}">Inicio</a>
+            <a href="{{ url_for('home.sobre') }}">Sobre</a>
+            <a href="{{ url_for('Login.logout') }}" class="logout-btn">Logout</a>
+        </div>
+    </nav>
+
+    <main class="container">
+        <section class="panel-card">
+            <h1>Painel do entregador</h1>
+            <p class="muted">Pedidos disponiveis para entrega agora.</p>
+
+            <article class="delivery-card">
+                <div>
+                    <h2>Pedido #CE-3192</h2>
+                    <p>Cliente: Mariana A.</p>
+                    <p>Endereco: Rua das Flores, 120 - Centro</p>
+                    <p>Pagamento: Na entrega</p>
+                </div>
+                <a class="btn" href="{{ url_for('home.status_entrega') }}">Iniciar rota</a>
+            </article>
+
+            <article class="delivery-card">
+                <div>
+                    <h2>Pedido #CE-3197</h2>
+                    <p>Cliente: Lucas P.</p>
+                    <p>Endereco: Av. Paulista, 1450</p>
+                    <p>Pagamento: Pix</p>
+                </div>
+                <a class="btn" href="{{ url_for('home.status_entrega') }}">Iniciar rota</a>
+            </article>
+        </section>
+    </main>
+</body>
+</html>

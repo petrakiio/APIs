@@ -59,7 +59,7 @@ def buscar_cliente(usuario):
     try:
         with db.cursor() as cursor:
             sql = """
-                SELECT id, usuario, senha, foto_perfil, is_admin
+                SELECT *
                 FROM clientes
                 WHERE usuario = %s
             """

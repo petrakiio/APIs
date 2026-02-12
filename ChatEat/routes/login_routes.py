@@ -82,6 +82,8 @@ def busca():
     session['usuario_nome'] = cliente['usuario']
     session['usuario_image'] = cliente['foto_perfil']
     session['is_admin'] = bool(cliente['is_admin'])
+    session['is_motoboy'] = bool(cliente.get('is_motoboy', False))
+    session['is_entregador'] = session['is_motoboy']
     session.permanent = True
 
     flash('Login realizado com sucesso!', 'success')
