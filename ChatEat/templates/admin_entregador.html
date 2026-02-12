@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Painel Admin - Entregadores</title>
+    <link rel="shortcut icon" href="{{ url_for('static', filename='img/logo.png') }}" type="image/x-icon">
+    <link rel="stylesheet" href="{{ url_for('static', filename='admin_entregador.css') }}">
+</head>
+<body>
+    <nav>
+        <span class="brand">Painel Admin-Entregadores</span>
+        <div class="nav-links">
+            <span class="welcome-msg">Ola, {{ session['usuario_nome'] }}</span>
+            <a href="{{ url_for('home.index') }}">Inicio</a>
+            <a href="{{ url_for('admin.admin') }}">Feedbacks</a>
+            <a href="{{ url_for('admin.admin_user') }}">Usuarios</a>
+            <a href="{{ url_for('admin.admin_produtos') }}">Produtos</a>
+            <a href="{{ url_for('Login.logout') }}" class="logout">Sair</a>
+            <a href="{{ url_for('profile.perfil') }}" class="profile-link">
+                <img src="{{ session['usuario_image'] }}" alt="Perfil">
+            </a>
+        </div>
+    </nav>
+
+    <main class="container">
+        <section class="hero">
+            <h1>Admin Entregador</h1>
+            <p>Escolha uma acao para gerenciar entregadores (somente interface).</p>
+        </section>
+
+        <section class="cards">
+            <a class="card" href="{{ url_for('entregador.admin_add_entregador') }}">
+                <h2>Adicionar entregador</h2>
+                <p>Formulario para cadastrar um novo motoboy.</p>
+            </a>
+
+            <a class="card" href="{{ url_for('entregador.admin_view_entregador') }}">
+                <h2>Visualizar entregadores</h2>
+                <p>Tabela para consultar entregadores cadastrados.</p>
+            </a>
+
+            <a class="card" href="{{ url_for('entregador.admin_remove_entregador') }}">
+                <h2>Remover entregador</h2>
+                <p>Tela para remover um entregador por identificador.</p>
+            </a>
+        </section>
+    </main>
+<script src="{{ url_for('static', filename='script/timer.js') }}"></script>
+</body>
+</html>

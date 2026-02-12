@@ -1,0 +1,75 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Painel Admin - Adicionar Entregador</title>
+    <link rel="shortcut icon" href="{{ url_for('static', filename='img/logo.png') }}" type="image/x-icon">
+    <link rel="stylesheet" href="{{ url_for('static', filename='admin_entregador_form.css') }}">
+</head>
+<body>
+    <nav>
+        <span class="brand">Painel Admin-Adicionar Entregador</span>
+        <div class="nav-links">
+            <a href="{{ url_for('entregador.admin_entregador') }}">Admin Entregador</a>
+            <a href="{{ url_for('entregador.admin_view_entregador') }}">Visualizar</a>
+            <a href="{{ url_for('entregador.admin_remove_entregador') }}">Remover</a>
+            <a href="{{ url_for('Login.logout') }}" class="logout">Sair</a>
+        </div>
+    </nav>
+
+    <main class="container">
+        <section class="card">
+            <h1>Adicionar entregador</h1>
+            <p class="muted">Tela pronta para cadastro. A logica de salvar no banco voce conecta no backend.</p>
+
+            <form method="POST" action="#" class="form-grid">
+                <label>
+                    Nome completo
+                    <input type="text" name="nome" placeholder="Ex: Lucas Nogueira">
+                </label>
+
+                <label>
+                    Usuario
+                    <input type="text" name="usuario" placeholder="Ex: lucas_moto">
+                </label>
+
+                <label>
+                    E-mail
+                    <input type="email" name="email" placeholder="entregador@email.com">
+                </label>
+
+                <label>
+                    Telefone
+                    <input type="text" name="telefone" placeholder="(11) 99999-9999">
+                </label>
+
+                <label>
+                    Tipo de veiculo
+                    <select name="veiculo">
+                        <option value="moto">Moto</option>
+                        <option value="bike">Bike</option>
+                        <option value="carro">Carro</option>
+                    </select>
+                </label>
+
+                <label>
+                    Placa (opcional)
+                    <input type="text" name="placa" placeholder="ABC1D23">
+                </label>
+
+                <label class="switch-row">
+                    Ativar como motoboy
+                    <input type="checkbox" name="is_motoboy" checked>
+                </label>
+
+                <div class="actions">
+                    <button type="submit" class="btn">Salvar entregador</button>
+                    <a class="btn ghost" href="{{ url_for('entregador.admin_entregador') }}">Voltar</a>
+                </div>
+            </form>
+        </section>
+    </main>
+<script src="{{ url_for('static', filename='script/timer.js') }}"></script>
+</body>
+</html>

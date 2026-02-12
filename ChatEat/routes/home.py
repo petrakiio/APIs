@@ -1,6 +1,5 @@
 from flask import Blueprint, render_template, request, session, redirect, url_for, flash
 from models.produtos_class import Product
-from routes.auth import entregador_required
 
 home_route = Blueprint('home', __name__)
 
@@ -23,11 +22,6 @@ def sobre():
 @home_route.route('/status_entrega')
 def status_entrega():
     return render_template('status_entrega.html')
-
-@home_route.route('/painel_entregador')
-@entregador_required
-def painel_entregador():
-    return render_template('painel_entregador.html')
 
 @home_route.route('/products/<int:id>')
 def products_page(id):

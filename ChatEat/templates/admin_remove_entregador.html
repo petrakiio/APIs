@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Remover Entregador</title>
+    <link rel="shortcut icon" href="{{ url_for('static', filename='img/logo.png') }}" type="image/x-icon">
+    <link rel="stylesheet" href="{{ url_for('static', filename='admin_entregador_form.css') }}">
+</head>
+<body>
+    <nav>
+        <span class="brand">Painel Admin-Remover Entregador</span>
+        <div class="nav-links">
+            <a href="{{ url_for('entregador.admin_entregador') }}">Admin Entregador</a>
+            <a href="{{ url_for('admin.admin_user') }}">Usuarios</a>
+            <a href="{{ url_for('Login.logout') }}" class="logout">Sair</a>
+        </div>
+    </nav>
+
+    <main class="container">
+        <section class="card">
+            <h1>Remover entregador</h1>
+            <p class="muted">Interface pronta para acao de remocao.</p>
+
+            <form action="#" method="POST" class="form-grid">
+                <label>
+                    ID do entregador
+                    <input type="number" name="entregador_id" placeholder="Ex: 12">
+                </label>
+
+                <label>
+                    Motivo da remocao
+                    <select name="motivo">
+                        <option value="solicitacao">Solicitacao do usuario</option>
+                        <option value="inatividade">Inatividade</option>
+                        <option value="outro">Outro</option>
+                    </select>
+                </label>
+
+                <label>
+                    Observacao
+                    <textarea name="observacao" rows="4" placeholder="Detalhes da remocao"></textarea>
+                </label>
+
+                <div class="actions">
+                    <button type="submit" class="btn danger">Remover entregador</button>
+                    <a class="btn ghost" href="{{ url_for('entregador.admin_entregador') }}">Voltar</a>
+                </div>
+            </form>
+        </section>
+    </main>
+<script src="{{ url_for('static', filename='script/timer.js') }}"></script>
+</body>
+</html>

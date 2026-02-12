@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Visualizar Entregadores</title>
+    <link rel="shortcut icon" href="{{ url_for('static', filename='img/logo.png') }}" type="image/x-icon">
+    <link rel="stylesheet" href="{{ url_for('static', filename='admin_entregador_form.css') }}">
+</head>
+<body>
+    <nav>
+        <span class="brand">Painel Admin-Visualizar Entregadores</span>
+        <div class="nav-links">
+            <a href="{{ url_for('entregador.admin_entregador') }}">Admin Entregador</a>
+            <a href="{{ url_for('admin.admin_user') }}">Usuarios</a>
+            <a href="{{ url_for('Login.logout') }}" class="logout">Sair</a>
+        </div>
+    </nav>
+
+    <main class="container">
+        <section class="card">
+            <h1>Visualizar entregadores</h1>
+            <p class="muted">Mock da listagem para voce conectar no backend depois.</p>
+
+            <table>
+                <thead>
+                    <tr>
+                        <th>ID</th>
+                        <th>Nome</th>
+                        <th>Usuario</th>
+                        <th>Telefone</th>
+                        <th>Veiculo</th>
+                        <th>Status</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td>1</td>
+                        <td>Lucas Nogueira</td>
+                        <td>lucas_moto</td>
+                        <td>(11) 99999-9999</td>
+                        <td>Moto</td>
+                        <td>Ativo</td>
+                    </tr>
+                    <tr>
+                        <td>2</td>
+                        <td>Mariana Alves</td>
+                        <td>mari_bike</td>
+                        <td>(11) 98888-8888</td>
+                        <td>Bike</td>
+                        <td>Ativo</td>
+                    </tr>
+                </tbody>
+            </table>
+
+            <div class="actions">
+                <a class="btn ghost" href="{{ url_for('entregador.admin_entregador') }}">Voltar</a>
+            </div>
+        </section>
+    </main>
+<script src="{{ url_for('static', filename='script/timer.js') }}"></script>
+</body>
+</html>

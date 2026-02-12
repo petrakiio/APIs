@@ -20,7 +20,7 @@
                 <a href="{{ url_for('admin.admin_produtos') }}">Tela Admin | Produtos</a>
             {% endif %}
             {% if session.get('is_motoboy') or session.get('is_entregador') %}
-                <a href="{{ url_for('home.painel_entregador') }}">Painel Entregador</a>
+                <a href="{{ url_for('entregador.painel_entregador') }}">Painel Entregador</a>
             {% endif %}
             
             <a href="{{ url_for('Login.logout') }}">Logout</a>

@@ -14,6 +14,7 @@
                 <span class="welcome-msg" style="color: var(--text-muted);">Olá, {{ session['usuario_nome'] }}</span>
                 <a href="{{ url_for('home.index') }}">Início</a>
                 <a href="{{ url_for('home.sobre') }}">Sobre</a>
+                <a href="{{ url_for('entregador.admin_entregador') }}">Admin Entregador</a>
                 <a href="{{ url_for('Login.logout') }}" style="color: #ed4245;">Sair</a>
                 <a href="{{ url_for('profile.perfil') }}" class="profile-link">
                     <img src="{{ session['usuario_image'] }}" alt="Perfil">
