@@ -1,0 +1,83 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Caminho da Entrega - ChatEat</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='caminho_entrega.css') }}">
+    <link rel="shortcut icon" href="{{ url_for('static', filename='img/logo.png') }}" type="image/x-icon">
+</head>
+<body>
+    <nav>
+        <span class="user-greeting">Pedido em rota - {{ session['usuario_nome'] }}</span>
+        <div class="nav-links">
+            <a href="{{ url_for('home.index') }}">Inicio</a>
+            <a href="{{ url_for('home.sobre') }}">Sobre</a>
+            <a href="{{ url_for('Login.logout') }}" class="logout-btn">Logout</a>
+        </div>
+    </nav>
+
+    <main class="container">
+        <section class="tracking-card">
+            <header>
+                <h1>Caminho em tempo real</h1>
+                <p>Produto: <strong>{{ product['nome'] }}</strong></p>
+                <p>Pagamento: <strong>{{ forma_pagamento|replace('_', ' ')|title }}</strong></p>
+            </header>
+
+            <div class="map-area">
+                <div class="map-grid"></div>
+                <div class="route-line"></div>
+                <div class="point loja">Loja</div>
+                <div class="point casa">Voce</div>
+                <div id="entregador" class="entregador">Moto</div>
+            </div>
+
+            <div class="status-row">
+                <p id="status-text">Entregador saiu da loja</p>
+                <p>Previsao: <strong><span id="eta">24</span> min</strong></p>
+            </div>
+
+            <div class="actions">
+                <a class="btn" target="_blank" rel="noopener noreferrer" href="https://www.google.com/maps/dir/?api=1&origin=Rua+Central,+245&destination=Avenida+Principal,+1200&travelmode=driving">Abrir rota no mapa</a>
+                <a class="btn ghost" href="{{ url_for('gatway.compra_sucesso') }}">Confirmar entrega recebida</a>
+            </div>
+        </section>
+    </main>
+
+    <script>
+        const entregador = document.getElementById('entregador');
+        const etaElement = document.getElementById('eta');
+        const statusText = document.getElementById('status-text');
+
+        const steps = [
+            { left: 12, top: 70, eta: 24, text: 'Entregador saiu da loja' },
+            { left: 28, top: 62, eta: 18, text: 'Passando pela Av. Central' },
+            { left: 44, top: 56, eta: 13, text: 'Pedido no bairro da entrega' },
+            { left: 62, top: 50, eta: 8, text: 'A poucas quadras de voce' },
+            { left: 78, top: 44, eta: 4, text: 'Entregador chegando no endereco' },
+            { left: 88, top: 38, eta: 1, text: 'Entregador na sua porta' }
+        ];
+
+        let index = 0;
+
+        function renderStep(step) {
+            entregador.style.left = step.left + '%';
+            entregador.style.top = step.top + '%';
+            etaElement.textContent = step.eta;
+            statusText.textContent = step.text;
+        }
+
+        renderStep(steps[index]);
+
+        const interval = setInterval(() => {
+            index += 1;
+            if (index >= steps.length) {
+                clearInterval(interval);
+                return;
+            }
+            renderStep(steps[index]);
+        }, 4000);
+    </script>
+</body>
+</html>

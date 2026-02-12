@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Pagar ao Entregador - ChatEat</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='pagar_entregador.css') }}">
+    <link rel="shortcut icon" href="{{ url_for('static', filename='img/logo.png') }}" type="image/x-icon">
+</head>
+<body>
+    <nav>
+        {% if 'usuario_nome' in session %}
+            <span class="user-greeting">Bem-vindo, {{ session['usuario_nome'] }}!</span>
+            <div class="nav-links">
+                <a href="{{ url_for('feed.feedback') }}">Feedbacks</a>
+                <a href="{{ url_for('home.sobre') }}">Sobre</a>
+                <a href="{{ url_for('home.index') }}">Voltar</a>
+                <a href="{{ url_for('Login.logout') }}" class="logout-btn">Logout</a>
+                <a href="{{ url_for('profile.perfil') }}" class="profile-link">
+                    <img src="{{ session['usuario_image'] }}" alt="Foto de Perfil">
+                </a>
+            </div>
+        {% else %}
+            <div class="nav-links">
+                <a href="{{ url_for('home.sobre') }}">Sobre</a>
+                <a href="{{ url_for('Login.login') }}">Login</a>
+            </div>
+        {% endif %}
+    </nav>
+
+    <main class="container">
+        <section class="checkout-card">
+            <h1>Pagar ao entregador</h1>
+            <p class="muted">Finalize o pedido para pagar somente na entrega.</p>
+
+            <div class="product-box">
+                <img src="{{ product['img'] }}" alt="{{ product['nome'] }}">
+                <div>
+                    <h2>{{ product['nome'] }}</h2>
+                    <p>{{ product['descricao'] }}</p>
+                    <span>R$ {{ "%.2f"|format(product['preco'])|replace('.', ',') }}</span>
+                </div>
+            </div>
+
+            <form action="{{ url_for('gatway.pagar_entregador', id=product['id']) }}" method="POST" class="payment-form">
+                <label>
+                    <input type="radio" name="forma_pagamento" value="dinheiro" checked>
+                    Dinheiro
+                </label>
+                <label>
+                    <input type="radio" name="forma_pagamento" value="cartao_maquina">
+                    Cartao na maquininha
+                </label>
+                <label>
+                    <input type="radio" name="forma_pagamento" value="pix_entrega">
+                    Pix no momento da entrega
+                </label>
+
+                <button type="submit" class="confirm-btn">Confirmar pedido e acompanhar caminho</button>
+            </form>
+        </section>
+    </main>
+</body>
+</html>

@@ -40,6 +40,32 @@ def compra_falha():
 def compra_pendente():
     return render_template('compra_pendente.html')
 
+@gatway_route.route('/pagar_entregador/<int:id>', methods=['GET', 'POST'])
+@login_required
+def pagar_entregador(id):
+    product = Product.get_product_by_id(id)
+    if not product:
+        flash("Produto nao encontrado.", "error")
+        return redirect(url_for('home.index'))
+
+    if request.method == 'POST':
+        forma_pagamento = request.form.get('forma_pagamento', 'dinheiro')
+        return redirect(url_for('gatway.caminho_entrega_real', id=id, forma_pagamento=forma_pagamento))
+
+    return render_template('pagar_entregador.html', product=product)
+
+
+@gatway_route.route('/caminho_entrega/<int:id>')
+@login_required
+def caminho_entrega_real(id):
+    product = Product.get_product_by_id(id)
+    if not product:
+        flash("Produto nao encontrado.", "error")
+        return redirect(url_for('home.index'))
+
+    forma_pagamento = request.args.get('forma_pagamento', 'dinheiro')
+    return render_template('caminho_entrega.html', product=product, forma_pagamento=forma_pagamento)
+
 @gatway_route.route('/webhook/mercadopago', methods=['POST'])
 def webhook_mercadopago():
     payload = request.get_json(silent=True) or {}

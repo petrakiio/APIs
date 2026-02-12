@@ -48,7 +48,9 @@
 
                 <div style="display: grid; gap: 10px; margin-top: 12px;">
                     <button class="confirm-btn" type="button">Pagar com cartao</button>
-                    <button class="confirm-btn" type="button">Pagar ao entregador</button>
+                    <form action="{{ url_for('gatway.pagar_entregador', id=product['id']) }}" method="GET">
+                        <button class="confirm-btn" type="submit">Pagar ao entregador</button>
+                    </form>
                     <button class="confirm-btn" type="button">Outro metodo</button>
                     <form action="{{ url_for('gatway.compra_falha') }}">
                         <button class="confirm-btn cancel" type="submit">Cancelar compra</button>
