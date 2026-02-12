@@ -1,5 +1,6 @@
 import os
 from pathlib import Path
+from urllib.parse import urlparse
 
 import mercadopago
 from dotenv import load_dotenv
@@ -9,12 +10,25 @@ load_dotenv()
 
 sdk = mercadopago.SDK(os.getenv('ACESS_TOKEN'))
 WEBHOOK_URL = os.getenv('MERCADOPAGO_WEBHOOK_URL')
+BASE_URL = os.getenv('APP_BASE_URL', 'http://localhost:5000').rstrip('/')
 
 _payment_status_cache = {}
+
+
+def _is_public_https_url(url):
+    parsed = urlparse(url)
+    if parsed.scheme != "https":
+        return False
+    host = (parsed.hostname or "").lower()
+    return host not in {"localhost", "127.0.0.1"}
 
 def create_gatway(produto):
     request_dada = None
     try:
+        success_url = f"{BASE_URL}/sucesso"
+        failure_url = f"{BASE_URL}/falha"
+        pending_url = f"{BASE_URL}/pendente"
+
         request_dada = {
             "items": [
                 {
@@ -28,12 +42,14 @@ def create_gatway(produto):
             ],
             "back_urls":
             {
-                "success": "http://localhost:5000/sucesso",
-                "failure": "http://localhost:5000/falha",
-                "pending": "http://localhost:5000/pendente"
+                "success": success_url,
+                "failure": failure_url,
+                "pending": pending_url
             },
-            "auto_return": "approved",
         }
+        # Mercado Pago rejects auto_return for local/non-https success URLs.
+        if _is_public_https_url(success_url):
+            request_dada["auto_return"] = "approved"
         if WEBHOOK_URL:
             request_dada["notification_url"] = WEBHOOK_URL
         response = sdk.preference().create(request_dada)
