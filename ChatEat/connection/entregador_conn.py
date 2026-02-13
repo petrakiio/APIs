@@ -5,8 +5,8 @@ def get_entregador():
     try:
         db = get_connection()
         cursor = db.cursor()
-        sql = 'SELECT * FROM clientes WHERE is_motoboy = %s'
-        cursor.execute(sql,(True))
+        sql = 'SELECT * FROM entregadores'
+        cursor.execute(sql)
         resultado = cursor.fetchall()
         if resultado is not None:
             return resultado
@@ -16,3 +16,10 @@ def get_entregador():
     finally:
         if db is not None:
             db.close
+
+def add_entregador(entregador:object):
+    db = None
+    try:
+        db = get_connection()
+        cursor = db.cursor()
+        sql = 'INSERT INTO entregadores(nome,usuario) '
