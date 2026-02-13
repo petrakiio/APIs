@@ -22,4 +22,27 @@ def add_entregador(entregador:object):
     try:
         db = get_connection()
         cursor = db.cursor()
-        sql = 'INSERT INTO entregadores(nome,usuario) '
+        sql = 'INSERT INTO entregadores(nome,usuario,email,telefone,veiculo,placa,ativo)' \
+        'VALUES (%s,%s,%s,%s,%s,%s,%s)'
+        cursor.execute(sql(
+            entregador.nome,
+            entregador.usuario,
+            entregador.email,
+            entregador.telefone,
+            entregador.veiculo,
+            entregador.placa,
+            entregador.ativo
+        ))
+        return True
+    except Exception as err:
+        print('Erro:',err)
+        return False
+    finally:
+        if db is not None:
+            db.close()
+
+def rm_entregador(motivo:object):
+    db = None
+    try:
+        db = get_connection()
+        
