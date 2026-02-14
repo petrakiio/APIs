@@ -15,7 +15,13 @@ def validar_idade(data_nascimento_str, idade_minima):
 def validar_dados(pessoa):
     dados = ['*','#','@','!','$','%','¨','&','(',')','-','+']
     for dado in dados:
-        if pessoa.nome
+        if dado in pessoa.nome:
+            return False
+    return True
+
+def tratamento_dados(pessoa):
+    nome = getattr(pessoa, 'nome', '')
+    return nome.strip().lower()
 
 
 MAX_TENTATIVAS = 5

@@ -1,4 +1,4 @@
-from routes.tools import validar_idade,get_client_ip,pode_tentar_login
+from routes.tools import validar_idade,get_client_ip,pode_tentar_login,validar_dados,tratamento_dados
 from connection.auth_conn import (
     inserir_cliente,
     buscar_cliente,
@@ -33,13 +33,15 @@ class PersonaService():
             return 'Este e-mail já está em uso!'
 
         senha_hash = criptografar_senha(pessoa.senha)
-
-        sucesso = inserir_cliente(
-            pessoa.nome,
-            senha_hash,
-            pessoa.email,
-            pessoa.data
-        )
+        
+        if validar_dados(pessoa):
+            nome = tratamento_dados(pessoa)
+            sucesso = inserir_cliente(
+                nome,
+                senha_hash,
+                pessoa.email,
+                pessoa.data
+            )
 
         return True if sucesso else False
     @staticmethod
@@ -51,6 +53,8 @@ class PersonaService():
 
         if len(pessoa.nome) > 50 or len(pessoa.senha) > 100:
             return {'ok': False, 'msg': 'Dados inválidos'}
+
+        nome = tratamento_dados(pessoa)
 
         cliente = buscar_cliente(pessoa.nome)
 
