@@ -1,5 +1,6 @@
 from connection.entregador_conn import get_entregador,add_entregador,rm_entregador
 
+
 class Entregador:
     def __init__(self,nome,usuario,email,telefone,veiculo,placa,ativo):
         self.nome = nome

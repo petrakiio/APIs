@@ -23,9 +23,8 @@ def admin_entregador():
 @admin_required
 def admin_add_entregador():
     if request.method == 'POST':
-        nome = request.form.get('nome')
         entregador = Entregador(
-        nome=tratamento_dados(nome),
+        nome=tratamento_dados(request.form.get('nome'))),
         usuario=request.form.get('usuario'),
         email=request.form.get('email'),
         telefone=request.form.get('telefone'),
