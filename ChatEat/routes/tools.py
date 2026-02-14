@@ -20,7 +20,10 @@ def validar_dados(pessoa):
     return True
 
 def tratamento_dados(pessoa):
-    nome = getattr(pessoa, 'nome', '')
+    if isinstance(pessoa, str):
+        nome = pessoa
+    else:
+        nome = getattr(pessoa, 'nome', '')
     return nome.strip().lower()
 
 
