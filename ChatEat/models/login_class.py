@@ -24,26 +24,29 @@ class PersonaService():
     def cadastrar(pessoa: Pessoa):
 
         if not all([pessoa.nome, pessoa.senha, pessoa.email, pessoa.data]):
-            return 'Por favor, preencha todos os campos.'
+            return {'ok': False, 'msg': 'Por favor, preencha todos os campos.'}
 
-        if not validar_idade(18, pessoa.data):
-            return 'Você deve ter pelo menos 18 anos para se cadastrar.'
+        if not validar_idade(pessoa.data, 18):
+            return {'ok': False, 'msg': 'Você deve ter pelo menos 18 anos para se cadastrar.'}
 
         if verificar_email(pessoa.email):
-            return 'Este e-mail já está em uso!'
+            return {'ok': False, 'msg': 'Este e-mail já está em uso!'}
+
+        if not validar_dados(pessoa):
+            return {'ok': False, 'msg': 'Nome de usuário inválido.'}
 
         senha_hash = criptografar_senha(pessoa.senha)
-        
-        if validar_dados(pessoa):
-            nome = tratamento_dados(pessoa)
-            sucesso = inserir_cliente(
-                nome,
-                senha_hash,
-                pessoa.email,
-                pessoa.data
-            )
+        nome = tratamento_dados(pessoa)
+        sucesso = inserir_cliente(
+            nome,
+            senha_hash,
+            pessoa.email,
+            pessoa.data
+        )
 
-        return True if sucesso else False
+        if sucesso:
+            return {'ok': True, 'msg': 'Cadastro realizado com sucesso!'}
+        return {'ok': False, 'msg': 'Erro ao cadastrar usuário.'}
     @staticmethod
     def login(pessoa: Pessoa):
         ip = get_client_ip()
@@ -56,7 +59,7 @@ class PersonaService():
 
         nome = tratamento_dados(pessoa)
 
-        cliente = buscar_cliente(pessoa.nome)
+        cliente = buscar_cliente(nome)
 
         if not cliente:
             return {'ok': False, 'msg': 'Usuário não encontrado'}

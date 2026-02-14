@@ -1,6 +1,6 @@
 from flask import request
-import datetime
-import time
+from datetime import datetime
+from time import time
 
 def validar_idade(data_nascimento_str, idade_minima):
     try:

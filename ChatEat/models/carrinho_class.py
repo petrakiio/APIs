@@ -1,11 +1,14 @@
 from connection.cart_conn import add_carinho, del_carinho, get_itens_carrinho
 from models.produtos_class import Product
+from routes.tools import tratamento_dados
 
 class CarrinhoService:
     @staticmethod
     def listar(user):
         if not user:
             return {'ok': False, 'msg': 'Usuário inválido'}
+
+        user = tratamento_dados(user)
 
         ids_no_banco = get_itens_carrinho(user)
         products = Product.get_all_products()
