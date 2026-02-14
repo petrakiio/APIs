@@ -10,7 +10,4 @@ class RegistroService:
 
     @staticmethod
     def add_m(registro:Registro):
-        add_motivo(registro)
-        if add_motivo:
-            return True
-        return False
+        return add_motivo(registro)

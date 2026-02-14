@@ -35,8 +35,9 @@ def admin_add_entregador():
         ativar = True
         )
         if entregador is None:
-            return flash('Complete os Dados')
-        
+            flash('Complete os Dados')
+            return redirect(url_for('entregador.adicionar'))
+
         r = EntregadoService.add(entregador)
         if r:
             flash('Entregador adicionado com sucesso!')
@@ -65,6 +66,10 @@ def admin_remove_entregador():
        )
        r = RegistroService.add_m(registro)
        if r:
-        nome = tratamento_dados(registro.nome)
+        if EntregadoService.rm(tratamento_dados(registro.nome)):
+            flash('Entregador removido com sucesso!')
+            return redirect(url_for('entregador.visualizar'))
+        flash('Erro ao deletar!')
+        return redirect(url_for('entregador.remover'))
         
     return render_template('admin_remove_entregador.html')

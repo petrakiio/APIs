@@ -4,7 +4,7 @@ class Entregador:
     def __init__(self,nome,usuario,email,telefone,veiculo,placa,ativo):
         self.nome = nome
         self.usuario = usuario
-        self.emai = email
+        self.email = email
         self.telefone = telefone
         self.veiculo = veiculo
         self.placa = placa
@@ -21,6 +21,7 @@ class EntregadoService:
         return add_entregador(pessoa)
     
     @staticmethod
-    def rm():
-        pass
-            
+    def rm(nome):
+        if rm_entregador(nome):
+            return True
+        return False
