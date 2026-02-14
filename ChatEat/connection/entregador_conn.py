@@ -51,9 +51,18 @@ def add_entregador(entregador: object):
             db.close()
 
 
-def rm_entregador(entregador_id: int):
+def rm_entregador(nome: str):
     db = None
     try:
         db = get_connection()
         cursor = db.cursor()
-      
+        sql = "DELETE FROM entregadores WHERE nome = %s LIMIT 1"
+        cursor.execute(sql, (nome,))
+        db.commit()
+        return cursor.rowcount > 0
+    except Exception as err:
+        print("Erro:", err)
+        return False
+    finally:
+        if db is not None:
+            db.close()
