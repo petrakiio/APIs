@@ -1,5 +1,6 @@
 from flask import Blueprint, render_template
 from routes.auth import admin_required, entregador_required
+from routes.tools import tratamento_dados
 
 entregador_route = Blueprint('entregador', __name__)
 
@@ -16,7 +17,7 @@ def admin_entregador():
     return render_template('admin_entregador.html')
 
 
-@entregador_route.route('/admin_entregador/adicionar')
+@entregador_route.route('/admin_entregador/adicionar',methods=['GET']['POST'])
 @admin_required
 def admin_add_entregador():
     return render_template('admin_add_entregador.html')

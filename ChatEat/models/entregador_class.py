@@ -15,3 +15,6 @@ class EntregadoService:
     @staticmethod
     def visu():
         return get_entregador()
+    
+    @staticmethod
+    def add(pessoa:Entregador):
