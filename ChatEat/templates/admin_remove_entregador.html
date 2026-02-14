@@ -22,13 +22,15 @@
             <h1>Remover entregador</h1>
             <p class="muted">Interface pronta para acao de remocao.</p>
 
-            <form action="/admin_entregador/remover" method="POST" class="form-grid">
-                <label>Nome</label>
-                    {% for entregador in entregadores %}
-                    <select name="nome">
-                        <option value="{{entregador.nome}}">{{entregador.nome}}</option>
+            <form action="{{ url_for('entregador.admin_remove_entregador') }}" method="POST" class="form-grid">
+                <label>
+                    Nome
+                    <select name="nome" required>
+                        {% for entregador in entregadores %}
+                        <option value="{{ entregador.nome }}">{{ entregador.nome }}</option>
+                        {% endfor %}
                     </select>
-                    {% endfor %}
+                </label>
 
                 <label>
                     Motivo da remocao

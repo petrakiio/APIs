@@ -20,8 +20,9 @@
     <main class="container">
         <section class="card">
             <h1>Visualizar entregadores</h1>
-            <p class="muted">Mock da listagem para voce conectar no backend depois.</p>
-        {% for entregador in entregadores %}
+            <p class="muted">Lista de entregadores cadastrados.</p>
+
+            {% if entregadores %}
             <table>
                 <thead>
                     <tr>
@@ -34,16 +35,21 @@
                     </tr>
                 </thead>
                 <tbody>
+                    {% for entregador in entregadores %}
                     <tr>
-                        <td>{{entregador.id}}</td>
-                        <td>{{entregador.nome}}</td>
-                        <td>{{entregador.usuario}}</td>
-                        <td>{{entregador.telefone}}</td>
-                        <td>{{entregador.veiculo}}</td>
-                        <td>{{entregador.ativo}}</td>
+                        <td>{{ entregador.id }}</td>
+                        <td>{{ entregador.nome }}</td>
+                        <td>{{ entregador.usuario }}</td>
+                        <td>{{ entregador.telefone }}</td>
+                        <td>{{ entregador.veiculo }}</td>
+                        <td>{{ entregador.ativo }}</td>
                     </tr>
+                    {% endfor %}
                 </tbody>
             </table>
+            {% else %}
+            <p class="muted">Nenhum entregador encontrado.</p>
+            {% endif %}
 
             <div class="actions">
                 <a class="btn ghost" href="{{ url_for('entregador.admin_entregador') }}">Voltar</a>

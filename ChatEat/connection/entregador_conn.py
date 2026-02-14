@@ -14,7 +14,7 @@ def get_entregador():
         return []
     except Exception as err:
         print("Erro:", err)
-        return False
+        return []
     finally:
         if db is not None:
             db.close()
