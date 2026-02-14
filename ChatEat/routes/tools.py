@@ -12,6 +12,12 @@ def validar_idade(data_nascimento_str, idade_minima):
         print(f"Erro na data: {e}")
         return False
     
+def validar_dados(pessoa):
+    dados = ['*','#','@','!','$','%','¨','&','(',')','-','+']
+    for dado in dados:
+        if pessoa.nome
+
+
 MAX_TENTATIVAS = 5
 BLOQUEIO_TEMPO = 300  
 login_attempts = {}

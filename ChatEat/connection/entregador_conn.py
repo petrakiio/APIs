@@ -45,4 +45,14 @@ def rm_entregador(motivo:object):
     db = None
     try:
         db = get_connection()
-        
+        cursor = db.cursor()
+        sql = 'INSERT registro(nome,motivo) VALUES (%s,%s)'
+        cursor.execute(sql,(motivo.nome,motivo.mt))
+        db.commit()
+        return True
+    except Exception as err:
+        print('Erro:',err)
+    finally:
+        if db is not None:
+            db.close()
+
