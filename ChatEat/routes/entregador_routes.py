@@ -1,6 +1,8 @@
-from flask import Blueprint, render_template
+from flask import Blueprint, render_template,request,flash,url_for,redirect
 from routes.auth import admin_required, entregador_required
 from routes.tools import tratamento_dados
+from models.entregador_class import Entregador,EntregadoService
+import os
 
 entregador_route = Blueprint('entregador', __name__)
 
@@ -20,13 +22,35 @@ def admin_entregador():
 @entregador_route.route('/admin_entregador/adicionar',methods=['GET']['POST'])
 @admin_required
 def admin_add_entregador():
+    if request.method == ['POST']:
+        nome =  request.form.get('nome')
+        entregador = Entregador(
+        nome = tratamento_dados(nome),
+        user = request.form.get('usuario'),
+        email = request.form.get('email'),
+        telefone = request.form.get('telefone'),
+        veiculo = request.form.get('veiculo'),
+        placa = request.form.get('placa'),
+        ativar = True
+        )
+        if entregador is None:
+            return flash('Complete os Dados')
+        
+        r = EntregadoService.add(entregador)
+        if r:
+            flash('Entregador adicionado com sucesso!')
+            return redirect(url_for('entregador.visualizar'))
+        flash('Erro ao adicionar entregado:(')
+        return redirect(url_for('entregador.painel_entregador'))
+
+
     return render_template('admin_add_entregador.html')
 
 
 @entregador_route.route('/admin_entregador/visualizar')
 @admin_required
 def admin_view_entregador():
-    return render_template('admin_view_entregador.html')
+    return render_template('admin_view_entregador.html',entregadores=EntregadoService.visu())
 
 
 @entregador_route.route('/admin_entregador/remover')

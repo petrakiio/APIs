@@ -18,3 +18,4 @@ class EntregadoService:
     
     @staticmethod
     def add(pessoa:Entregador):
+        return add_entregador(pessoa)
