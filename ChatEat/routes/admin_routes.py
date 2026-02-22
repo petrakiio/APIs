@@ -1,106 +1,55 @@
-from flask import Blueprint, render_template, url_for, redirect, flash, request
-from models.admin_class import AdminService
+from flask import Blueprint
 from routes.auth import admin_required
-from models.produtos_class import Product
+from controllers import admin_controller
 
 admin_route = Blueprint('admin', __name__)
-
-def _flash_result(result, success_category='success', error_category='danger'):
-    if result.get('ok'):
-        flash(result.get('msg', 'Operação realizada.'), success_category)
-    else:
-        flash(result.get('msg', 'Erro ao executar a operação.'), error_category)
-
 
 @admin_route.route('/admin')
 @admin_required
 def admin():
-    return render_template('admin.html', feedbacks=AdminService.feedback())
+    return admin_controller.admin()
 
 @admin_route.route('/admin_user')
 @admin_required
 def admin_user():
-    return render_template('usuarios.html', cliente=AdminService.users())
+    return admin_controller.admin_user()
 
 @admin_route.route('/admin_produtos')
 @admin_required
 def admin_produtos():
-    return render_template('admin_produtos.html', produtos=Product.get_all_products())
+    return admin_controller.admin_produtos()
 
 @admin_route.route('/admin_produtos/novo', methods=['GET', 'POST'])
 @admin_required
 def admin_produtos_novo():
-    if request.method == 'POST':
-        r = Product.insert_product(
-            request.form.get('nome'),
-            request.form.get('descricao'),
-            float(request.form.get('preco')),
-            request.form.get('imagem')
-        )
-        _flash_result(r)
-        return redirect(url_for('admin.admin_produtos'))
-    return render_template('admin_produtos_add.html')
+    return admin_controller.admin_produtos_novo()
 
 @admin_route.route('/admin_produtos/editar/<int:id>', methods=['GET', 'POST'])
 @admin_required
 def admin_produtos_editar(id):
-    if request.method == 'POST':
-        r = Product.update_product(
-            id,
-            request.form.get('nome'),
-            request.form.get('descricao'),
-            float(request.form.get('preco')),
-            request.form.get('imagem')
-        )
-        _flash_result(r)
-        return redirect(url_for('admin.admin_produtos'))
-    produto = Product.get_product_by_id(id)
-    if not produto:
-        flash('Produto não encontrado.', 'danger')
-        return redirect(url_for('admin.admin_produtos'))
-    produto = {
-        'id': produto.get('id'),
-        'nome': produto.get('nome', ''),
-        'preco': produto.get('preco', ''),
-        'descricao': produto.get('descricao', ''),
-        'imagem': produto.get('imagem', produto.get('img', '')),
-    }
-    return render_template('admin_produtos_edit.html', produto=produto)
+    return admin_controller.admin_produtos_editar(id)
 
 @admin_route.route('/admin_produtos/excluir/<int:id>', methods=['GET', 'POST'])
 @admin_required
 def admin_produtos_excluir(id):
-    r = Product.delete_product(id)
-    _flash_result(r)
-    return redirect(url_for('admin.admin_produtos'))
+    return admin_controller.admin_produtos_excluir(id)
 
 @admin_route.route('/deletar_feedback/<int:id>')
 @admin_required
 def deletar_feed(id):
-    r = AdminService.del_fed(id)
-    _flash_result(r)
-    return redirect(url_for('admin.admin'))
+    return admin_controller.deletar_feed(id)
 
 @admin_route.route('/del_user',methods=['POST'])
 @admin_required
 def deletar_user():
-    id = request.form.get('id')
-    r = AdminService.del_user(id)
-    _flash_result(r)
-    return redirect(url_for('admin.admin_user'))
+    return admin_controller.deletar_user()
 
 @admin_route.route('/add_admin',methods=['POST'])
 @admin_required
 def add_admin():
-    id = request.form.get('id_admin')
-    r = AdminService.add_new_admin(id)
-    _flash_result(r)
-    return redirect(url_for('admin.admin_user'))
+    return admin_controller.add_admin()
 
 @admin_route.route('/rm_admin',methods=['POST'])
 @admin_required
 def rm_adm():
-    id = request.form.get('id_admin_remove')
-    r = AdminService.rm_admin(id)
-    _flash_result(r)
-    return redirect(url_for('admin.admin_user'))
+    return admin_controller.rm_adm()

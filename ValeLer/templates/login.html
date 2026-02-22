@@ -23,6 +23,9 @@
 <div class="auth-container">
     <div class="auth-card">
         <h2>Entrar</h2>
+        {% if error %}
+            <p class="auth-error">{{ error }}</p>
+        {% endif %}
         <form method="POST" action="/login" class="auth-form">
             <label for="gmail">Gmail</label>
             <input type="email" id="gmail" name="gmail" placeholder="seuemail@gmail.com" required>

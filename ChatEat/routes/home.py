@@ -1,33 +1,25 @@
-from flask import Blueprint, render_template, request, session, redirect, url_for, flash
-from models.produtos_class import Product
+from flask import Blueprint
+from controllers import home_controller
 
 home_route = Blueprint('home', __name__)
 
 @home_route.route('/')
 @home_route.route('/index') 
 def index():
-    products = Product.get_all_products()
-    return render_template('index.html', products=products)
+    return home_controller.index()
 
 @home_route.route('/search', methods=['POST'])
 def search():
-    term = request.form.get('search_term', '')
-    resultados = Product.search(term)
-    return render_template('index.html', products=resultados)
+    return home_controller.search()
 
 @home_route.route('/sobre')
 def sobre():
-    return render_template('sobre.html')
+    return home_controller.sobre()
 
 @home_route.route('/status_entrega')
 def status_entrega():
-    return render_template('status_entrega.html')
+    return home_controller.status_entrega()
 
 @home_route.route('/products/<int:id>')
 def products_page(id):
-    product_found = Product.get_product_by_id(id)
-    
-    if product_found:
-        return render_template('comprar.html', product=product_found)
-    
-    return redirect(url_for('home.index'))
+    return home_controller.products_page(id)

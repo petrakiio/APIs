@@ -1,86 +1,42 @@
-from flask import Blueprint,render_template,redirect,url_for,request,flash
-from connection import gatway_conn
-from models.gatway_class import Gatway,GatwayService
+from flask import Blueprint
 from routes.auth import login_required
-from models.produtos_class import Product
+from controllers import gatway_controller
 
 gatway_route = Blueprint('gatway', __name__)
 
 @gatway_route.route('/iniciar_pagamento/<int:id>',methods=['GET','POST'])
 def iniciar_pagamento(id):
-    url_pagamento = GatwayService.criar_gatway(id)
-    if not url_pagamento:
-        flash("Erro ao criar pagamento. Tente novamente.")
-        return redirect(url_for('home.index'))
-    GatwayService.gerar_qr_code(url_pagamento)
-    return render_template('pagamento.html',product=Product.get_product_by_id(id))
+    return gatway_controller.iniciar_pagamento(id)
 
 
 @gatway_route.route('/sucesso')
 @login_required
 def compra_sucesso():
-    payment_id = request.args.get('payment_id') or request.args.get('collection_id')
-    if payment_id:
-        status = gatway_conn.get_payment_status(payment_id)
-        if status and status != "approved":
-            return redirect(url_for('gatway.compra_pendente'))
-    return render_template('compra_sucesso.html')
+    return gatway_controller.compra_sucesso()
 
 
 @gatway_route.route('/falha')
 @login_required
 def compra_falha():
-    if not GatwayService.deletar_qr_code():
-        print("Erro ao deletar o QR code.")
-    return render_template('compra_falha.html')
+    return gatway_controller.compra_falha()
 
 
 @gatway_route.route('/pendente')
 @login_required
 def compra_pendente():
-    return render_template('compra_pendente.html')
+    return gatway_controller.compra_pendente()
 
 @gatway_route.route('/pagar_entregador/<int:id>', methods=['GET', 'POST'])
 @login_required
 def pagar_entregador(id):
-    product = Product.get_product_by_id(id)
-    if not product:
-        flash("Produto nao encontrado.", "error")
-        return redirect(url_for('home.index'))
-
-    if request.method == 'POST':
-        forma_pagamento = request.form.get('forma_pagamento', 'dinheiro')
-        return redirect(url_for('gatway.caminho_entrega_real', id=id, forma_pagamento=forma_pagamento))
-
-    return render_template('pagar_entregador.html', product=product)
+    return gatway_controller.pagar_entregador(id)
 
 
 @gatway_route.route('/caminho_entrega/<int:id>')
 @login_required
 def caminho_entrega_real(id):
-    product = Product.get_product_by_id(id)
-    if not product:
-        flash("Produto nao encontrado.", "error")
-        return redirect(url_for('home.index'))
-
-    forma_pagamento = request.args.get('forma_pagamento', 'dinheiro')
-    return render_template('caminho_entrega.html', product=product, forma_pagamento=forma_pagamento)
+    return gatway_controller.caminho_entrega_real(id)
 
 @gatway_route.route('/webhook/mercadopago', methods=['POST'])
 def webhook_mercadopago():
-    payload = request.get_json(silent=True) or {}
-    payment_id = None
-
-    data = payload.get("data") or {}
-    if isinstance(data, dict):
-        payment_id = data.get("id")
-
-    if not payment_id:
-        payment_id = request.args.get("data.id")
-
-    if payment_id:
-        status = gatway_conn.get_payment_status(payment_id)
-        if status:
-            gatway_conn.set_payment_status(payment_id, status)
-
-    return "", 200
+    return gatway_controller.webhook_mercadopago()

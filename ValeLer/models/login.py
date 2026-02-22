@@ -8,6 +8,7 @@ class Pessoa:
         self.is_admin = is_admin
 
 class PessoaService:
+    INVALID_LOGIN_MESSAGE = "Credenciais inválidas."
 
     @staticmethod
     def cadastrar(user:Pessoa):
@@ -38,9 +39,9 @@ class PessoaService:
         
         usuario = login_conn.get_usuario_por_gmail(gmail)
         if not usuario:
-            return False, "Usuário não encontrado."
+            return False, PessoaService.INVALID_LOGIN_MESSAGE
         
         if not login_conn.buscar_senha(senha, usuario['password']):
-            return False, "Senha incorreta."
+            return False, PessoaService.INVALID_LOGIN_MESSAGE
         
         return True, "Login bem-sucedido.", usuario
