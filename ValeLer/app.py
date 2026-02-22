@@ -1,19 +1,17 @@
 from flask import Flask
+from  routes.all_routes import ALL_ROUTES
 import os
-from routes.home_routes import home
-from routes.admin_routes import admin
-from routes.login_routes import login
-from routes.perfil_routes import perfil
-from routes.feedback_routes import feedback
-try:
-    app = Flask(__name__)
-    app.secret_key = os.getenv("SECRET_KEY")
-    app.register_blueprint(home)
-    app.register_blueprint(admin)
-    app.register_blueprint(login)
-    app.register_blueprint(perfil)
-    app.register_blueprint(feedback)
 
+
+def create_app():
+    app = Flask(__name__)
+    for rota in ALL_ROUTES:
+        app.register_blueprint(rota)
+    return app
+
+try:
+    app = create_app
+    app.secret_key = os.getenv("SECRET_KEY")
     if __name__ == '__main__':
         port = int(os.getenv("PORT", 5000))
         debug = os.getenv("FLASK_DEBUG", "0") == "1"
