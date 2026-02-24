@@ -4,8 +4,21 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>index</title>
+    <style>
+        p{
+            color: white;
+            text-align: center;
+        }
+        a{
+            text-decoration: none;
+            color: white;
+        }
+    </style>
 </head>
 <body style="background-color: black;">
-    <h1 style="text-align: center; color: azure;">Ola visitante</h1>
+    <h1 style="text-align: center; color: azure;">Ola {{nome}}</h1>
+    <p>Nome:{{nome}}</p>
+    <p>Idade:{{idade}}</p>
+    <a href="{% url 'tarefas:index' %}">Adicionar tarefa</a>
 </body>
 </html>

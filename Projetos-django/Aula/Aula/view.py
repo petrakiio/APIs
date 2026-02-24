@@ -6,7 +6,7 @@ def teste(request):
 
 def index(request):
     contexto = {
-        "Nome":"Pedro",
-        "Idade":"15",
+        "nome":"Pedro",
+        "idade":"15",
     }
-    return render(request,'home/home.html')
+    return render(request,'home/home.html',contexto)
