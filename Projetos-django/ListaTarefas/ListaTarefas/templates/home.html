@@ -10,6 +10,30 @@
 <body>
     <main class="home-card">
         <h1>Bem vindo {{ nome }} !!</h1>
+        <table class="tabela-tarefas">
+            <thead>
+                <tr>
+                    <th>Nome</th>
+                    <th>Descricao</th>
+                    <th>Situacao</th>
+                    <th>Data Criacao</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for tarefa in tarefas %}
+                <tr>
+                    <td>{{ tarefa.nome }}</td>
+                    <td>{{ tarefa.descricao }}</td>
+                    <td>{{ tarefa.concluido }}</td>
+                    <td>{{ tarefa.data_criacao }}</td>
+                </tr>
+                {% empty %}
+                <tr>
+                    <td colspan="4" class="sem-dados">Nenhuma tarefa cadastrada.</td>
+                </tr>
+                {% endfor %}
+            </tbody>
+        </table>
         <a class="btn-add" href="{% url 'adicionar' %}">Adicionar tarefa</a>
     </main>
 </body>
