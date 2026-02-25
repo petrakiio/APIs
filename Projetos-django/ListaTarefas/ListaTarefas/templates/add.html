@@ -1,11 +1,25 @@
+{% load static %}
 <!DOCTYPE html>
-<html lang="en">
+<html lang="pt-BR">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Adicionar</title>
+    <link rel="stylesheet" href="{% static 'css/add.css' %}">
 </head>
 <body>
-    
+    <main class="add-card">
+        <h1>Adicionar tarefa</h1>
+
+        <form action="" method="post" class="add-form">
+            <label for="nome">Nome</label>
+            <input id="nome" type="text" name="nome" placeholder="Digite o nome da tarefa">
+
+            <label for="desc">Descricao</label>
+            <input id="desc" type="text" name="desc" placeholder="Digite a descricao">
+            
+            <button type="submit">Salvar tarefa</button>
+        </form>
+    </main>
 </body>
 </html>

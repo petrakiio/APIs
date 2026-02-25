@@ -17,7 +17,12 @@ Including another URLconf
 from django.contrib import admin
 from django.urls import path
 
+from .routes import views
+
+app_name = 'home'
 
 urlpatterns = [
     path('admin/', admin.site.urls),
+    path('', views.home, name='index'),
+    path('adicionar/', views.adicionar_tarefa, name='adicionar'),
 ]
