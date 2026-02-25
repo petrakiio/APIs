@@ -1,5 +1,5 @@
 from django.shortcuts import render
-
+from ..models.forms import TarefaForm
 
 def home(request):
     contexto = {
@@ -9,4 +9,7 @@ def home(request):
 
 
 def adicionar_tarefa(request):
-    return render(request, 'add.html')
+    contexto = {
+        "form": TarefaForm()
+    }
+    return render(request, 'add.html', contexto)
