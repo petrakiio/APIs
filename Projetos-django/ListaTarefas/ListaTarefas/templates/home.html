@@ -17,6 +17,7 @@
                     <th>Descricao</th>
                     <th>Situacao</th>
                     <th>Data Criacao</th>
+                    <th>Acao</th>
                 </tr>
             </thead>
             <tbody>
@@ -36,15 +37,17 @@
                     {% endif %}
 
                     <td>{{ tarefa.data_criacao }}</td>
+                    <td><a class="btn-edit" href="{% url 'editar' tarefa.id %}">Editar</a></td>
                 </tr>
                 {% empty %}
                 <tr>
-                    <td colspan="4" class="sem-dados">Nenhuma tarefa cadastrada.</td>
+                    <td colspan="5" class="sem-dados">Nenhuma tarefa cadastrada.</td>
                 </tr>
                 {% endfor %}
             </tbody>
         </table>
         <a class="btn-add" href="{% url 'adicionar' %}">Adicionar tarefa</a>
+        <a class="btn-edit" href="{% url 'editar_lista' %}">Pagina de edicao</a>
         <a class="btn-rm" href="{% url 'remover' %}">Remover tarefas</a>
     </main>
 </body>

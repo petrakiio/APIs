@@ -1,0 +1,153 @@
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    min-height: 100vh;
+    display: grid;
+    place-items: center;
+    font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
+    background: linear-gradient(140deg, #0b1220, #111827);
+    color: #e5e7eb;
+}
+
+.edit-card,
+.edit-form-card {
+    width: min(94vw, 980px);
+    background: #1f2937;
+    border-radius: 16px;
+    padding: 34px 26px;
+    border: 1px solid #374151;
+    box-shadow: 0 14px 35px rgba(0, 0, 0, 0.35);
+}
+
+.edit-form-card {
+    width: min(92vw, 560px);
+}
+
+h1 {
+    text-align: center;
+    margin-bottom: 8px;
+}
+
+.subtitle {
+    text-align: center;
+    margin-bottom: 20px;
+    color: #cbd5e1;
+}
+
+.tabela-editar {
+    width: 100%;
+    border-collapse: collapse;
+    border: 1px solid #374151;
+    border-radius: 12px;
+    overflow: hidden;
+    margin-bottom: 18px;
+}
+
+.tabela-editar thead th {
+    background: #0f172a;
+    color: #e2e8f0;
+    text-align: left;
+    padding: 12px 14px;
+    font-size: 0.92rem;
+}
+
+.tabela-editar tbody td {
+    padding: 12px 14px;
+    border-top: 1px solid #374151;
+    color: #d1d5db;
+}
+
+.tabela-editar tbody tr:nth-child(even) {
+    background: #182334;
+}
+
+.btn-edit-item {
+    display: inline-block;
+    text-decoration: none;
+    background: #f59e0b;
+    color: #111827;
+    padding: 8px 12px;
+    border-radius: 8px;
+    font-weight: 700;
+}
+
+.btn-edit-item:hover {
+    background: #d97706;
+}
+
+.edit-form {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+}
+
+.edit-form label {
+    font-weight: 600;
+}
+
+.edit-form input,
+.edit-form textarea {
+    padding: 11px 12px;
+    border: 1px solid #4b5563;
+    border-radius: 10px;
+    font-size: 0.96rem;
+    background: #111827;
+    color: #f9fafb;
+    outline: none;
+}
+
+.edit-form textarea {
+    resize: vertical;
+    min-height: 110px;
+}
+
+.check-wrap {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+}
+
+.check-wrap input[type="checkbox"] {
+    width: 18px;
+    height: 18px;
+    accent-color: #f59e0b;
+}
+
+.edit-form button {
+    margin-top: 8px;
+    padding: 12px;
+    border: none;
+    border-radius: 10px;
+    background: #f59e0b;
+    color: #111827;
+    font-weight: 700;
+    cursor: pointer;
+}
+
+.edit-form button:hover {
+    background: #d97706;
+}
+
+.btn-back {
+    display: inline-block;
+    text-decoration: none;
+    background: #1d4ed8;
+    color: #f9fafb;
+    padding: 10px 18px;
+    border-radius: 10px;
+    font-weight: 600;
+}
+
+.btn-back:hover {
+    background: #1e40af;
+}
+
+.sem-dados {
+    text-align: center;
+    color: #94a3b8;
+    font-style: italic;
+}
