@@ -3,22 +3,89 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>index</title>
+    <title>Nova tarefa</title>
     <style>
-        p{
-            color: white;
+        body {
+            background-color: #111;
+            color: #fff;
+            font-family: Arial, sans-serif;
+        }
+
+        .container {
+            max-width: 520px;
+            margin: 40px auto;
+            padding: 24px;
+            border: 1px solid #2b2b2b;
+            border-radius: 10px;
+            background-color: #1a1a1a;
+        }
+
+        h1 {
             text-align: center;
         }
-        a{
+
+        label {
+            display: block;
+            margin-top: 16px;
+            margin-bottom: 6px;
+        }
+
+        input[type="text"],
+        textarea {
+            width: 100%;
+            padding: 10px;
+            border: 1px solid #444;
+            border-radius: 6px;
+            background: #0f0f0f;
+            color: #fff;
+            box-sizing: border-box;
+        }
+
+        .checkbox {
+            margin-top: 16px;
+        }
+
+        button {
+            margin-top: 18px;
+            width: 100%;
+            border: 0;
+            border-radius: 6px;
+            padding: 10px;
+            cursor: pointer;
+            background: #00a86b;
+            color: #fff;
+            font-weight: bold;
+        }
+
+        a {
+            display: inline-block;
+            margin-top: 14px;
             text-decoration: none;
             color: white;
         }
     </style>
 </head>
-<body style="background-color: black;">
-    <h1 style="text-align: center; color: azure;">Ola {{nome}}</h1>
-    <p>Nome:{{nome}}</p>
-    <p>Idade:{{idade}}</p>
-    <a href="{% url 'tarefas:index' %}">Adicionar tarefa</a>
+<body>
+    <div class="container">
+        <h1>Criar tarefa</h1>
+
+        <form method="post" action="">
+
+            <label for="nome">Nome</label>
+            <input type="text" id="nome" name="nome" maxlength="100" required>
+
+            <label for="descricao">Descricao</label>
+            <textarea id="descricao" name="descricao" rows="4"></textarea>
+
+            <div class="checkbox">
+                <input type="checkbox" id="concluido" name="concluido">
+                <label for="concluido" style="display: inline;">Concluido</label>
+            </div>
+
+            <button type="submit">Salvar tarefa</button>
+        </form>
+
+        <a href="{% url 'tarefas:index' %}">Ir para tarefas</a>
+    </div>
 </body>
 </html>
