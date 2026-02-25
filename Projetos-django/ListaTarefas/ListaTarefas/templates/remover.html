@@ -1,0 +1,51 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Remover tarefas</title>
+    <link rel="stylesheet" href="{% static 'css/remover.css' %}">
+</head>
+<body>
+    <main class="remove-card">
+        <h1>Remover tarefas</h1>
+        <p class="subtitle">Selecione a tarefa que deseja excluir.</p>
+
+        <table class="tabela-remover">
+            <thead>
+                <tr>
+                    <th>Nome</th>
+                    <th>Descricao</th>
+                    <th>Situacao</th>
+                    <th>Data Criacao</th>
+                    <th>Acao</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for tarefa in tarefas %}
+                <tr>
+                    <td>{{ tarefa.nome }}</td>
+                    <td>{{ tarefa.descricao }}</td>
+                    <td>{{ tarefa.concluido }}</td>
+                    <td>{{ tarefa.data_criacao }}</td>
+                    <td>
+                        <form method="post" action="">
+                            {% csrf_token %}
+                            <input type="hidden" name="tarefa_id" value="{{ tarefa.id }}">
+                            <button type="submit" class="btn-danger">Remover</button>
+                        </form>
+                    </td>
+                </tr>
+                {% empty %}
+                <tr>
+                    <td class="sem-dados" colspan="5">Nenhuma tarefa para remover.</td>
+                </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+
+        <a class="btn-back" href="{% url 'index' %}">Voltar para home</a>
+    </main>
+</body>
+</html>

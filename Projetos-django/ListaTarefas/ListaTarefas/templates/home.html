@@ -24,7 +24,17 @@
                 <tr>
                     <td>{{ tarefa.nome }}</td>
                     <td>{{ tarefa.descricao }}</td>
-                    <td>{{ tarefa.concluido }}</td>
+
+                    {%if tarefa.concluido %}
+
+                    <td>Em Andamento</td>
+
+                    {% else %}
+
+                    <td>Tarefa feita</td>
+
+                    {% endif %}
+
                     <td>{{ tarefa.data_criacao }}</td>
                 </tr>
                 {% empty %}
@@ -35,6 +45,7 @@
             </tbody>
         </table>
         <a class="btn-add" href="{% url 'adicionar' %}">Adicionar tarefa</a>
+        <a class="btn-rm" href="{% url 'remover' %}">Remover tarefas</a>
     </main>
 </body>
 </html>
