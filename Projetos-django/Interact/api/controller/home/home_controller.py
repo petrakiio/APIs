@@ -1,7 +1,6 @@
-from django.http import request
 from django.shortcuts import render
 
-class HomeController():
+class HomeController:
     @staticmethod
-    def index():
+    def index(request):
         return render(request, 'index.html')
