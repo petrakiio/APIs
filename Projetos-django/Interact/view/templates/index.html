@@ -1,0 +1,16 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>InteractChat</title>
+</head>
+<body>
+    <nav class="menu">
+    {% if 'user_id' in sessin %}
+        <a href="#">
+            <img src="{{ user.img }}">
+        </a>
+    </nav>
+</body>
+</html>
