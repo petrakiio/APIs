@@ -1,9 +1,11 @@
 <!DOCTYPE html>
 <html lang="en">
+{% load static %}
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>InteractChat</title>
+    <link rel="stylesheet" href="{% static 'style.css' %}">
 </head>
 <body>
     <nav class="menu">
@@ -11,6 +13,30 @@
         <a href="#">
             <img src="{{ user.img }}">
         </a>
+        <a href="#">
+            Chats
+        </a>
+        <a href="#">
+            Amizades
+        </a>
+    {% else %}
+        <a href="#">
+            Login/Cadastro
+        </a>
     </nav>
+    {% endif %}
+    <div class="search">
+        <input type="text" placeholder="Busca por id">
+    </div>
+    <div class="main">
+        {% for user in users %}
+        <div class="card">
+            <img src="{{ user.img }}">
+            <p>{{ user.nome }}</p>
+            <p>{{ user.bio }}</p>
+            <p>{{ user.descricao }}</p>
+        </div>
+        {% endfor %}
+    </div>
 </body>
 </html>
