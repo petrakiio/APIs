@@ -12,5 +12,12 @@ class LoginController:
     @staticmethod
     def signup(request):
         if request.method == 'POST':
-            pass
+            nome = request.POST.get('nome')
+            password = request.POST.get('password')
+            new_user = User(
+                nome=nome.strip(),
+                senha=User.tratamento(password),
+                email = request.POST.get('email'),
+                
+            )
         return render(request, 'cadastro.html')
