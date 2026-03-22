@@ -7,6 +7,7 @@ class User(models.Model):
     bio = models.TextField(max_length=500, blank=True)
     descricao = models.CharField(max_length=300)
     codigo_id = models.CharField(max_length=25,unique=True)
+    friends = models.ManyToManyField('self', blank=True)
 
     def __str__(self):
-        return super().__str__()
+        return self.nome
