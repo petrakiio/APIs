@@ -1,6 +1,8 @@
 from django.db import models
 from django.contrib.auth.hashers import make_password,check_password
 from django.core.exceptions import ValidationError
+import secrets
+import string
 
 class User(models.Model):
     nome = models.CharField(max_length=150)
@@ -14,10 +16,16 @@ class User(models.Model):
     def __str__(self):
         return self.nome
 
-    def tratamento(senha):
+    @staticmethod
+    def criptografia(senha):
         return make_password(senha)
 
-    def Singup(self):
+    @staticmethod
+    def create_code(tamanho=25):
+        caracter = string.ascii_letters + string.digits
+        return ''.join(secrets.choice(caracter) for _ in range(tamanho))        
+
+    def Signup(self):
         try:
             self.full_clean()
             self.save()

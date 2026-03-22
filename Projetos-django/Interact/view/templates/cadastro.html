@@ -22,18 +22,22 @@
             <div class="card card-accent">
                 <h2>Cadastro</h2>
                 <p class="subtitle">É rápido e leva menos de um minuto.</p>
-                <form class="form">
+                <form class="form" method="post">
+                    {% csrf_token %}
                     <label for="signup-name">Nome</label>
-                    <input id="signup-name" type="text" placeholder="Seu nome" required>
+                    <input id="signup-name" name="nome" type="text" placeholder="Seu nome" required>
 
                     <label for="signup-email">Email</label>
-                    <input id="signup-email" type="email" placeholder="voce@email.com" required>
+                    <input id="signup-email" name="email" type="email" placeholder="voce@email.com" required>
 
                     <label for="signup-password">Senha</label>
-                    <input id="signup-password" type="password" placeholder="Crie uma senha forte" required>
+                    <input id="signup-password" name="password" type="password" placeholder="Crie uma senha forte" required>
 
                     <label for="signup-bio">Bio</label>
-                    <input id="signup-bio" type="text" placeholder="Conte algo sobre você">
+                    <input id="signup-bio" name="biografia" type="text" placeholder="Conte algo sobre você">
+
+                    <label for="signup-descricao">Descrição</label>
+                    <input id="signup-descricao" name="descricao" type="text" placeholder="Uma frase sobre você">
 
                     <button type="submit" class="btn btn-light">Criar conta</button>
                 </form>
