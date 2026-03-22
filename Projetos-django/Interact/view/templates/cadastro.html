@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+{% load static %}
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>InteractChat | Cadastro</title>
+    <link rel="stylesheet" href="{% static 'auth.css' %}">
+</head>
+<body>
+    <main class="auth">
+        <header class="auth-header">
+            <div class="brand">
+                <a class="back-link" href="/">Voltar</a>
+                <span class="brand-pill">InteractChat</span>
+                <h1>Crie sua conta</h1>
+                <p>Faça parte da comunidade e comece a conversar hoje.</p>
+            </div>
+        </header>
+
+        <section class="auth-grid single">
+            <div class="card card-accent">
+                <h2>Cadastro</h2>
+                <p class="subtitle">É rápido e leva menos de um minuto.</p>
+                <form class="form">
+                    <label for="signup-name">Nome</label>
+                    <input id="signup-name" type="text" placeholder="Seu nome" required>
+
+                    <label for="signup-email">Email</label>
+                    <input id="signup-email" type="email" placeholder="voce@email.com" required>
+
+                    <label for="signup-password">Senha</label>
+                    <input id="signup-password" type="password" placeholder="Crie uma senha forte" required>
+
+                    <label for="signup-bio">Bio</label>
+                    <input id="signup-bio" type="text" placeholder="Conte algo sobre você">
+
+                    <button type="submit" class="btn btn-light">Criar conta</button>
+                </form>
+            </div>
+        </section>
+    </main>
+</body>
+</html>

@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+{% load static %}
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>InteractChat | Login</title>
+    <link rel="stylesheet" href="{% static 'auth.css' %}">
+</head>
+<body>
+    <main class="auth">
+        <header class="auth-header">
+            <div class="brand">
+                <a class="back-link" href="/">Voltar</a>
+                <span class="brand-pill">InteractChat</span>
+                <h1>Bem-vindo de volta</h1>
+                <p>Entre para continuar suas conversas e conexões.</p>
+            </div>
+        </header>
+
+        <section class="auth-grid single">
+            <div class="card">
+                <h2>Login</h2>
+                <p class="subtitle">Acesse sua conta rapidamente.</p>
+                <form class="form">
+                    <label for="login-email">Email</label>
+                    <input id="login-email" type="email" placeholder="voce@email.com" required>
+
+                    <label for="login-password">Senha</label>
+                    <input id="login-password" type="password" placeholder="••••••••" required>
+
+                    <div class="row">
+                        <label class="checkbox">
+                            <input type="checkbox">
+                            <span>Lembrar de mim</span>
+                        </label>
+                        <a class="link" href="#">Esqueci a senha</a>
+                    </div>
+
+                    <button type="submit" class="btn">Entrar</button>
+                </form>
+            </div>
+        </section>
+    </main>
+</body>
+</html>
