@@ -23,15 +23,15 @@ body {
   font-family: "Space Grotesk", "Segoe UI", sans-serif;
   color: var(--text);
   background:
-    radial-gradient(900px 500px at 15% -10%, rgba(73, 217, 255, 0.25), transparent 60%),
-    radial-gradient(900px 600px at 90% 0%, rgba(255, 138, 61, 0.2), transparent 55%),
-    linear-gradient(120deg, var(--bg), var(--bg-alt));
+    linear-gradient(120deg, rgba(15, 18, 38, 0.9), rgba(20, 25, 58, 0.9)),
+    url("img/fundo.png") center/cover no-repeat fixed;
   padding: 32px 24px 64px;
 }
 
 .menu {
   display: flex;
   align-items: center;
+  justify-content: space-between;
   gap: 20px;
   padding: 16px 24px;
   background: var(--surface);
@@ -42,6 +42,27 @@ body {
   position: sticky;
   top: 20px;
   z-index: 10;
+}
+
+.brand {
+  display: inline-flex;
+  align-items: center;
+  gap: 12px;
+  font-family: "Syne", "Space Grotesk", sans-serif;
+  font-size: 18px;
+  font-weight: 700;
+  letter-spacing: 0.4px;
+}
+
+.logo {
+  width: 36px;
+  height: 36px;
+}
+
+.menu-links {
+  display: inline-flex;
+  align-items: center;
+  gap: 20px;
 }
 
 .menu a {
@@ -171,6 +192,11 @@ body {
   .menu {
     flex-wrap: wrap;
     gap: 12px;
+  }
+
+  .menu-links {
+    width: 100%;
+    justify-content: flex-start;
   }
 
   .search {

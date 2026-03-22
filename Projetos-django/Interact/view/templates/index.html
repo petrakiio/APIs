@@ -9,24 +9,30 @@
 </head>
 <body>
     <nav class="menu">
-    {% if 'user_id' in sessin %}
-        <a href="#">
-            <img src="{{ user.img }}">
-        </a>
-        <a href="#">
-            Chats
-        </a>
-        <a href="#">
-            Amizades
-        </a>
-    {% else %}
-        <a href="/login/">
-            Login
-        </a>
-        <a href="/cadastro/">
-            Cadastro
-        </a>
-    {% endif %}
+        <div class="brand">
+            <img class="logo" src="{% static 'logo.svg' %}" alt="InteractChat">
+            <span>InteractChat</span>
+        </div>
+        <div class="menu-links">
+        {% if 'user_id' in sessin %}
+            <a href="#">
+                <img src="{{ user.img }}">
+            </a>
+            <a href="#">
+                Chats
+            </a>
+            <a href="#">
+                Amizades
+            </a>
+        {% else %}
+            <a href="/login/">
+                Login
+            </a>
+            <a href="/cadastro/">
+                Cadastro
+            </a>
+        {% endif %}
+        </div>
     </nav>
     <div class="search">
         <input type="text" placeholder="Busca por id">
