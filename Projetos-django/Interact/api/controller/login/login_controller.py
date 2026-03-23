@@ -8,12 +8,20 @@ class LoginController:
         if request.method == 'POST':
             email = request.POST.get('email','').strip()
             senha = request.POST.get('senha','').strip()
+            remember = request.POST.get('remember_me') == 'on'
             if not email or not senha:
                 messages.error(request,'Preencha email e senha')
                 return redirect('login')
-            user = User.login(email,senha)
-            if user[0]:
-
+            result = User.login(email,senha)
+            if result[0]:
+                user = result[1]
+                request.session['user_id'] = user.id
+                request.session['user_nome'] = user.nome
+                if remember:
+                    request.session.set_expiry(60 * 60 * 24 * 30) #expira a sessão em 1 mês
+                else:
+                    request.session.set_expiry(0) #expira ao fechar o navegador
+                return redirect('home')
         return render(request, 'login.html')
 
     @staticmethod
@@ -43,3 +51,8 @@ class LoginController:
                 return redirect('signup')
 
         return render(request, 'cadastro.html')
+
+    @staticmethod
+    def logout(request):
+        request.session.flush()
+        return redirect('login')
