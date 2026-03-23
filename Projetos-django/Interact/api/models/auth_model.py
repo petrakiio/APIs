@@ -33,4 +33,13 @@ class User(models.Model):
         except ValidationError as e:
             print('erro:',e)
             return False
-        
+    
+    def login(email,senha):
+        try:
+            user = User.objects.filter(email=email).filter()
+            if not user or not check_password(senha, user.senha):
+                return [False,'Verifique seus Dados']
+            return [True,user]
+        except Exception as e:
+            print('erro:',e)
+            return False

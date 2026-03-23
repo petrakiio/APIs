@@ -6,7 +6,14 @@ class LoginController:
     @staticmethod
     def login(request):
         if request.method == 'POST':
-            pass
+            email = request.POST.get('email','').strip()
+            senha = request.POST.get('senha','').strip()
+            if not email or not senha:
+                messages.error(request,'Preencha email e senha')
+                return redirect('login')
+            user = User.login(email,senha)
+            if user[0]:
+
         return render(request, 'login.html')
 
     @staticmethod
