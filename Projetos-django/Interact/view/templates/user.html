@@ -1,0 +1,78 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+{% load static %}
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>InteractChat | Perfil</title>
+    <link rel="stylesheet" href="{% static 'style.css' %}">
+</head>
+<body>
+    <nav class="menu">
+        <div class="brand">
+            <img class="logo" src="{% static 'logo.svg' %}" alt="InteractChat">
+            <span>InteractChat</span>
+        </div>
+        <div class="menu-links">
+            <a href="/">Home</a>
+            {% if current_user_id %}
+                <a href="{% url 'user_profile' current_user_id %}">Meu perfil</a>
+            {% else %}
+                <a href="/login/">Login</a>
+            {% endif %}
+        </div>
+    </nav>
+
+    <main class="profile">
+        <section class="profile-card">
+            <div class="profile-header">
+                <div>
+                    <p class="profile-pill">Perfil</p>
+                    <h1>{{ profile.nome }}</h1>
+                    <p class="profile-email">{{ profile.email }}</p>
+                </div>
+                <div class="profile-meta">
+                    <div>
+                        <span>Código</span>
+                        <strong>{{ profile.codigo_id }}</strong>
+                    </div>
+                    <div>
+                        <span>Amigos</span>
+                        <strong>{{ profile.friends.count }}</strong>
+                    </div>
+                </div>
+            </div>
+
+            <div class="profile-body">
+                <div>
+                    <h2>Bio</h2>
+                    <p>{{ profile.bio|default:"-" }}</p>
+                </div>
+                <div>
+                    <h2>Descrição</h2>
+                    <p>{{ profile.descricao|default:"-" }}</p>
+                </div>
+            </div>
+        </section>
+
+        {% if current_user_id == profile.id %}
+        <section class="profile-edit">
+            <h2>Editar perfil</h2>
+            <form class="profile-form" method="post" action="{% url 'user_profile' profile.id %}">
+                {% csrf_token %}
+                <label for="profile-nome">Nome</label>
+                <input id="profile-nome" type="text" name="nome" value="{{ profile.nome }}" maxlength="150" required>
+
+                <label for="profile-bio">Bio</label>
+                <textarea id="profile-bio" name="bio" maxlength="500" rows="4">{{ profile.bio }}</textarea>
+
+                <label for="profile-descricao">Descrição</label>
+                <input id="profile-descricao" type="text" name="descricao" value="{{ profile.descricao }}" maxlength="300">
+
+                <button type="submit" class="btn-primary">Salvar mudanças</button>
+            </form>
+        </section>
+        {% endif %}
+    </main>
+</body>
+</html>

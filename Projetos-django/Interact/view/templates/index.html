@@ -14,7 +14,7 @@
             <span>InteractChat</span>
         </div>
         <div class="menu-links">
-        {% if 'user_id' in sessin %}
+        {% if 'user_id' in request.session %}
             <a href="#">
                 <img src="{{ user.img }}">
             </a>
@@ -39,12 +39,12 @@
     </div>
     <div class="main">
         {% for user in users %}
-        <div class="card">
+        <a class="card" href="{% url 'user_profile' user.id %}">
             <img src="{{ user.img }}">
             <p>{{ user.nome }}</p>
             <p>{{ user.bio }}</p>
             <p>{{ user.descricao }}</p>
-        </div>
+        </a>
         {% endfor %}
     </div>
 </body>
