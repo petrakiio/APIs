@@ -22,6 +22,8 @@ class LoginController:
                 else:
                     request.session.set_expiry(0) #expira ao fechar o navegador
                 return redirect('home')
+            else:
+                messages.error(request,result[1])
         return render(request, 'login.html')
 
     @staticmethod
