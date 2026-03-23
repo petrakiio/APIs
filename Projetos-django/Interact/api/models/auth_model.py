@@ -36,10 +36,12 @@ class User(models.Model):
     
     def login(email,senha):
         try:
-            user = User.objects.filter(email=email).filter()
-            if not user or not check_password(senha, user.senha):
-                return [False,'Verifique seus Dados']
-            return [True,user]
+            user = User.objects.filter(email=email).first()
+            if not user:
+                return (False, 'Verifique seus dados')
+            if not check_password(senha, user.senha):
+                return (False, 'Verifique seus dados')
+            return (True, user)
         except Exception as e:
-            print('erro:',e)
-            return False
+            print('erro:', e)
+            return (False, 'Erro inesperado')
