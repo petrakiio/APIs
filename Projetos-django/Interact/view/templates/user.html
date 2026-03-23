@@ -6,6 +6,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>InteractChat | Perfil</title>
     <link rel="stylesheet" href="{% static 'style.css' %}">
+    <link rel="stylesheet" href="{% static 'user.css' %}">
 </head>
 <body>
     <nav class="menu">
@@ -34,7 +35,10 @@
                 <div class="profile-meta">
                     <div>
                         <span>Código</span>
-                        <strong>{{ profile.codigo_id }}</strong>
+                        <div class="profile-code">
+                            <strong id="profile-code">{{ profile.codigo_id }}</strong>
+                            <button type="button" class="copy-btn" data-copy-target="profile-code">Copiar</button>
+                        </div>
                     </div>
                     <div>
                         <span>Amigos</span>
@@ -44,6 +48,13 @@
             </div>
 
             <div class="profile-body">
+                <div class="profile-avatar">
+                    {% if profile.img %}
+                        <img src="{{ profile.img.url }}" alt="{{ profile.nome }}">
+                    {% else %}
+                        <img src="{% static 'img/icon.jpeg' %}" alt="{{ profile.nome }}">
+                    {% endif %}
+                </div>
                 <div>
                     <h2>Bio</h2>
                     <p>{{ profile.bio|default:"-" }}</p>
@@ -58,10 +69,13 @@
         {% if current_user_id == profile.id %}
         <section class="profile-edit">
             <h2>Editar perfil</h2>
-            <form class="profile-form" method="post" action="{% url 'user_profile' profile.id %}">
+            <form class="profile-form" method="post" action="{% url 'user_profile' profile.id %}" enctype="multipart/form-data">
                 {% csrf_token %}
                 <label for="profile-nome">Nome</label>
                 <input id="profile-nome" type="text" name="nome" value="{{ profile.nome }}" maxlength="150" required>
+
+                <label for="profile-img">Imagem</label>
+                <input id="profile-img" type="file" name="img" accept="image/*">
 
                 <label for="profile-bio">Bio</label>
                 <textarea id="profile-bio" name="bio" maxlength="500" rows="4">{{ profile.bio }}</textarea>
@@ -74,5 +88,6 @@
         </section>
         {% endif %}
     </main>
+    <script src="{% static 'script/copy.js' %}"></script>
 </body>
 </html>

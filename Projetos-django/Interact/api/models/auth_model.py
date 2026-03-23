@@ -10,6 +10,12 @@ class User(models.Model):
     email = models.EmailField(unique=True)
     bio = models.TextField(max_length=500, blank=True)
     descricao = models.CharField(max_length=300)
+    img = models.ImageField(
+        upload_to='perfil/',
+        default='perfil/icon.jpeg',
+        blank=True,
+        null=True
+    )
     codigo_id = models.CharField(max_length=25,unique=True)
     friends = models.ManyToManyField('self', blank=True)
 

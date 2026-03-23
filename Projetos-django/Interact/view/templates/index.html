@@ -14,9 +14,16 @@
             <span>InteractChat</span>
         </div>
         <div class="menu-links">
-        {% if 'user_id' in request.session %}
-            <a href="#">
-                <img src="{{ user.img }}">
+        {% if current_user %}
+            <a href="{% url 'user_profile' current_user.id %}">
+                {% if current_user.img %}
+                    <img src="{{ current_user.img.url }}" alt="Perfil">
+                {% else %}
+                    <img src="{% static 'img/icon.jpeg' %}" alt="Perfil">
+                {% endif %}
+            </a>
+            <a href="/logout/">
+                <span style="color: red;">Sair</span>
             </a>
             <a href="#">
                 Chats
@@ -40,7 +47,11 @@
     <div class="main">
         {% for user in users %}
         <a class="card" href="{% url 'user_profile' user.id %}">
-            <img src="{{ user.img }}">
+            {% if user.img %}
+                <img src="{{ user.img.url }}" alt="{{ user.nome }}">
+            {% else %}
+                <img src="{% static 'img/icon.jpeg' %}" alt="{{ user.nome }}">
+            {% endif %}
             <p>{{ user.nome }}</p>
             <p>{{ user.bio }}</p>
             <p>{{ user.descricao }}</p>

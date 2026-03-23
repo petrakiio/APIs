@@ -11,11 +11,16 @@ class UserController:
             nome = request.POST.get('nome', '').strip()
             bio = request.POST.get('bio', '').strip()
             descricao = request.POST.get('descricao', '').strip()
+            img = request.FILES.get('img')
             if nome:
                 profile.nome = nome
             profile.bio = bio
             profile.descricao = descricao
+            if img:
+                profile.img = img
             profile.save()
+            if img:
+                request.session['user_img'] = profile.img.url
             return redirect('user_profile', user_id=profile.id)
         return render(
             request,

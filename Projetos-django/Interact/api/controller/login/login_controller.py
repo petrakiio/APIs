@@ -17,6 +17,10 @@ class LoginController:
                 user = result[1]
                 request.session['user_id'] = user.id
                 request.session['user_nome'] = user.nome
+                if user.img:
+                    request.session['user_img'] = user.img.url
+                else:
+                    request.session['user_img'] = ''
                 if remember:
                     request.session.set_expiry(60 * 60 * 24 * 30) #expira a sessão em 1 mês
                 else:
