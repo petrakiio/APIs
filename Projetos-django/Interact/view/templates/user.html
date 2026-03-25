@@ -47,6 +47,30 @@
                 </div>
             </div>
 
+            {% if current_user_id and current_user_id != profile.id %}
+            <div class="profile-actions">
+                {% if is_friend %}
+                    <span class="btn-primary">Amigos</span>
+                {% elif incoming_request %}
+                    <form method="post" action="{% url 'friend_request_accept' incoming_request.id %}">
+                        {% csrf_token %}
+                        <button type="submit" class="btn-primary">Aceitar amizade</button>
+                    </form>
+                    <form method="post" action="{% url 'friend_request_decline' incoming_request.id %}">
+                        {% csrf_token %}
+                        <button type="submit" class="btn-secondary">Recusar</button>
+                    </form>
+                {% elif outgoing_request %}
+                    <span class="btn-secondary">Convite enviado</span>
+                {% else %}
+                    <form method="post" action="{% url 'friend_request_send' profile.id %}">
+                        {% csrf_token %}
+                        <button type="submit" class="btn-primary">Adicionar amigo</button>
+                    </form>
+                {% endif %}
+            </div>
+            {% endif %}
+
             <div class="profile-body">
                 <div class="profile-avatar">
                     {% if profile.img %}

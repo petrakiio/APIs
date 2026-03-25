@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+{% load static %}
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>InteractChat | Conexões</title>
+    <link rel="stylesheet" href="{% static 'style.css' %}">
+    <link rel="stylesheet" href="{% static 'friends.css' %}">
+</head>
+<body>
+    <nav class="menu">
+        <div class="brand">
+            <img class="logo" src="{% static 'logo.svg' %}" alt="InteractChat">
+            <span>InteractChat</span>
+        </div>
+        <div class="menu-links">
+            <a href="/">Home</a>
+            {% if user.is_authenticated %}
+                <a href="{% url 'user_profile' user.id %}">Meu perfil</a>
+            {% else %}
+                <a href="/login/">Login</a>
+            {% endif %}
+        </div>
+    </nav>
+
+    <main class="friends">
+        <header class="friends-header">
+            <div>
+                <p class="friends-pill">Conexões</p>
+                <h1>Amigos confirmados</h1>
+                <p class="friends-subtitle">Aqui estão as pessoas com quem você já conectou.</p>
+            </div>
+            <div class="friends-count">
+                <span>Total</span>
+                <strong>{{ friends|length }}</strong>
+            </div>
+        </header>
+
+        {% if friends %}
+        <section class="friends-grid">
+            {% for friend in friends %}
+            <article class="friend-card">
+                <div class="friend-info">
+                    <div class="friend-avatar">
+                        {% if friend.img %}
+                            <img src="{{ friend.img.url }}" alt="{{ friend.nome }}">
+                        {% else %}
+                            <img src="{% static 'img/icon.jpeg' %}" alt="{{ friend.nome }}">
+                        {% endif %}
+                    </div>
+                    <div>
+                        <h2>{{ friend.nome }}</h2>
+                        <p>{{ friend.bio|default:"Sem bio" }}</p>
+                    </div>
+                </div>
+                <div class="friend-actions">
+                    <a class="btn-primary" href="{% url 'user_profile' friend.id %}">Ver perfil</a>
+                </div>
+            </article>
+            {% endfor %}
+        </section>
+        {% else %}
+        <section class="friends-empty">
+            <h2>Você ainda não possui conexões.</h2>
+            <p>Comece a interagir e faça novas amizades!</p>
+            <a class="btn-primary" href="/">Explorar pessoas</a>
+        </section>
+        {% endif %}
+    </main>
+</body>
+</html>

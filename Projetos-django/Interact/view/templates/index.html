@@ -14,10 +14,10 @@
             <span>InteractChat</span>
         </div>
         <div class="menu-links">
-        {% if current_user %}
-            <a href="{% url 'user_profile' current_user.id %}">
-                {% if current_user.img %}
-                    <img src="{{ current_user.img.url }}" alt="Perfil">
+        {% if user.is_authenticated %}
+            <a href="{% url 'user_profile' user.id %}">
+                {% if user.img %}
+                    <img src="{{ user.img.url }}" alt="Perfil">
                 {% else %}
                     <img src="{% static 'img/icon.jpeg' %}" alt="Perfil">
                 {% endif %}
@@ -28,7 +28,7 @@
             <a href="#">
                 Chats
             </a>
-            <a href="#">
+            <a href="{% url 'friends_list' %}">
                 Amizades
             </a>
         {% else %}
@@ -42,7 +42,10 @@
         </div>
     </nav>
     <div class="search">
-        <input type="text" placeholder="Busca por id">
+        <form action="{% url 'home_search' %}" method="post">
+            {% csrf_token %}
+            <input type="text" name="codigo" placeholder="Busca por id">
+        </form>
     </div>
     <div class="main">
         {% for user in users %}

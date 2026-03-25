@@ -4,11 +4,9 @@ from models.auth_model import User
 class HomeController:
     @staticmethod
     def index(request):
-        current_user = None
-        user_id = request.session.get('user_id')
-        if user_id:
-            current_user = User.objects.filter(id=user_id).first()
-            users = User.objects.exclude(id=user_id).order_by('id')
+        current_user = request.user if request.user.is_authenticated else None
+        if current_user:
+            users = User.objects.exclude(id=current_user.id).order_by('id')
         else:
             users = User.objects.all().order_by('id')
 
@@ -17,11 +15,9 @@ class HomeController:
     @staticmethod
     def search(request):
         codigo = request.POST.get('codigo', '').strip()
-        current_user = None
-        user_id = request.session.get('user_id')
-        if user_id:
-            current_user = User.objects.filter(id=user_id).first()
-            users = User.objects.exclude(id=user_id).order_by('id')
+        current_user = request.user if request.user.is_authenticated else None
+        if current_user:
+            users = User.objects.exclude(id=current_user.id).order_by('id')
         else:
             users = User.objects.all().order_by('id')
 

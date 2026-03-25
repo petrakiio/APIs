@@ -97,6 +97,14 @@
   flex-wrap: wrap;
 }
 
+.profile-actions {
+  display: flex;
+  gap: 12px;
+  flex-wrap: wrap;
+  position: relative;
+  z-index: 1;
+}
+
 .copy-btn {
   border: 1px solid rgba(255, 255, 255, 0.2);
   background: rgba(255, 255, 255, 0.08);
@@ -206,4 +214,22 @@
 .btn-primary:hover {
   transform: translateY(-2px);
   box-shadow: 0 16px 34px rgba(73, 217, 255, 0.25);
+}
+
+.btn-secondary {
+  border: 1px solid rgba(255, 255, 255, 0.2);
+  border-radius: 999px;
+  padding: 12px 24px;
+  font-weight: 600;
+  font-size: 14px;
+  background: rgba(8, 12, 30, 0.5);
+  color: var(--text);
+  cursor: pointer;
+  transition: transform 0.2s ease, border 0.2s ease, box-shadow 0.2s ease;
+}
+
+.btn-secondary:hover {
+  transform: translateY(-2px);
+  border-color: rgba(73, 217, 255, 0.5);
+  box-shadow: 0 12px 24px rgba(73, 217, 255, 0.2);
 }
