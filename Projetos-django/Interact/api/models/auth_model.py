@@ -1,5 +1,3 @@
-from django.core.exceptions import ValidationError
-from django.core.validators import FileExtensionValidator
 from django.db import models
 from django.contrib.auth.hashers import make_password,check_password
 from django.core.exceptions import ValidationError
@@ -16,23 +14,13 @@ class User(models.Model):
         upload_to='perfil/',
         default='perfil/icon.jpeg',
         blank=True,
-        null=True,
-        validators=[
-            FileExtensionValidator(allowed_extensions=['jpg', 'jpeg', 'png', 'webp']),
-        ],
+        null=True
     )
     codigo_id = models.CharField(max_length=25,unique=True)
     friends = models.ManyToManyField('self', blank=True)
 
     def __str__(self):
         return self.nome
-
-    def clean(self):
-        super().clean()
-        if self.img and hasattr(self.img, 'size'):
-            max_size_mb = 2
-            if self.img.size > max_size_mb * 1024 * 1024:
-                raise ValidationError({'img': f'Imagem muito grande (máx {max_size_mb}MB).'})
 
     @staticmethod
     def criptografia(senha):

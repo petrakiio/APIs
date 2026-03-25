@@ -18,19 +18,7 @@ class UserController:
             profile.descricao = descricao
             if img:
                 profile.img = img
-            try:
-                profile.full_clean()
-                profile.save()
-            except Exception:
-                return render(
-                    request,
-                    'user.html',
-                    {
-                        'profile': profile,
-                        'current_user_id': current_user_id,
-                        'error': 'Imagem inválida ou muito grande.',
-                    },
-                )
+            profile.save()
             if img:
                 request.session['user_img'] = profile.img.url
             return redirect('user_profile', user_id=profile.id)
