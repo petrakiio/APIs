@@ -69,6 +69,9 @@
         {% if current_user_id == profile.id %}
         <section class="profile-edit">
             <h2>Editar perfil</h2>
+            {% if error %}
+                <p style="color: #d12b2b; margin: 8px 0 16px;">{{ error }}</p>
+            {% endif %}
             <form class="profile-form" method="post" action="{% url 'user_profile' profile.id %}" enctype="multipart/form-data">
                 {% csrf_token %}
                 <label for="profile-nome">Nome</label>
