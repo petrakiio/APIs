@@ -37,9 +37,10 @@
             </div>
         </header>
 
-        {% if friends %}
+        {% if friends_with_unread %}
         <section class="friends-grid">
-            {% for friend in friends %}
+            {% for item in friends_with_unread %}
+            {% with friend=item.friend unread=item.unread %}
             <article class="friend-card">
                 <div class="friend-info">
                     <div class="friend-avatar">
@@ -56,8 +57,15 @@
                 </div>
                 <div class="friend-actions">
                     <a class="btn-primary" href="{% url 'user_profile' friend.id %}">Ver perfil</a>
+                    <a class="btn-secondary" href="{% url 'chat-room' friend.id %}">
+                        Abrir chat
+                        {% if unread and unread > 0 %}
+                            <span class="notif-badge">{{ unread }}</span>
+                        {% endif %}
+                    </a>
                 </div>
             </article>
+            {% endwith %}
             {% endfor %}
         </section>
         {% else %}

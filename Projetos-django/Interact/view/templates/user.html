@@ -50,7 +50,7 @@
             {% if current_user_id and current_user_id != profile.id %}
             <div class="profile-actions">
                 {% if is_friend %}
-                    <span class="btn-primary">Amigos</span>
+                    <a class="btn-primary" href="{% url 'chat-room' profile.id %}">Abrir chat</a>
                 {% elif incoming_request %}
                     <form method="post" action="{% url 'friend_request_accept' incoming_request.id %}">
                         {% csrf_token %}

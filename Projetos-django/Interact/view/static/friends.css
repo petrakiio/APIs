@@ -119,6 +119,23 @@
   display: flex;
   align-items: center;
   justify-content: flex-start;
+  gap: 10px;
+}
+
+.notif-badge {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  min-width: 20px;
+  height: 20px;
+  padding: 0 6px;
+  border-radius: 999px;
+  margin-left: 8px;
+  background: #ff5e5e;
+  color: #fff;
+  font-size: 11px;
+  font-weight: 700;
+  box-shadow: 0 6px 14px rgba(255, 94, 94, 0.35);
 }
 
 .friends-empty {

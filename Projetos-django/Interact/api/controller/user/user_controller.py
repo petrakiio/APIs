@@ -1,5 +1,6 @@
 from django.contrib.auth.decorators import login_required
 from django.shortcuts import get_object_or_404, redirect, render
+from chat.models import ChatMessage, ChatRoom
 from models.auth_model import FriendshipRequest, User
 
 
@@ -152,13 +153,27 @@ class UserController:
             .first()
         )
         friends = []
+        friends_with_unread = []
         if current_user:
             friends = current_user.friends.all().order_by('nome')
+            for friend in friends:
+                room_name = f'friend_{min(current_user.id, friend.id)}_{max(current_user.id, friend.id)}'
+                room = ChatRoom.objects.filter(name=room_name).first()
+                if not room:
+                    friends_with_unread.append({'friend': friend, 'unread': 0})
+                    continue
+                unread_count = (
+                    ChatMessage.objects.filter(room=room, sender=friend)
+                    .exclude(read_by=current_user)
+                    .count()
+                )
+                friends_with_unread.append({'friend': friend, 'unread': unread_count})
 
         return render(
             request,
             'friends.html',
             {
                 'friends': friends,
+                'friends_with_unread': friends_with_unread,
             },
         )

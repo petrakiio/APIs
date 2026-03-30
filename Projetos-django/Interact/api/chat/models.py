@@ -3,8 +3,9 @@ from models.auth_model import User
 
 
 class ChatRoom(models.Model):
-    name = models.CharField(max_length=120)
+    name = models.CharField(max_length=120, unique=True)
     created_at = models.DateTimeField(auto_now_add=True)
+    participants = models.ManyToManyField(User, related_name='chat_rooms')
 
     def __str__(self):
         return self.name
@@ -26,6 +27,7 @@ class ChatMessage(models.Model):
     message_type = models.CharField(max_length=10, choices=TYPE_CHOICES, default=TYPE_TEXT)
     text = models.TextField(blank=True)
     file = models.FileField(upload_to='chat/', blank=True, null=True)
+    read_by = models.ManyToManyField(User, related_name='read_messages', blank=True)
     created_at = models.DateTimeField(auto_now_add=True)
 
     class Meta:

@@ -19,7 +19,16 @@ class ChatConsumer(AsyncWebsocketConsumer):
             await self.close()
             return
 
-        await self._get_or_create_room()
+        room = await self._get_room()
+        if not room:
+            await self.close()
+            return
+
+        is_participant = await self._is_participant(room, user.id)
+        if not is_participant:
+            await self.close()
+            return
+
         await self.channel_layer.group_add(self.group_name, self.channel_name)
         await self.accept()
 
@@ -72,8 +81,12 @@ class ChatConsumer(AsyncWebsocketConsumer):
         await self.send(text_data=json.dumps(event['payload']))
 
     @sync_to_async
-    def _get_or_create_room(self):
-        ChatRoom.objects.get_or_create(id=self.room_id, defaults={'name': f'Sala {self.room_id}'})
+    def _get_room(self):
+        return ChatRoom.objects.filter(id=self.room_id).first()
+
+    @sync_to_async
+    def _is_participant(self, room, user_id):
+        return room.participants.filter(id=user_id).exists()
 
     @sync_to_async
     def _create_message(self, message_type, text='', file_name=None, file_data=None):
@@ -91,4 +104,5 @@ class ChatConsumer(AsyncWebsocketConsumer):
             chat_message.file.save(file_name, ContentFile(decoded_file), save=False)
 
         chat_message.save()
+        chat_message.read_by.add(user)
         return chat_message
