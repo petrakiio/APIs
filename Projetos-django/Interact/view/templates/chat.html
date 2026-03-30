@@ -1,0 +1,64 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Chat - {{ room.name }}</title>
+    <link rel="stylesheet" href="{% static 'chat.css' %}">
+</head>
+<body>
+    <main class="chat-shell" data-room-id="{{ room.id }}" data-user-id="{{ current_user.id|default:'' }}">
+        <header class="chat-header">
+            <div>
+                <h1>{{ room.name }}</h1>
+                <p>Conversa em tempo real</p>
+            </div>
+            <a class="back-link" href="/">Voltar</a>
+        </header>
+
+        <section class="chat-messages" id="chatMessages">
+            {% for message in messages %}
+                <article class="chat-message {% if current_user and message.sender.id == current_user.id %}self{% endif %}">
+                    <div class="meta">
+                        <strong>{{ message.sender.nome }}</strong>
+                        <span>{{ message.created_at|date:"H:i" }}</span>
+                    </div>
+                    {% if message.message_type == 'text' %}
+                        <p>{{ message.text }}</p>
+                    {% elif message.message_type == 'image' and message.file %}
+                        <img src="{{ message.file.url }}" alt="Imagem enviada">
+                    {% elif message.message_type == 'audio' and message.file %}
+                        <audio controls src="{{ message.file.url }}"></audio>
+                    {% endif %}
+                </article>
+            {% empty %}
+                <div class="chat-empty">Nenhuma mensagem ainda. Seja o primeiro!</div>
+            {% endfor %}
+        </section>
+
+        {% if current_user %}
+        <form class="chat-input" id="chatForm">
+            <div class="input-row">
+                <input type="text" id="chatText" placeholder="Digite sua mensagem...">
+                <button type="submit">Enviar</button>
+            </div>
+            <div class="input-row">
+                <label class="file-btn">
+                    <input type="file" id="chatImage" accept="image/*">
+                    Enviar imagem
+                </label>
+                <label class="file-btn">
+                    <input type="file" id="chatAudio" accept="audio/*">
+                    Enviar audio
+                </label>
+            </div>
+        </form>
+        {% else %}
+            <div class="chat-locked">Faça login para participar do chat.</div>
+        {% endif %}
+    </main>
+
+    <script src="{% static 'script/chat.js' %}"></script>
+</body>
+</html>

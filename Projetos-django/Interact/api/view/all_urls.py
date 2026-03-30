@@ -4,4 +4,5 @@ urlpatterns = [
     path('', include('view.home_urls')),
     path('', include('view.login_urls')),
     path('', include('view.user_urls')),
+    path('', include('view.chat_urls')),
 ]
